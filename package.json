@@ -1,0 +1,37 @@
+{
+  "name": "ft.js",
+  "version": "0.0.1",
+  "description": "Utility library",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/instanceofpro/ft.js.git"
+  },
+  "keywords": [
+    "ft.js",
+    "functional",
+    "utils",
+    "utility",
+    "array",
+    "object",
+    "string",
+    "is"
+  ],
+  "author": "Eugene Abrosimov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/instanceofpro/ft.js/issues"
+  },
+  "homepage": "https://github.com/instanceofpro/ft.js",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-template": "~0.2.3",
+    "grunt-preprocess": "~4.0.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-concat": "~0.4.0",
+    "grunt-contrib-uglify": "~0.5.0"
+  }
+}
