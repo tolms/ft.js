@@ -18,6 +18,7 @@
     ft.VERSION = '<%= version %>';
 
     // @include array.js
+    // @include string.js
 
     return ft;
 }));

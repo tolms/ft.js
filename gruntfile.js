@@ -6,8 +6,8 @@ module.exports = function(grunt){
 
         preprocess: {
             build: {
-                src: 'src/index.js',
-                dest: 'tmp/index.js'
+                src: 'src/core.js',
+                dest: 'tmp/core.js'
             }
         },
 
