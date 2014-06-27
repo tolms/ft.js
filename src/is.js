@@ -1,7 +1,7 @@
 ft.is = function (value) {
     // ft.is().not()....
     var _is = {},
-        types = ['array', 'boolean', 'date', 'nan', 'null', 'number', 'regexp', 'string'],
+        types = ['array', 'boolean', 'date', 'nan', 'null', 'number', 'object', 'regexp', 'string'],
         check = function (o) {
         if (o === null) {
             return 'null';
