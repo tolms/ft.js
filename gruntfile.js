@@ -41,14 +41,25 @@ module.exports = function(grunt){
             build: {
                 src: 'tmp'
             }
+        },
+
+        mocha: {
+            all: {
+                src: ['tests/runner.html']
+            },
+            options: {
+                run: true
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-preprocess');
     grunt.loadNpmTasks('grunt-template');
+    grunt.loadNpmTasks('grunt-mocha');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-clean');
 
     grunt.registerTask('build', ['preprocess', 'template', 'concat', 'uglify', 'clean']);
+    grunt.registerTask('test', ['mocha']);
 };
