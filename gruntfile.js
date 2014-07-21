@@ -50,6 +50,18 @@ module.exports = function(grunt){
             options: {
                 run: true
             }
+        },
+
+        complexity: {
+            generic: {
+                src: '<%= concat.build.dest %>',
+                options: {
+                    errorsOnly: false,
+                    cyclomatic: 3,
+                    halstead: 8,
+                    maintainability: 100
+                }
+            }
         }
     });
 
@@ -59,7 +71,9 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-complexity');
 
     grunt.registerTask('build', ['preprocess', 'template', 'concat', 'uglify', 'clean']);
     grunt.registerTask('test', ['mocha']);
+    grunt.registerTask('estimate', ['complexity']);
 };
