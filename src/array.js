@@ -1,5 +1,4 @@
 ft.array = function (value) {
-
     var _array = {
 
         each: function (fn, context) {
@@ -12,7 +11,6 @@ ft.array = function (value) {
             return value;
         }
     };
-
 
     return _array;
 };

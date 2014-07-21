@@ -1,5 +1,4 @@
-module.exports = function(grunt){
-
+module.exports = function (grunt) {
     grunt.initConfig({
 
         pkg: grunt.file.readJSON('package.json'),
@@ -32,8 +31,8 @@ module.exports = function(grunt){
 
         uglify: {
             build: {
-                src : '<%= concat.build.dest %>',
-                dest : 'build/ft.min.js'
+                src: '<%= concat.build.dest %>',
+                dest: 'build/ft.min.js'
             }
         },
 
@@ -62,6 +61,14 @@ module.exports = function(grunt){
                     maintainability: 100
                 }
             }
+        },
+
+        jscs: {
+            src: ['src/*.js', 'tests/*.js', 'gruntfile.js'],
+            options: {
+                config: "jscs.json",
+                requireCurlyBraces: [ "if" ]
+            }
         }
     });
 
@@ -72,6 +79,7 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-complexity');
+    grunt.loadNpmTasks("grunt-jscs");
 
     grunt.registerTask('build', ['preprocess', 'template', 'concat', 'uglify', 'clean']);
     grunt.registerTask('test', ['mocha']);

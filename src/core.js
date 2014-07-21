@@ -1,7 +1,6 @@
-(function(root, factory) {
-
+(function (root, factory) {
     if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
-        define(function() {
+        define(function () {
             return factory();
         });
     } else if (typeof exports !== 'undefined') {
@@ -9,8 +8,7 @@
     } else {
         root.ft = factory();
     }
-
-}(this, function() {
+}(this, function () {
     'use strict';
 
     var ft = {};
