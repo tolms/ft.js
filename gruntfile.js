@@ -68,7 +68,14 @@ module.exports = function (grunt) {
         jscs: {
             src: ['src/*.js', 'tests/*.js', 'gruntfile.js'],
             options: {
-                config: 'jscs.json'
+                config: '.jscsrc'
+            }
+        },
+
+        jshint: {
+            src: ['src/*.js', 'gruntfile.js'],
+            options: {
+                jshintrc: '.jshintrc'
             }
         }
     });
@@ -80,7 +87,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-complexity');
-    grunt.loadNpmTasks("grunt-jscs");
+    grunt.loadNpmTasks('grunt-jscs');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.registerTask('build', ['preprocess', 'template', 'concat', 'uglify', 'clean']);
     grunt.registerTask('test', ['mocha']);

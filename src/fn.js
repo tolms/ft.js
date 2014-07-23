@@ -1,4 +1,4 @@
-ft.fn = function (value) {
+ft.fn = function () {
     var _fn = {
         noop: function () {}
     };
