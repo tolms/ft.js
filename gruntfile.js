@@ -66,8 +66,7 @@ module.exports = function (grunt) {
         jscs: {
             src: ['src/*.js', 'tests/*.js', 'gruntfile.js'],
             options: {
-                config: "jscs.json",
-                requireCurlyBraces: [ "if" ]
+                config: 'jscs.json'
             }
         }
     });
