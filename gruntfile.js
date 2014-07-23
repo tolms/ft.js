@@ -1,4 +1,6 @@
 module.exports = function (grunt) {
+    'use strict';
+
     grunt.initConfig({
 
         pkg: grunt.file.readJSON('package.json'),
@@ -82,5 +84,5 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', ['preprocess', 'template', 'concat', 'uglify', 'clean']);
     grunt.registerTask('test', ['mocha']);
-    grunt.registerTask('estimate', ['complexity']);
+    grunt.registerTask('estimate', ['jscs', 'complexity']);
 };
