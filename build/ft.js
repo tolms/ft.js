@@ -1,7 +1,6 @@
-(function(root, factory) {
-
-    if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
-        define(function() {
+(function (root, factory) {
+    if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+        define(function () {
             return factory();
         });
     } else if (typeof exports !== 'undefined') {
@@ -9,8 +8,7 @@
     } else {
         root.ft = factory();
     }
-
-}(this, function() {
+}(this, function () {
     'use strict';
 
     var ft = {};
@@ -18,7 +16,6 @@
     ft.VERSION = '0.0.1';
 
     ft.array = function (value) {
-    
         var _array = {
     
             each: function (fn, context) {
@@ -31,7 +28,6 @@
                 return value;
             }
         };
-    
     
         return _array;
     };
@@ -82,7 +78,6 @@
     };
 
     ft.string = function (value) {
-    
         return {
             truncate: function (limit) {
                 return value.length > limit ? value = value.substring(0, limit - 3) + '...' : value;
@@ -90,8 +85,7 @@
         };
     };
 
-    ft.fn = function (value) {
-    
+    ft.fn = function () {
         var _fn = {
             noop: function () {}
         };

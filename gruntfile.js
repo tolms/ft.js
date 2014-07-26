@@ -1,6 +1,8 @@
 module.exports = function (grunt) {
     'use strict';
 
+    require('load-grunt-tasks')(grunt);
+
     grunt.initConfig({
 
         pkg: grunt.file.readJSON('package.json'),
@@ -79,16 +81,6 @@ module.exports = function (grunt) {
             }
         }
     });
-
-    grunt.loadNpmTasks('grunt-preprocess');
-    grunt.loadNpmTasks('grunt-template');
-    grunt.loadNpmTasks('grunt-mocha');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-complexity');
-    grunt.loadNpmTasks('grunt-jscs');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.registerTask('build', ['preprocess', 'template', 'concat', 'uglify', 'clean']);
     grunt.registerTask('test', ['mocha']);
