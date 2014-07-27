@@ -57,7 +57,7 @@ module.exports = function (grunt) {
 
         complexity: {
             generic: {
-                src: '<%= concat.build.dest %>',
+                src: 'src/*.js',
                 options: {
                     errorsOnly: false,
                     cyclomatic: 3,
@@ -84,5 +84,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', ['preprocess', 'template', 'concat', 'uglify', 'clean']);
     grunt.registerTask('test', ['mocha']);
-    grunt.registerTask('estimate', ['jscs', 'complexity']);
+    grunt.registerTask('check', ['jscs', 'jshint']);
+    grunt.registerTask('estimate', ['complexity']);
 };
