@@ -4,7 +4,10 @@
         "require": true,
         "module": true,
         "exports": true,
-        "ft": true
+        "ft": true,
+        "describe": true,
+        "it": true,
+        "expect": true
     },
     "maxerr": 50,
     "bitwise": true,

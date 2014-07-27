@@ -79,6 +79,17 @@ module.exports = function (grunt) {
             options: {
                 jshintrc: '.jshintrc'
             }
+        },
+
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js'
+            },
+            continuous: {
+                configFile: 'karma.conf.js',
+                singleRun: true,
+                browsers: ['PhantomJS']
+            }
         }
     });
 
