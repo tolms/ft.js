@@ -99,5 +99,5 @@ module.exports = function (grunt) {
     grunt.registerTask('check', ['jscs', 'jshint']);
     grunt.registerTask('estimate', ['complexity']);
 
-    grunt.registerTask('default', ['build']);
+    grunt.registerTask('default', ['check', 'test', 'build']);
 };
