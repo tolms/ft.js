@@ -108,5 +108,9 @@ module.exports = function (grunt) {
     ]);
     grunt.registerTask('estimate', ['complexity']);
 
-    grunt.registerTask('default', ['check', 'test', 'build']);
+    grunt.registerTask('default', [
+        'check',
+        'test',
+        'build'
+    ]);
 };
