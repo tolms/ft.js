@@ -35,5 +35,6 @@
     "disallowKeywordsOnNewLine": ["else"],
     "requireCapitalizedConstructors": true,
     "safeContextKeyword": ["that"],
-    "disallowYodaConditions": true
+    "disallowYodaConditions": true,
+    "maximumLineLength": 100
 }

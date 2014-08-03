@@ -94,9 +94,18 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('build', ['preprocess', 'template', 'concat', 'uglify', 'clean']);
+    grunt.registerTask('build', [
+        'preprocess',
+        'template',
+        'concat',
+        'uglify',
+        'clean'
+    ]);
     grunt.registerTask('test', ['mocha']);
-    grunt.registerTask('check', ['jscs', 'jshint']);
+    grunt.registerTask('check', [
+        'jscs',
+        'jshint'
+    ]);
     grunt.registerTask('estimate', ['complexity']);
 
     grunt.registerTask('default', ['check', 'test', 'build']);
