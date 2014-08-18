@@ -1,8 +1,6 @@
 (function (root, factory) {
-    if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
-        define(function () {
-            return factory();
-        });
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
     } else if (typeof exports !== 'undefined') {
         module.exports = factory();
     } else {
@@ -15,8 +13,8 @@
 
     ft.VERSION = '0.0.1';
 
-    ft.array = function (value) {
-        var _array = {
+    ft.list = function (value) {
+        var _list = {
     
             each: function (fn, context) {
                 for (var i = 0, length = value.length; i < length; i++) {
@@ -29,7 +27,7 @@
             }
         };
     
-        return _array;
+        return _list;
     };
 
     ft.is = function (value) {
