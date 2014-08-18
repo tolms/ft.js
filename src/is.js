@@ -34,7 +34,7 @@ ft.is = function (value) {
         return check(value) === 'undefined';
     };
 
-    ft.array(types).each(function (name) {
+    ft.list(types).each(function (name) {
         _is[name] = function () {
             return check(value) === name;
         };

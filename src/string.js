@@ -1,7 +1,10 @@
 ft.string = function (value) {
-    return {
-        truncate: function (limit) {
-            return value.length > limit ? value = value.substring(0, limit - 3) + '...' : value;
-        }
+    var _string = {};
+
+    _string.truncate = function (limit, suffix) {
+        suffix = suffix || '...';
+        return value.length > limit ? value = value.substring(0, limit - suffix.length) + suffix : value;
     };
+
+    return _string;
 };
