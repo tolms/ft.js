@@ -1,5 +1,5 @@
-ft.array = function (value) {
-    var _array = {
+ft.list = function (value) {
+    var _list = {
 
         each: function (fn, context) {
             for (var i = 0, length = value.length; i < length; i++) {
@@ -12,5 +12,5 @@ ft.array = function (value) {
         }
     };
 
-    return _array;
+    return _list;
 };

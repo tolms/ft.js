@@ -13,7 +13,7 @@
 
     ft.VERSION = '<%= version %>';
 
-    // @include array.js
+    // @include list.js
 
     // @include is.js
 
