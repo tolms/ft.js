@@ -88,6 +88,10 @@
             return _string.trim().replace(/\s+/g, ' ');
         };
     
+        _string.reverse = function () {
+            return _string.chars().reverse().join('');
+        };
+    
         _string.trim = function (chars) {
             if (!chars && nativeTrim) {
                 return nativeTrim.call(value);
