@@ -14,17 +14,16 @@
     ft.VERSION = '0.0.1';
 
     ft.list = function (value) {
-        var _list = {
+        var _list = {};
     
-            each: function (fn, context) {
-                for (var i = 0, length = value.length; i < length; i++) {
-                    fn.call(context || this, value[i], i);
-                }
-            },
-    
-            value: function () {
-                return value;
+        _list.each = function (fn, context) {
+            for (var i = 0, length = value.length; i < length; i++) {
+                fn.call(context || this, value[i], i);
             }
+        };
+    
+        _list.value = function () {
+            return value;
         };
     
         return _list;
@@ -66,7 +65,7 @@
             return check(value) === 'undefined';
         };
     
-        ft.array(types).each(function (name) {
+        ft.list(types).each(function (name) {
             _is[name] = function () {
                 return check(value) === name;
             };
@@ -76,17 +75,48 @@
     };
 
     ft.string = function (value) {
-        return {
-            truncate: function (limit) {
-                return value.length > limit ? value = value.substring(0, limit - 3) + '...' : value;
-            }
+        var _string = {};
+    
+        /**
+         * Native functions
+         */
+        var nativeTrim = String.prototype.trim,
+            nativeTrimRight = String.prototype.trimRight,
+            nativeTrimLeft = String.prototype.trimLeft;
+    
+        _string.truncate = function (limit, suffix) {
+            suffix = suffix || '...';
+            return value.length > limit ? value = value.substring(0, limit - suffix.length) + suffix : value;
         };
+    
+        _string.trimLeft = function (chars) {
+            if (!chars && nativeTrimLeft) {
+                return nativeTrimLeft.call(value);
+            }
+            return value.replace(new RegExp('^' + chars + '+'), '');
+        };
+    
+        _string.trimRight = function (chars) {
+            if (!chars && nativeTrimRight) {
+                return nativeTrimRight.call(value);
+            }
+            return value.replace(new RegExp(chars + '+$'), '');
+        };
+    
+        _string.trim = function (chars) {
+            if (!chars && nativeTrim) {
+                return nativeTrim.call(value);
+            }
+            return value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
+        };
+    
+        return _string;
     };
 
     ft.fn = function () {
-        var _fn = {
-            noop: function () {}
-        };
+        var _fn = {};
+    
+        _fn.noop = function () {};
     
         return _fn;
     };
