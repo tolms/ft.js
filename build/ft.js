@@ -80,6 +80,10 @@
             nativeTrimRight = String.prototype.trimRight,
             nativeTrimLeft = String.prototype.trimLeft;
     
+        _string.chars = function () {
+            return value.split('');
+        };
+    
         _string.clean = function () {
             return _string.trim().replace(/\s+/g, ' ');
         };
