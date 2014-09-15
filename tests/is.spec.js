@@ -1,4 +1,4 @@
-describe('List', function () {
+describe('Is', function () {
     describe('.value()', function () {
         it('should return value');
     });

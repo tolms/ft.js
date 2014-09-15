@@ -7,6 +7,10 @@ ft.list = function (value) {
         }
     };
 
+    _list.take = function (limit) {
+        return value.slice(0, limit);
+    };
+
     _list.value = function () {
         return value;
     };
