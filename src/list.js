@@ -1,10 +1,22 @@
-ft.list = function (value) {
-    var _list = {};
+var List = (function () {
 
-    _list.each = function (fn, context) {
-        for (var i = 0, length = value.length; i < length; i++) {
-            fn.call(context || this, value[i], i);
+    function List(value) {
+        this._value = value;
+    }
+
+    List.prototype.each = function (fn, context) {
+        for (var i = 0, length = this._value.length; i < length; i++) {
+            fn.call(context, this._value[i], i, this._value);
         }
+    };
+
+    /**
+     * Метод возвращает значение из замыкания.
+     * Используется для завершения цепочки вызовов
+     * @returns {array}
+     */
+    List.prototype.value = function () {
+        return this._value;
     };
 
     /**
@@ -13,18 +25,13 @@ ft.list = function (value) {
      * @param {number} limit Длина нового списка
      * @returns {array} Новый список
      */
-    _list.take = function (limit) {
-        return value.slice(0, limit);
+    List.prototype.take = function (limit) {
+        return this._value.slice(0, limit);
     };
 
-    /**
-     * Метод возвращает значение из замыкания.
-     * Используется для завершения цепочки вызовов
-     * @returns {array}
-     */
-    _list.value = function () {
-        return value;
-    };
+    return List;
+})();
 
-    return _list;
+ft.list = function (value) {
+    return new List(value);
 };

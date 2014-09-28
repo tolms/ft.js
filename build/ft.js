@@ -13,20 +13,47 @@
 
     ft.VERSION = '0.0.1';
 
-    ft.list = function (value) {
-        var _list = {};
+    /**
+     * Набор общих методов
+     */
     
-        _list.each = function (fn, context) {
-            for (var i = 0, length = value.length; i < length; i++) {
-                fn.call(context || this, value[i], i);
+
+    var List = (function () {
+    
+        function List(value) {
+            this._value = value;
+        }
+    
+        List.prototype.each = function (fn, context) {
+            for (var i = 0, length = this._value.length; i < length; i++) {
+                fn.call(context, this._value[i], i, this._value);
             }
         };
     
-        _list.value = function () {
-            return value;
+        /**
+         * Метод возвращает значение из замыкания.
+         * Используется для завершения цепочки вызовов
+         * @returns {array}
+         */
+        List.prototype.value = function () {
+            return this._value;
         };
     
-        return _list;
+        /**
+         * Метод возвращает новый список элементов длинной limit, начинающийся
+         * с начала исходного списка
+         * @param {number} limit Длина нового списка
+         * @returns {array} Новый список
+         */
+        List.prototype.take = function (limit) {
+            return this._value.slice(0, limit);
+        };
+    
+        return List;
+    })();
+    
+    ft.list = function (value) {
+        return new List(value);
     };
 
     ft.is = function (value) {
@@ -80,14 +107,27 @@
             nativeTrimRight = String.prototype.trimRight,
             nativeTrimLeft = String.prototype.trimLeft;
     
+        /**
+         * Метод возвращает массив из символов, из которых состояла исходная строка
+         * @returns {Array} Массив символов
+         */
         _string.chars = function () {
             return value.split('');
         };
     
+        /**
+         * Метод очищает исходную строку от дублирующихся пробелов
+         * @returns {string} Очищенная строка
+         */
         _string.clean = function () {
             return _string.trim().replace(/\s+/g, ' ');
         };
     
+        /**
+         * Метод разворачивает исходную строку так, что первый символ становится последним,
+         * второй - предпоследним и т.д.
+         * @returns {string}
+         */
         _string.reverse = function () {
             return _string.chars().reverse().join('');
         };
@@ -124,12 +164,27 @@
         return _string;
     };
 
-    ft.fn = function () {
-        var _fn = {};
+    var Fn = (function () {
     
-        _fn.noop = function () {};
+        function Fn(value) {
+            this._value = value;
+        }
     
-        return _fn;
+        /**
+         * Метод возвращает пустую функцию заглушку
+         */
+        Fn.prototype.noop = function () {};
+    
+        Fn.prototype.value = function () {
+            return this._value;
+        };
+    
+        return Fn;
+    })();
+    
+    
+    ft.fn = function (value) {
+        return new Fn(value);
     };
 
     return ft;

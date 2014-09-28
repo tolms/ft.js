@@ -1,10 +1,22 @@
-ft.fn = function () {
-    var _fn = {};
+var Fn = (function () {
+
+    function Fn(value) {
+        this._value = value;
+    }
 
     /**
      * Метод возвращает пустую функцию заглушку
      */
-    _fn.noop = function () {};
+    Fn.prototype.noop = function () {};
 
-    return _fn;
+    Fn.prototype.value = function () {
+        return this._value;
+    };
+
+    return Fn;
+})();
+
+
+ft.fn = function (value) {
+    return new Fn(value);
 };
