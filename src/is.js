@@ -34,11 +34,11 @@ ft.is = function (value) {
         return check(value) === 'undefined';
     };
 
-    ft.list(types).each(function (name) {
-        _is[name] = function () {
-            return check(value) === name;
-        };
-    });
+//    ft.list(types).each(function (name) {
+//        _is[name] = function () {
+//            return check(value) === name;
+//        };
+//    });
 
     return _is;
 };

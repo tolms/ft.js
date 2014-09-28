@@ -5,6 +5,10 @@ var List = (function () {
     }
 
     List.prototype.each = function (fn, context) {
+        if (!ft.is(fn).fn()) {
+            throw new TypeError();
+        }
+
         for (var i = 0, length = this._value.length; i < length; i++) {
             fn.call(context, this._value[i], i, this._value);
         }

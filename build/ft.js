@@ -25,6 +25,10 @@
         }
     
         List.prototype.each = function (fn, context) {
+            if (!ft.is(fn).fn()) {
+                throw new TypeError();
+            }
+    
             for (var i = 0, length = this._value.length; i < length; i++) {
                 fn.call(context, this._value[i], i, this._value);
             }
@@ -92,11 +96,11 @@
             return check(value) === 'undefined';
         };
     
-        ft.list(types).each(function (name) {
-            _is[name] = function () {
-                return check(value) === name;
-            };
-        });
+    //    ft.list(types).each(function (name) {
+    //        _is[name] = function () {
+    //            return check(value) === name;
+    //        };
+    //    });
     
         return _is;
     };
