@@ -4,14 +4,27 @@ ft.string = function (value) {
         nativeTrimRight = String.prototype.trimRight,
         nativeTrimLeft = String.prototype.trimLeft;
 
+    /**
+     * Метод возвращает массив из символов, из которых состояла исходная строка
+     * @returns {Array} Массив символов
+     */
     _string.chars = function () {
         return value.split('');
     };
 
+    /**
+     * Метод очищает исходную строку от дублирующихся пробелов
+     * @returns {string} Очищенная строка
+     */
     _string.clean = function () {
         return _string.trim().replace(/\s+/g, ' ');
     };
 
+    /**
+     * Метод разворачивает исходную строку так, что первый символ становится последним,
+     * второй - предпоследним и т.д.
+     * @returns {string}
+     */
     _string.reverse = function () {
         return _string.chars().reverse().join('');
     };

@@ -7,10 +7,21 @@ ft.list = function (value) {
         }
     };
 
+    /**
+     * Метод возвращает новый список элементов длинной limit, начинающийся
+     * с начала исходного списка
+     * @param {number} limit Длина нового списка
+     * @returns {array} Новый список
+     */
     _list.take = function (limit) {
         return value.slice(0, limit);
     };
 
+    /**
+     * Метод возвращает значение из замыкания.
+     * Используется для завершения цепочки вызовов
+     * @returns {array}
+     */
     _list.value = function () {
         return value;
     };
