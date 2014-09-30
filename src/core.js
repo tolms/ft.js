@@ -15,6 +15,8 @@
 
     // @include common.js
 
+    // @include object.js
+
     // @include list.js
 
     // @include is.js
