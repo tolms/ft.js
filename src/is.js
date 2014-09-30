@@ -6,9 +6,36 @@ var Is = (function () {
     /**
      * Types
      */
+    Is.prototype.args = function () {
+        return nativeToString.call(this._value) === '[object Arguments]';
+    };
+
+    Is.prototype.array = function () {
+        return nativeToString.call(this._value) === '[object Array]';
+    };
+
+    Is.prototype.bool = function () {
+        return nativeToString.call(this._value) === '[object Boolean]';
+    };
+
+    Is.prototype.date = function () {
+        return nativeToString.call(this._value) === '[object Date]' || this._value instanceof Date;
+    };
+
+    Is.prototype.fn = function () {
+        return nativeToString.call(this._value) === '[object Function]';
+    };
 
     Is.prototype.number = function () {
         return nativeToString.call(this._value) === '[object Number]';
+    };
+
+    Is.prototype.regexp = function () {
+        return nativeToString.call(this._value) === '[object RegExp]' || this._value instanceof RegExp;
+    };
+
+    Is.prototype.string = function () {
+        return nativeToString.call(this._value) === '[object String]';
     };
 
     /**
@@ -37,49 +64,3 @@ var Is = (function () {
 ft.is = function (value) {
     return new Is(value);
 };
-
-//
-//ft.is = function (value) {
-//    // ft.is().not()....
-//    var _is = {},
-//        types = ['array', 'boolean', 'date', 'nan', 'null', 'number', 'object', 'regexp', 'string'],
-//        check = function (o) {
-//        if (o === null) {
-//            return 'null';
-//        }
-//
-//        if (o && (o.nodeType === 1 || o.nodeType === 9)) {
-//            return 'element';
-//        }
-//
-//        var s = Object.prototype.toString.call(o),
-//            type = s.match(/\[object (.*?)\]/)[1].toLowerCase();
-//
-//        if (type === 'number') {
-//            if (isNaN(o)) {
-//                return 'nan';
-//            }
-//            if (!isFinite(o)) {
-//                return 'infinity';
-//            }
-//        }
-//
-//        return type;
-//    };
-//
-//    _is.fn = function () {
-//        return check(value) === 'function';
-//    };
-//
-//    _is.undef = function () {
-//        return check(value) === 'undefined';
-//    };
-//
-////    ft.list(types).each(function (name) {
-////        _is[name] = function () {
-////            return check(value) === name;
-////        };
-////    });
-//
-//    return _is;
-//};
