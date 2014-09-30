@@ -3,9 +3,21 @@ var Is = (function () {
         this._value = value;
     }
 
+    /**
+     * Types
+     */
+
     Is.prototype.number = function () {
         return nativeToString.call(this._value) === '[object Number]';
     };
+
+    Is.prototype.nan = function () {
+        return this.number() && this._value !== this._value;
+    };
+
+    /**
+     * Numbers
+     */
 
     Is.prototype.int = function () {
         return this.number() && (this._value % 1 === 0);
