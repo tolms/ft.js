@@ -11,10 +11,6 @@ var Is = (function () {
         return nativeToString.call(this._value) === '[object Number]';
     };
 
-    Is.prototype.nan = function () {
-        return this.number() && this._value !== this._value;
-    };
-
     /**
      * Numbers
      */
