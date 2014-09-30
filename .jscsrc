@@ -14,7 +14,6 @@
         "beforeOpeningCurlyBrace": true
     },
     "requireSpacesInFunctionDeclaration": {
-        "beforeOpeningRoundBrace": true,
         "beforeOpeningCurlyBrace": true
     },
     "requireMultipleVarDecl": true,
