@@ -1,6 +1,3 @@
-var nativeHasOwnProperty = Object.prototype.hasOwnProperty,
-    nativeKeys = Object.prototype.keys;
-
 var Obj = (function () {
     function Obj(value) {
         this._value = value;
