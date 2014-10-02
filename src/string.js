@@ -1,23 +1,22 @@
-ft.string = function (value) {
-    var _string = {},
-        nativeTrim = String.prototype.trim,
-        nativeTrimRight = String.prototype.trimRight,
-        nativeTrimLeft = String.prototype.trimLeft;
+var Str = (function () {
+    function Str(value) {
+        this._value = value;
+    }
 
     /**
      * Метод возвращает массив из символов, из которых состояла исходная строка
      * @returns {Array} Массив символов
      */
-    _string.chars = function () {
-        return value.split('');
+    Str.prototype.chars = function () {
+        return this._value.split('');
     };
 
     /**
      * Метод очищает исходную строку от дублирующихся пробелов
      * @returns {string} Очищенная строка
      */
-    _string.clean = function () {
-        return _string.trim().replace(/\s+/g, ' ');
+    Str.prototype.clean = function () {
+        return this.trim().replace(/\s+/g, ' ');
     };
 
     /**
@@ -25,38 +24,42 @@ ft.string = function (value) {
      * второй - предпоследним и т.д.
      * @returns {string}
      */
-    _string.reverse = function () {
-        return _string.chars().reverse().join('');
+    Str.prototype.reverse = function () {
+        return this.chars().reverse().join('');
     };
 
-    _string.trim = function (chars) {
+    Str.prototype.trim = function (chars) {
         if (!chars && nativeTrim) {
-            return nativeTrim.call(value);
+            return nativeTrim.call(this._value);
         }
         chars = chars || '\\s';
-        return value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
+        return this._value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
     };
 
-    _string.trimLeft = function (chars) {
+    Str.prototype.trimLeft = function (chars) {
         if (!chars && nativeTrimLeft) {
-            return nativeTrimLeft.call(value);
+            return nativeTrimLeft.call(this._value);
         }
         chars = chars || '\\s';
-        return value.replace(new RegExp('^' + chars + '+'), '');
+        return this._value.replace(new RegExp('^' + chars + '+'), '');
     };
 
-    _string.trimRight = function (chars) {
+    Str.prototype.trimRight = function (chars) {
         if (!chars && nativeTrimRight) {
-            return nativeTrimRight.call(value);
+            return nativeTrimRight.call(this._value);
         }
         chars = chars || '\\s';
-        return value.replace(new RegExp(chars + '+$'), '');
+        return this._value.replace(new RegExp(chars + '+$'), '');
     };
 
-    _string.truncate = function (limit, sfx) {
+    Str.prototype.truncate = function (limit, sfx) {
         sfx = sfx || '...';
-        return value.length > limit ? value = value.substring(0, limit - sfx.length) + sfx : value;
+        return this._value.length > limit ? this._value.substring(0, limit - sfx.length) + sfx : this._value;
     };
 
-    return _string;
+    return Str;
+})();
+
+ft.string = function (value) {
+    return new Str(value);
 };
