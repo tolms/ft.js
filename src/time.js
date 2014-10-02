@@ -1,7 +1,7 @@
 var Time = (function () {
 
     function Time(value) {
-        this.value = value;
+        this._value = value;
     }
 
     Time.prototype.method = function () {
