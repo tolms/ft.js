@@ -197,7 +197,7 @@
     
         Str.prototype.trim = function (chars) {
             if (!chars && nativeTrim) {
-                return nativeTrim.call(value);
+                return nativeTrim.call(this._value);
             }
             chars = chars || '\\s';
             return this._value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
