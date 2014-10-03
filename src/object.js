@@ -8,6 +8,20 @@ var Objects = (function () {
         throw new Error();
     };
 
+    Objects.prototype.clone = function (target, source) {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
+    Objects.prototype.has = function (key) {
+        return nativeHasOwnProperty.call(this._value, key);
+    };
+
+    Objects.prototype.is = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
     Objects.prototype.keys = function () {
         if (nativeKeys) {
             return nativeKeys(this._value);
@@ -19,10 +33,6 @@ var Objects = (function () {
             }
         }
         return keys;
-    };
-
-    Objects.prototype.has = function (key) {
-        return nativeHasOwnProperty.call(this._value, key);
     };
 
     Objects.prototype.toString = function() {

@@ -19,6 +19,21 @@ var Strings = (function () {
         return this.trim().replace(/\s+/g, ' ');
     };
 
+    Strings.prototype.contains = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
+    Strings.prototype.endsWith = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
+    Strings.prototype.repeat = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
     /**
      * Метод разворачивает исходную строку так, что первый символ становится последним,
      * второй - предпоследним и т.д.
@@ -26,6 +41,11 @@ var Strings = (function () {
      */
     Strings.prototype.reverse = function () {
         return this.chars().reverse().join('');
+    };
+
+    Strings.prototype.startsWith = function () {
+        // TODO: Реализовать
+        throw new Error();
     };
 
     Strings.prototype.trim = function (chars) {

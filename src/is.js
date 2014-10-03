@@ -24,12 +24,28 @@ var Is = (function () {
         return nativeToString.call(this._value) === '[object Date]' || this._value instanceof Date;
     };
 
+    Is.prototype.even = function () {
+        return this.int() && (this._value % 2 === 0);
+    };
+
+    Is.prototype.float = function () {
+        return this.number() && (this._value % 1 !== 0);
+    };
+
     Is.prototype.fn = function () {
         return nativeToString.call(this._value) === '[object Function]';
     };
 
+    Is.prototype.int = function () {
+        return this.number() && (this._value % 1 === 0);
+    };
+
     Is.prototype.number = function () {
         return nativeToString.call(this._value) === '[object Number]';
+    };
+
+    Is.prototype.odd = function () {
+        return this.int() && (this._value % 2 !== 0);
     };
 
     Is.prototype.regexp = function () {
@@ -38,22 +54,6 @@ var Is = (function () {
 
     Is.prototype.string = function () {
         return nativeToString.call(this._value) === '[object String]';
-    };
-
-    Is.prototype.int = function () {
-        return this.number() && (this._value % 1 === 0);
-    };
-
-    Is.prototype.float = function () {
-        return this.number() && (this._value % 1 !== 0);
-    };
-
-    Is.prototype.even = function () {
-        return this.int() && (this._value % 2 === 0);
-    };
-
-    Is.prototype.odd = function () {
-        return this.int() && (this._value % 2 !== 0);
     };
 
     return Is;
