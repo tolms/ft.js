@@ -3,9 +3,11 @@ var Is = (function () {
         this._value = value;
     }
 
-    /**
-     * Types
-     */
+    Is.prototype.equal = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
     Is.prototype.args = function () {
         return nativeToString.call(this._value) === '[object Arguments]';
     };
@@ -37,10 +39,6 @@ var Is = (function () {
     Is.prototype.string = function () {
         return nativeToString.call(this._value) === '[object String]';
     };
-
-    /**
-     * Numbers
-     */
 
     Is.prototype.int = function () {
         return this.number() && (this._value % 1 === 0);
