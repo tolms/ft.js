@@ -3,6 +3,11 @@ var Objects = (function () {
         this._value = value;
     }
 
+    Objects.prototype.assign = function (target, source) {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
     Objects.prototype.keys = function () {
         if (nativeKeys) {
             return nativeKeys(this._value);
@@ -18,6 +23,16 @@ var Objects = (function () {
 
     Objects.prototype.has = function (key) {
         return nativeHasOwnProperty.call(this._value, key);
+    };
+
+    Objects.prototype.toString = function() {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
+    Objects.prototype.valueOf = function () {
+        // TODO: Реализовать
+        throw new Error();
     };
 
     return Objects;
