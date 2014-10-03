@@ -15,15 +15,19 @@
 
     // @include common.js
 
+    // @include is.js
+
     // @include object.js
 
     // @include list.js
 
-    // @include is.js
+    // @include datetime.js
 
     // @include string.js
 
     // @include fn.js
+
+    // @include random.js
 
     return ft;
 }));
