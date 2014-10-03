@@ -35,5 +35,5 @@
     "requireCapitalizedConstructors": true,
     "safeContextKeyword": ["that"],
     "disallowYodaConditions": true,
-    "maximumLineLength": 100
+    "maximumLineLength": 140
 }

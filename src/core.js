@@ -27,6 +27,8 @@
 
     // @include fn.js
 
+    // @include number.js
+
     // @include random.js
 
     return ft;

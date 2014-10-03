@@ -26,6 +26,73 @@
         nativeTrimRight = strProto.trimRight,
         nativeTrimLeft = strProto.trimLeft;
 
+    var Is = (function () {
+        function Is(value){
+            this._value = value;
+        }
+    
+        /**
+         * Types
+         */
+        Is.prototype.args = function () {
+            return nativeToString.call(this._value) === '[object Arguments]';
+        };
+    
+        Is.prototype.array = function () {
+            return nativeToString.call(this._value) === '[object Array]';
+        };
+    
+        Is.prototype.bool = function () {
+            return nativeToString.call(this._value) === '[object Boolean]';
+        };
+    
+        Is.prototype.date = function () {
+            return nativeToString.call(this._value) === '[object Date]' || this._value instanceof Date;
+        };
+    
+        Is.prototype.fn = function () {
+            return nativeToString.call(this._value) === '[object Function]';
+        };
+    
+        Is.prototype.number = function () {
+            return nativeToString.call(this._value) === '[object Number]';
+        };
+    
+        Is.prototype.regexp = function () {
+            return nativeToString.call(this._value) === '[object RegExp]' || this._value instanceof RegExp;
+        };
+    
+        Is.prototype.string = function () {
+            return nativeToString.call(this._value) === '[object String]';
+        };
+    
+        /**
+         * Numbers
+         */
+    
+        Is.prototype.int = function () {
+            return this.number() && (this._value % 1 === 0);
+        };
+    
+        Is.prototype.float = function () {
+            return this.number() && (this._value % 1 !== 0);
+        };
+    
+        Is.prototype.even = function () {
+            return this.int() && (this._value % 2 === 0);
+        };
+    
+        Is.prototype.odd = function () {
+            return this.int() && (this._value % 2 !== 0);
+        };
+    
+        return Is;
+    })();
+    
+    ft.is = function (value) {
+        return new Is(value);
+    };
+
     var Objects = (function () {
         function Objects(value) {
             this._value = value;
@@ -98,71 +165,20 @@
         return new List(value);
     };
 
-    var Is = (function () {
-        function Is(value){
+    var DateTime = (function () {
+        function DateTime(value) {
             this._value = value;
         }
     
-        /**
-         * Types
-         */
-        Is.prototype.args = function () {
-            return nativeToString.call(this._value) === '[object Arguments]';
+        DateTime.prototype.method = function () {
+            throw new Error('Empty method!');
         };
     
-        Is.prototype.array = function () {
-            return nativeToString.call(this._value) === '[object Array]';
-        };
-    
-        Is.prototype.bool = function () {
-            return nativeToString.call(this._value) === '[object Boolean]';
-        };
-    
-        Is.prototype.date = function () {
-            return nativeToString.call(this._value) === '[object Date]' || this._value instanceof Date;
-        };
-    
-        Is.prototype.fn = function () {
-            return nativeToString.call(this._value) === '[object Function]';
-        };
-    
-        Is.prototype.number = function () {
-            return nativeToString.call(this._value) === '[object Number]';
-        };
-    
-        Is.prototype.regexp = function () {
-            return nativeToString.call(this._value) === '[object RegExp]' || this._value instanceof RegExp;
-        };
-    
-        Is.prototype.string = function () {
-            return nativeToString.call(this._value) === '[object String]';
-        };
-    
-        /**
-         * Numbers
-         */
-    
-        Is.prototype.int = function () {
-            return this.number() && (this._value % 1 === 0);
-        };
-    
-        Is.prototype.float = function () {
-            return this.number() && (this._value % 1 !== 0);
-        };
-    
-        Is.prototype.even = function () {
-            return this.int() && (this._value % 2 === 0);
-        };
-    
-        Is.prototype.odd = function () {
-            return this.int() && (this._value % 2 !== 0);
-        };
-    
-        return Is;
+        return DateTime;
     })();
     
-    ft.is = function (value) {
-        return new Is(value);
+    ft.datetime = function (value) {
+        return new DateTime(value);
     };
 
     var Strings = (function () {
@@ -253,6 +269,39 @@
     
     ft.fn = function (value) {
         return new Fn(value);
+    };
+
+    var Num = (function () {
+    
+        function Num(value) {
+            this._value = value;
+        }
+    
+        Num.prototype.method = function () {
+    
+        };
+    
+        return Num;
+    })();
+    
+    ft.number = function (value) {
+        return new Num(value);
+    };
+
+    var Random = (function () {
+        function Random(value) {
+            this._value = value;
+        }
+    
+        Random.prototype.method = function () {
+    
+        };
+    
+        return Random;
+    })();
+    
+    ft.random = function (value) {
+        return new Random(value);
     };
 
     return ft;
