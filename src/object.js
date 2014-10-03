@@ -1,5 +1,3 @@
-// = references common.js
-
 var Objects = (function () {
     function Objects(value) {
         this._value = value;
