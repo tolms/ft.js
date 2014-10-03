@@ -1,9 +1,11 @@
-var Obj = (function () {
-    function Obj(value) {
+// = references common.js
+
+var Objects = (function () {
+    function Objects(value) {
         this._value = value;
     }
 
-    Obj.prototype.keys = function () {
+    Objects.prototype.keys = function () {
         if (nativeKeys) {
             return nativeKeys(this._value);
         }
@@ -16,13 +18,13 @@ var Obj = (function () {
         return keys;
     };
 
-    Obj.prototype.has = function (key) {
+    Objects.prototype.has = function (key) {
         return nativeHasOwnProperty.call(this._value, key);
     };
 
-    return Obj;
+    return Objects;
 })();
 
 ft.object = function (value) {
-    return new Obj(value);
+    return new Objects(value);
 };

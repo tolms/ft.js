@@ -1,5 +1,7 @@
-var Str = (function () {
-    function Str(value) {
+// = references common.js
+
+var Strings = (function () {
+    function Strings(value) {
         this._value = value;
     }
 
@@ -7,7 +9,7 @@ var Str = (function () {
      * Метод возвращает массив из символов, из которых состояла исходная строка
      * @returns {Array} Массив символов
      */
-    Str.prototype.chars = function () {
+    Strings.prototype.chars = function () {
         return this._value.split('');
     };
 
@@ -15,7 +17,7 @@ var Str = (function () {
      * Метод очищает исходную строку от дублирующихся пробелов
      * @returns {string} Очищенная строка
      */
-    Str.prototype.clean = function () {
+    Strings.prototype.clean = function () {
         return this.trim().replace(/\s+/g, ' ');
     };
 
@@ -24,11 +26,11 @@ var Str = (function () {
      * второй - предпоследним и т.д.
      * @returns {string}
      */
-    Str.prototype.reverse = function () {
+    Strings.prototype.reverse = function () {
         return this.chars().reverse().join('');
     };
 
-    Str.prototype.trim = function (chars) {
+    Strings.prototype.trim = function (chars) {
         if (!chars && nativeTrim) {
             return nativeTrim.call(this._value);
         }
@@ -36,7 +38,7 @@ var Str = (function () {
         return this._value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
     };
 
-    Str.prototype.trimLeft = function (chars) {
+    Strings.prototype.trimLeft = function (chars) {
         if (!chars && nativeTrimLeft) {
             return nativeTrimLeft.call(this._value);
         }
@@ -44,7 +46,7 @@ var Str = (function () {
         return this._value.replace(new RegExp('^' + chars + '+'), '');
     };
 
-    Str.prototype.trimRight = function (chars) {
+    Strings.prototype.trimRight = function (chars) {
         if (!chars && nativeTrimRight) {
             return nativeTrimRight.call(this._value);
         }
@@ -52,14 +54,14 @@ var Str = (function () {
         return this._value.replace(new RegExp(chars + '+$'), '');
     };
 
-    Str.prototype.truncate = function (limit, sfx) {
+    Strings.prototype.truncate = function (limit, sfx) {
         sfx = sfx || '...';
         return this._value.length > limit ? this._value.substring(0, limit - sfx.length) + sfx : this._value;
     };
 
-    return Str;
+    return Strings;
 })();
 
 ft.string = function (value) {
-    return new Str(value);
+    return new Strings(value);
 };

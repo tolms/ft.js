@@ -1,16 +1,16 @@
-var Rand = (function () {
+var Random = (function () {
 
-    function Rand(value) {
+    function Random(value) {
         this._value = value;
     }
 
-    Rand.prototype.method = function () {
+    Random.prototype.method = function () {
 
     };
 
-    return Rand;
+    return Random;
 })();
 
 ft.random = function (value) {
-    return new Rand(value);
+    return new Random(value);
 };
