@@ -26,12 +26,12 @@
         nativeTrimRight = strProto.trimRight,
         nativeTrimLeft = strProto.trimLeft;
 
-    var Obj = (function () {
-        function Obj(value) {
+    var Objects = (function () {
+        function Objects(value) {
             this._value = value;
         }
     
-        Obj.prototype.keys = function () {
+        Objects.prototype.keys = function () {
             if (nativeKeys) {
                 return nativeKeys(this._value);
             }
@@ -44,15 +44,15 @@
             return keys;
         };
     
-        Obj.prototype.has = function (key) {
+        Objects.prototype.has = function (key) {
             return nativeHasOwnProperty.call(this._value, key);
         };
     
-        return Obj;
+        return Objects;
     })();
     
     ft.object = function (value) {
-        return new Obj(value);
+        return new Objects(value);
     };
     
 
@@ -165,8 +165,8 @@
         return new Is(value);
     };
 
-    var Str = (function () {
-        function Str(value) {
+    var Strings = (function () {
+        function Strings(value) {
             this._value = value;
         }
     
@@ -174,7 +174,7 @@
          * Метод возвращает массив из символов, из которых состояла исходная строка
          * @returns {Array} Массив символов
          */
-        Str.prototype.chars = function () {
+        Strings.prototype.chars = function () {
             return this._value.split('');
         };
     
@@ -182,7 +182,7 @@
          * Метод очищает исходную строку от дублирующихся пробелов
          * @returns {string} Очищенная строка
          */
-        Str.prototype.clean = function () {
+        Strings.prototype.clean = function () {
             return this.trim().replace(/\s+/g, ' ');
         };
     
@@ -191,11 +191,11 @@
          * второй - предпоследним и т.д.
          * @returns {string}
          */
-        Str.prototype.reverse = function () {
+        Strings.prototype.reverse = function () {
             return this.chars().reverse().join('');
         };
     
-        Str.prototype.trim = function (chars) {
+        Strings.prototype.trim = function (chars) {
             if (!chars && nativeTrim) {
                 return nativeTrim.call(this._value);
             }
@@ -203,7 +203,7 @@
             return this._value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
         };
     
-        Str.prototype.trimLeft = function (chars) {
+        Strings.prototype.trimLeft = function (chars) {
             if (!chars && nativeTrimLeft) {
                 return nativeTrimLeft.call(this._value);
             }
@@ -211,7 +211,7 @@
             return this._value.replace(new RegExp('^' + chars + '+'), '');
         };
     
-        Str.prototype.trimRight = function (chars) {
+        Strings.prototype.trimRight = function (chars) {
             if (!chars && nativeTrimRight) {
                 return nativeTrimRight.call(this._value);
             }
@@ -219,16 +219,16 @@
             return this._value.replace(new RegExp(chars + '+$'), '');
         };
     
-        Str.prototype.truncate = function (limit, sfx) {
+        Strings.prototype.truncate = function (limit, sfx) {
             sfx = sfx || '...';
             return this._value.length > limit ? this._value.substring(0, limit - sfx.length) + sfx : this._value;
         };
     
-        return Str;
+        return Strings;
     })();
     
     ft.string = function (value) {
-        return new Str(value);
+        return new Strings(value);
     };
     
 

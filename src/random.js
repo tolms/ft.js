@@ -1,5 +1,4 @@
 var Random = (function () {
-
     function Random(value) {
         this._value = value;
     }
