@@ -4,13 +4,24 @@ var Fn = (function () {
         this._value = value;
     }
 
-    /**
-     * Метод возвращает пустую функцию заглушку
-     */
-    Fn.prototype.noop = function () {};
+    Fn.prototype.curry = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
 
-    Fn.prototype.value = function () {
-        return this._value;
+    Fn.prototype.debounce = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
+    Fn.prototype.memoize = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
+    Fn.prototype.throttle = function () {
+        // TODO: Реализовать
+        throw new Error();
     };
 
     return Fn;

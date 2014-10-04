@@ -24,6 +24,11 @@ var Is = (function () {
         return nativeToString.call(this._value) === '[object Date]' || this._value instanceof Date;
     };
 
+    Is.prototype.defined = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
     Is.prototype.even = function () {
         return this.int() && (this._value % 2 === 0);
     };

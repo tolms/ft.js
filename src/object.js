@@ -13,6 +13,11 @@ var Objects = (function () {
         throw new Error();
     };
 
+    Objects.prototype.create = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
     Objects.prototype.has = function (key) {
         return nativeHasOwnProperty.call(this._value, key);
     };

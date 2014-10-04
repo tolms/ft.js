@@ -4,6 +4,16 @@ var List = (function () {
         this._value = value;
     }
 
+    List.prototype.at = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
+    List.prototype.clone = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
     List.prototype.each = function (fn, context) {
         if (!ft.is(fn).fn()) {
             throw new TypeError();
@@ -26,11 +36,12 @@ var List = (function () {
     /**
      * Метод возвращает новый список элементов длинной limit, начинающийся
      * с начала исходного списка
-     * @param {number} limit Длина нового списка
+     * @param {number} count Длина нового списка
      * @returns {array} Новый список
      */
-    List.prototype.take = function (limit) {
-        return this._value.slice(0, limit);
+    List.prototype.take = function (count) {
+        // TODO: Возвращать копию
+        return this._value.slice(0, count);
     };
 
     return List;
