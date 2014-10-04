@@ -9,6 +9,11 @@ var List = (function () {
         throw new Error();
     };
 
+    List.prototype.concat = function () {
+        // TODO: Реализовать ???
+        throw new Error();
+    };
+
     List.prototype.clone = function () {
         // TODO: Реализовать
         throw new Error();
@@ -22,6 +27,21 @@ var List = (function () {
         for (var i = 0, length = this._value.length; i < length; i++) {
             fn.call(context, this._value[i], i, this._value);
         }
+    };
+
+    List.prototype.filter = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
+    List.prototype.first = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
+    List.prototype.last = function () {
+        // TODO: Реализовать
+        throw new Error();
     };
 
     /**

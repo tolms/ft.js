@@ -3,8 +3,9 @@ var DateTime = (function () {
         this._value = value;
     }
 
-    DateTime.prototype.method = function () {
-        throw new Error('Empty method!');
+    DateTime.prototype.now = function () {
+        // TODO: Реализовать
+        throw new Error();
     };
 
     return DateTime;

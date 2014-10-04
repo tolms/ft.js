@@ -40,6 +40,11 @@ var Objects = (function () {
         return keys;
     };
 
+    Objects.prototype.pick = function() {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
     Objects.prototype.toString = function() {
         // TODO: Реализовать
         throw new Error();
