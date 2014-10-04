@@ -65,6 +65,12 @@ var Fn = (function () {
         throw new Error();
     };
 
+    Fn.prototype.wrap = function () {
+        // TODO: Реализовать
+        // alias: proxy
+        throw new Error();
+    };
+
     return Fn;
 })();
 
