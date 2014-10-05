@@ -1,6 +1,5 @@
 var Random = (function () {
-    function Random(value) {
-        this._value = value;
+    function Random() {
     }
 
     Random.prototype.id = function (prefix) {

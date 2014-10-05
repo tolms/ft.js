@@ -53,6 +53,11 @@ var Is = (function () {
         return this.int() && (this._value % 2 !== 0);
     };
 
+    Is.prototype.object = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
     Is.prototype.propertyOf = function () {
         // TODO: Реализовать
         throw new Error();

@@ -1,5 +1,9 @@
 var Objects = (function () {
     function Objects(value) {
+        if (!ft.is(value).object()) {
+            throw new TypeError();
+        }
+
         this._value = value;
     }
 

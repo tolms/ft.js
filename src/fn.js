@@ -1,5 +1,9 @@
 var Fn = (function () {
     function Fn(value) {
+        if (!ft.is(value).fn()) {
+            throw new TypeError();
+        }
+
         this._value = value;
     }
 

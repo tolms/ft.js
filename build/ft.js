@@ -31,9 +31,11 @@
             this._value = value;
         }
     
-        /**
-         * Types
-         */
+        Is.prototype.equal = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
         Is.prototype.args = function () {
             return nativeToString.call(this._value) === '[object Arguments]';
         };
@@ -50,12 +52,43 @@
             return nativeToString.call(this._value) === '[object Date]' || this._value instanceof Date;
         };
     
+        Is.prototype.defined = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Is.prototype.even = function () {
+            return this.int() && (this._value % 2 === 0);
+        };
+    
+        Is.prototype.float = function () {
+            return this.number() && (this._value % 1 !== 0);
+        };
+    
         Is.prototype.fn = function () {
             return nativeToString.call(this._value) === '[object Function]';
         };
     
+        Is.prototype.int = function () {
+            return this.number() && (this._value % 1 === 0);
+        };
+    
         Is.prototype.number = function () {
             return nativeToString.call(this._value) === '[object Number]';
+        };
+    
+        Is.prototype.odd = function () {
+            return this.int() && (this._value % 2 !== 0);
+        };
+    
+        Is.prototype.object = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Is.prototype.propertyOf = function () {
+            // TODO: Реализовать
+            throw new Error();
         };
     
         Is.prototype.regexp = function () {
@@ -64,26 +97,6 @@
     
         Is.prototype.string = function () {
             return nativeToString.call(this._value) === '[object String]';
-        };
-    
-        /**
-         * Numbers
-         */
-    
-        Is.prototype.int = function () {
-            return this.number() && (this._value % 1 === 0);
-        };
-    
-        Is.prototype.float = function () {
-            return this.number() && (this._value % 1 !== 0);
-        };
-    
-        Is.prototype.even = function () {
-            return this.int() && (this._value % 2 === 0);
-        };
-    
-        Is.prototype.odd = function () {
-            return this.int() && (this._value % 2 !== 0);
         };
     
         return Is;
@@ -95,8 +108,36 @@
 
     var Objects = (function () {
         function Objects(value) {
+            if (!ft.is(value).object()) {
+                throw new TypeError();
+            }
+    
             this._value = value;
         }
+    
+        Objects.prototype.assign = function (target, source) {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Objects.prototype.clone = function (target, source) {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Objects.prototype.create = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Objects.prototype.has = function (key) {
+            return nativeHasOwnProperty.call(this._value, key);
+        };
+    
+        Objects.prototype.is = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
     
         Objects.prototype.keys = function () {
             if (nativeKeys) {
@@ -111,8 +152,19 @@
             return keys;
         };
     
-        Objects.prototype.has = function (key) {
-            return nativeHasOwnProperty.call(this._value, key);
+        Objects.prototype.pick = function() {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Objects.prototype.toString = function() {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Objects.prototype.valueOf = function () {
+            // TODO: Реализовать
+            throw new Error();
         };
     
         return Objects;
@@ -129,6 +181,21 @@
             this._value = value;
         }
     
+        List.prototype.at = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        List.prototype.concat = function () {
+            // TODO: Реализовать ???
+            throw new Error();
+        };
+    
+        List.prototype.clone = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
         List.prototype.each = function (fn, context) {
             if (!ft.is(fn).fn()) {
                 throw new TypeError();
@@ -137,6 +204,21 @@
             for (var i = 0, length = this._value.length; i < length; i++) {
                 fn.call(context, this._value[i], i, this._value);
             }
+        };
+    
+        List.prototype.filter = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        List.prototype.first = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        List.prototype.last = function () {
+            // TODO: Реализовать
+            throw new Error();
         };
     
         /**
@@ -151,11 +233,12 @@
         /**
          * Метод возвращает новый список элементов длинной limit, начинающийся
          * с начала исходного списка
-         * @param {number} limit Длина нового списка
+         * @param {number} count Длина нового списка
          * @returns {array} Новый список
          */
-        List.prototype.take = function (limit) {
-            return this._value.slice(0, limit);
+        List.prototype.take = function (count) {
+            // TODO: Возвращать копию
+            return this._value.slice(0, count);
         };
     
         return List;
@@ -170,8 +253,9 @@
             this._value = value;
         }
     
-        DateTime.prototype.method = function () {
-            throw new Error('Empty method!');
+        DateTime.prototype.now = function () {
+            // TODO: Реализовать
+            throw new Error();
         };
     
         return DateTime;
@@ -183,6 +267,10 @@
 
     var Strings = (function () {
         function Strings(value) {
+            if (!ft.is(value).string()) {
+                throw new TypeError();
+            }
+    
             this._value = value;
         }
     
@@ -202,6 +290,21 @@
             return this.trim().replace(/\s+/g, ' ');
         };
     
+        Strings.prototype.contains = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Strings.prototype.endsWith = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Strings.prototype.repeat = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
         /**
          * Метод разворачивает исходную строку так, что первый символ становится последним,
          * второй - предпоследним и т.д.
@@ -209,6 +312,11 @@
          */
         Strings.prototype.reverse = function () {
             return this.chars().reverse().join('');
+        };
+    
+        Strings.prototype.startsWith = function () {
+            // TODO: Реализовать
+            throw new Error();
         };
     
         Strings.prototype.trim = function (chars) {
@@ -249,18 +357,80 @@
     
 
     var Fn = (function () {
-    
         function Fn(value) {
+            if (!ft.is(value).fn()) {
+                throw new TypeError();
+            }
+    
             this._value = value;
         }
     
-        /**
-         * Метод возвращает пустую функцию заглушку
-         */
-        Fn.prototype.noop = function () {};
+        Fn.prototype.after = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
     
-        Fn.prototype.value = function () {
-            return this._value;
+        Fn.prototype.before = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Fn.prototype.compose = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Fn.prototype.curry = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Fn.prototype.debounce = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Fn.prototype.delay = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Fn.prototype.defer = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Fn.prototype.memoize = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Fn.prototype.once = function () {
+            // Возвращает функцию, которая вызывается один раз
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Fn.prototype.partial = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Fn.prototype.repeat = function () {
+            // TODO: Реализовать
+            // alias: times
+            throw new Error();
+        };
+    
+        Fn.prototype.throttle = function () {
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Fn.prototype.wrap = function () {
+            // TODO: Реализовать
+            // alias: proxy
+            throw new Error();
         };
     
         return Fn;
@@ -272,8 +442,11 @@
     };
 
     var Num = (function () {
-    
         function Num(value) {
+            if (!ft.is(value).number()) {
+                throw new TypeError();
+            }
+    
             this._value = value;
         }
     
@@ -289,12 +462,13 @@
     };
 
     var Random = (function () {
-        function Random(value) {
-            this._value = value;
+        function Random() {
         }
     
-        Random.prototype.method = function () {
-    
+        Random.prototype.id = function (prefix) {
+            // TODO: Реализовать
+            // Генерирует уникальный идентификатор с префиксом prefix
+            throw new Error();
         };
     
         return Random;

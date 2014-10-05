@@ -1,5 +1,9 @@
 var Strings = (function () {
     function Strings(value) {
+        if (!ft.is(value).string()) {
+            throw new TypeError();
+        }
+
         this._value = value;
     }
 
