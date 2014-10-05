@@ -11,6 +11,10 @@ var Num = (function () {
 
     };
 
+    Num.prototype.toString = function () {
+        return '[object ft.Number]';
+    };
+
     return Num;
 })();
 

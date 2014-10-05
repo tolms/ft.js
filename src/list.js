@@ -64,6 +64,10 @@ var List = (function () {
         return this._value.slice(0, count);
     };
 
+    List.prototype.toString = function () {
+        return '[object ft.List]';
+    };
+
     return List;
 })();
 

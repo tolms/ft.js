@@ -71,6 +71,15 @@ var Is = (function () {
         return nativeToString.call(this._value) === '[object String]';
     };
 
+    Is.prototype.toString = function () {
+        return '[object ft.Is]';
+    };
+
+    Is.prototype.valueOf = function () {
+        // ??
+        return !!this._value;
+    };
+
     return Is;
 })();
 

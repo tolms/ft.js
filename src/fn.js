@@ -75,6 +75,10 @@ var Fn = (function () {
         throw new Error();
     };
 
+    Fn.prototype.toString = function () {
+        return '[object ft.Fn]';
+    };
+
     return Fn;
 })();
 

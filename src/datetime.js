@@ -8,6 +8,10 @@ var DateTime = (function () {
         throw new Error();
     };
 
+    DateTime.prototype.toString = function () {
+        return '[object ft.DateTime]';
+    };
+
     return DateTime;
 })();
 

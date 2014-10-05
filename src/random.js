@@ -8,6 +8,10 @@ var Random = (function () {
         throw new Error();
     };
 
+    Random.prototype.toString = function () {
+        return '[object ft.Random]';
+    };
+
     return Random;
 })();
 

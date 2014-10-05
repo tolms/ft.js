@@ -54,6 +54,10 @@ var Objects = (function () {
         throw new Error();
     };
 
+    Objects.prototype.toString = function () {
+        return '[object ft.Object]';
+    };
+
     Objects.prototype.valueOf = function () {
         // TODO: Реализовать
         throw new Error();
