@@ -26,9 +26,16 @@ var Objects = (function () {
         return nativeHasOwnProperty.call(this._value, key);
     };
 
-    Objects.prototype.is = function () {
-        // TODO: Реализовать
-        throw new Error();
+    Objects.prototype.is = function (value, other) {
+        if (value === 0 && other === 0) {
+            return 1 / value === 1 / other;
+        }
+
+        if (value !== value) {
+            return other !== other;
+        }
+
+        return value === other;
     };
 
     Objects.prototype.keys = function () {
