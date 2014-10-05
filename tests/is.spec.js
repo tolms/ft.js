@@ -41,20 +41,12 @@ describe('#is()', function () {
             expect(ft.is(0).equal(0)).to.be.true;
         });
 
-        it('#is(0).equal(+0) - zero should be positive zero', function () {
-            expect(ft.is(0).equal(+0)).to.be.true;
-        });
-
         it('#is(0).equal(-0) - zero should not be negative zero', function () {
             expect(ft.is(0).equal(-0)).to.be.false;
         });
 
         it('#is(Infinity).equal(Infinity) - infinity should be infinity', function () {
             expect(ft.is(Infinity).equal(Infinity)).to.be.true;
-        });
-
-        it('#is(Infinity).equal(+Infinity) - infinity should be positive infinity', function () {
-            expect(ft.is(Infinity).equal(+Infinity)).to.be.true;
         });
 
         it('#is(Infinity).equal(-Infinity) - infinity should not be negative infinity', function () {
