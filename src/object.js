@@ -26,18 +26,6 @@ var Objects = (function () {
         return nativeHasOwnProperty.call(this._value, key);
     };
 
-    Objects.prototype.is = function (value, other) {
-        if (value === 0 && other === 0) {
-            return 1 / value === 1 / other;
-        }
-
-        if (value !== value) {
-            return other !== other;
-        }
-
-        return value === other;
-    };
-
     Objects.prototype.keys = function () {
         if (nativeKeys) {
             return nativeKeys(this._value);
@@ -56,18 +44,12 @@ var Objects = (function () {
         throw new Error();
     };
 
-    Objects.prototype.toString = function() {
-        // TODO: Реализовать
-        throw new Error();
-    };
-
     Objects.prototype.toString = function () {
         return '[object ft.Object]';
     };
 
     Objects.prototype.valueOf = function () {
-        // TODO: Реализовать
-        throw new Error();
+        return this._value;
     };
 
     return Objects;
