@@ -29,11 +29,19 @@
     var Is = (function () {
         function Is(value){
             this._value = value;
+            this._negative = false;
         }
     
-        Is.prototype.equal = function () {
-            // TODO: Реализовать
-            throw new Error();
+        Is.prototype.equal = function (other) {
+            if (this._value === 0 && other === 0) {
+                return 1 / this._value === 1 / other;
+            }
+    
+            if (this._value !== this._value) {
+                return other !== other;
+            }
+    
+            return this._value === other;
         };
     
         Is.prototype.args = function () {
@@ -44,7 +52,7 @@
             return nativeToString.call(this._value) === '[object Array]';
         };
     
-        Is.prototype.bool = function () {
+        Is.prototype.boolean = function () {
             return nativeToString.call(this._value) === '[object Boolean]';
         };
     
@@ -53,8 +61,11 @@
         };
     
         Is.prototype.defined = function () {
-            // TODO: Реализовать
-            throw new Error();
+            throw typeof this._value !== 'undefined';
+        };
+    
+        Is.prototype.error = function () {
+            return nativeToString.call(this._value) === '[object Error]';
         };
     
         Is.prototype.even = function () {
@@ -73,6 +84,21 @@
             return this.number() && (this._value % 1 === 0);
         };
     
+        Is.prototype.nan = function () {
+            return this.number() && this._value !== this._value;
+        };
+    
+        Is.prototype.native = function () {
+            // Вернет true если переданный параметр является native code
+            // TODO: Реализовать
+            throw new Error();
+        };
+    
+        Is.prototype.not = function () {
+            this._negative = true;
+            return this;
+        };
+    
         Is.prototype.number = function () {
             return nativeToString.call(this._value) === '[object Number]';
         };
@@ -82,8 +108,7 @@
         };
     
         Is.prototype.object = function () {
-            // TODO: Реализовать
-            throw new Error();
+            return nativeToString.call(this._value) === '[object Object]';
         };
     
         Is.prototype.propertyOf = function () {
@@ -97,6 +122,15 @@
     
         Is.prototype.string = function () {
             return nativeToString.call(this._value) === '[object String]';
+        };
+    
+        Is.prototype.toString = function () {
+            return '[object ft.Is]';
+        };
+    
+        Is.prototype.valueOf = function () {
+            // ??
+            return !!this._value;
         };
     
         return Is;
@@ -134,11 +168,6 @@
             return nativeHasOwnProperty.call(this._value, key);
         };
     
-        Objects.prototype.is = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
-    
         Objects.prototype.keys = function () {
             if (nativeKeys) {
                 return nativeKeys(this._value);
@@ -157,14 +186,12 @@
             throw new Error();
         };
     
-        Objects.prototype.toString = function() {
-            // TODO: Реализовать
-            throw new Error();
+        Objects.prototype.toString = function () {
+            return '[object ft.Object]';
         };
     
         Objects.prototype.valueOf = function () {
-            // TODO: Реализовать
-            throw new Error();
+            return this._value;
         };
     
         return Objects;
@@ -241,6 +268,10 @@
             return this._value.slice(0, count);
         };
     
+        List.prototype.toString = function () {
+            return '[object ft.List]';
+        };
+    
         return List;
     })();
     
@@ -256,6 +287,10 @@
         DateTime.prototype.now = function () {
             // TODO: Реализовать
             throw new Error();
+        };
+    
+        DateTime.prototype.toString = function () {
+            return '[object ft.DateTime]';
         };
     
         return DateTime;
@@ -433,6 +468,10 @@
             throw new Error();
         };
     
+        Fn.prototype.toString = function () {
+            return '[object ft.Fn]';
+        };
+    
         return Fn;
     })();
     
@@ -454,6 +493,10 @@
     
         };
     
+        Num.prototype.toString = function () {
+            return '[object ft.Number]';
+        };
+    
         return Num;
     })();
     
@@ -469,6 +512,10 @@
             // TODO: Реализовать
             // Генерирует уникальный идентификатор с префиксом prefix
             throw new Error();
+        };
+    
+        Random.prototype.toString = function () {
+            return '[object ft.Random]';
         };
     
         return Random;
