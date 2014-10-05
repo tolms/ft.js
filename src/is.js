@@ -53,6 +53,11 @@ var Is = (function () {
         return this.int() && (this._value % 2 !== 0);
     };
 
+    Is.prototype.propertyOf = function () {
+        // TODO: Реализовать
+        throw new Error();
+    };
+
     Is.prototype.regexp = function () {
         return nativeToString.call(this._value) === '[object RegExp]' || this._value instanceof RegExp;
     };
