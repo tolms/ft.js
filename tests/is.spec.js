@@ -75,7 +75,41 @@ describe('#is()', function () {
     });
 
     describe('.args()', function () {
-        it('should return value');
+        it('#is().args() - args should be args', function () {
+            expect(ft.is(arguments).args()).to.be.true;
+        });
+
+        it('#is().args() - undefined should not be args', function () {
+            expect(ft.is().args()).to.be.false;
+        });
+
+        it('#is(null).args() - null should not be args', function () {
+            expect(ft.is(null).args()).to.be.false;
+        });
+
+        it('#is(true).args() - true should not be args', function () {
+            expect(ft.is(true).args()).to.be.false;
+        });
+
+        it('#is(\'foo\').args() - string should not be args', function () {
+            expect(ft.is('').args()).to.be.false;
+        });
+
+        it('#is(0).args() - zero should not be args', function () {
+            expect(ft.is(0).args()).to.be.false;
+        });
+
+        it('#is(42).args() - number should not be args', function () {
+            expect(ft.is(42).args()).to.be.false;
+        });
+
+        it('#is([]).args() - array should not be args', function () {
+            expect(ft.is([]).args()).to.be.false;
+        });
+
+        it('#is({}).args() - object should not be args', function () {
+            expect(ft.is({}).args()).to.be.false;
+        });
     });
 
     describe('.array()', function () {
