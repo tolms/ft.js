@@ -1,5 +1,5 @@
 /* jshint -W030 */
-describe.only('#is()', function () {
+describe('#is()', function () {
     describe('.equal()', function () {
         it('#is().equal() - two absent args should be the same', function () {
             expect(ft.is().equal()).to.be.true;
@@ -389,7 +389,29 @@ describe.only('#is()', function () {
     });
 
     describe('.even()', function () {
-        it('should return value');
+        it('#is(0).even() - zero should be even', function () {
+            expect(ft.is(0).even()).to.be.true;
+        });
+
+        it('#is(-0).even() - negative zero should be even', function () {
+            expect(ft.is(-0).even()).to.be.true;
+        });
+
+        it('#is(Infinity).even() - Infinity should not be even', function () {
+            expect(ft.is(Infinity).even()).to.be.false;
+        });
+
+        it('#is(-Infinity).even() - negative Infinity should not be even', function () {
+            expect(ft.is(-Infinity).even()).to.be.false;
+        });
+
+        it('#is(1).even() - 1 should not be even', function () {
+            expect(ft.is(1).even()).to.be.false;
+        });
+
+        it('#is(2).even() - 2 should be even', function () {
+            expect(ft.is(2).even()).to.be.true;
+        });        
     });
 
     describe('.float()', function () {
@@ -587,8 +609,30 @@ describe.only('#is()', function () {
         });
     });
 
-    describe('.odd()', function () {
-        it('should return value');
+    describe.only('.odd()', function () {
+        it('#is(0).odd() - zero should not be odd', function () {
+            expect(ft.is(0).odd()).to.be.false;
+        });
+
+        it('#is(-0).odd() - negative zero should not be odd', function () {
+            expect(ft.is(-0).odd()).to.be.false;
+        });
+
+        it('#is(Infinity).odd() - Infinity should not be odd', function () {
+            expect(ft.is(Infinity).odd()).to.be.false;
+        });
+
+        it('#is(-Infinity).odd() - negative Infinity should not be odd', function () {
+            expect(ft.is(-Infinity).odd()).to.be.false;
+        });
+
+        it('#is(1).odd() - 1 should be odd', function () {
+            expect(ft.is(1).odd()).to.be.true;
+        });
+
+        it('#is(2).odd() - 2 should not be odd', function () {
+            expect(ft.is(2).odd()).to.be.false;
+        });   
     });
 
     describe('.object()', function () {
