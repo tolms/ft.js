@@ -216,7 +216,7 @@ describe.only('#is()', function () {
         });
 
         it('#is(false).array() - false should be boolean', function () {
-            expect(ft.is(true).boolean()).to.be.true;
+            expect(ft.is(false).boolean()).to.be.true;
         });
 
         it('#is(\'\').boolean() - empty string should not be boolean', function () {
@@ -278,7 +278,7 @@ describe.only('#is()', function () {
         });
 
         it('#is(false).date() - false should not be date', function () {
-            expect(ft.is(true).date()).to.be.false;
+            expect(ft.is(false).date()).to.be.false;
         });
 
         it('#is(\'\').date() - empty string should not be date', function () {
@@ -323,7 +323,65 @@ describe.only('#is()', function () {
     });
 
     describe('.defined()', function () {
-        it('should return value');
+        it('#is(arguments).defined() - args should be defined', function () {
+            expect(ft.is(arguments).defined()).to.be.true;
+        });
+
+        it('#is(undefined).defined() - undefined should not be defined', function () {
+            expect(ft.is(undefined).defined()).to.be.false;
+        });
+
+        it('#is(null).defined() - null should be defined', function () {
+            expect(ft.is(null).defined()).to.be.true;
+        });
+
+        it('#is(true).defined() - true should be defined', function () {
+            expect(ft.is(true).defined()).to.be.true;
+        });
+
+        it('#is(false).defined() - false should be defined', function () {
+            expect(ft.is(false).defined()).to.be.true;
+        });
+
+        it('#is(\'\').defined() - empty string should be defined', function () {
+            expect(ft.is('foo').defined()).to.be.true;
+        });
+
+        it('#is(\'foo\').defined() - string should be defined', function () {
+            expect(ft.is('foo').defined()).to.be.true;
+        });
+
+        it('#is(0).defined() - zero should be defined', function () {
+            expect(ft.is(0).defined()).to.be.true;
+        });
+
+        it('#is(42).defined() - number should be defined', function () {
+            expect(ft.is(42).defined()).to.be.true;
+        });
+
+        it('#is([]).defined() - array should be defined', function () {
+            expect(ft.is([]).defined()).to.be.true;
+        });
+
+        it('#is(new Date()).defined() - date should be defined', function () {
+            expect(ft.is(new Date()).defined()).to.be.true;
+        });
+
+        it('#is(function () {}).defined() - function should be defined', function () {
+            expect(ft.is(function () {}).defined()).to.be.true;
+        });
+
+        it('#is(NaN).defined() - NaN should be defined', function () {
+            expect(ft.is(NaN).defined()).to.be.defined;
+        });
+
+        it('#is({}).defined() - object should be defined', function () {
+            expect(ft.is({}).defined()).to.be.true;
+        });
+
+        it('#is(/\s+/ig).defined() - regular expression should be defined', function () {
+            expect(ft.is(/\s+/ig).defined()).to.be.true;
+        });
     });
 
     describe('.error()', function () {
@@ -356,7 +414,7 @@ describe.only('#is()', function () {
         });
 
         it('#is(false).fn() - false should not be function', function () {
-            expect(ft.is(true).fn()).to.be.false;
+            expect(ft.is(false).fn()).to.be.false;
         });
 
         it('#is(\'\').fn() - empty string should not be function', function () {
@@ -485,7 +543,7 @@ describe.only('#is()', function () {
         });
 
         it('#is(false).number() - false should not be number', function () {
-            expect(ft.is(true).number()).to.be.false;
+            expect(ft.is(false).number()).to.be.false;
         });
 
         it('#is(\'\').number() - empty string should not be number', function () {
@@ -559,7 +617,7 @@ describe.only('#is()', function () {
         });
 
         it('#is(false).regexp() - false should not be regexp', function () {
-            expect(ft.is(true).regexp()).to.be.false;
+            expect(ft.is(false).regexp()).to.be.false;
         });
 
         it('#is(\'\').regexp() - empty string should not be regexp', function () {

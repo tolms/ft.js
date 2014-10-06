@@ -61,7 +61,7 @@
         };
     
         Is.prototype.defined = function () {
-            throw typeof this._value !== 'undefined';
+            return typeof this._value !== 'undefined';
         };
     
         Is.prototype.error = function () {
