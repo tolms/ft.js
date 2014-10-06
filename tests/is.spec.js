@@ -1,6 +1,6 @@
 /* jshint -W030 */
 describe('#is()', function () {
-    describe.only('.equal()', function () {
+    describe('.equal()', function () {
         it('#is().equal() - two absent args should be the same', function () {
             expect(ft.is().equal()).to.be.true;
         });
@@ -115,7 +115,58 @@ describe('#is()', function () {
     });
 
     describe('.nan()', function () {
-        it('should return value');
+        it('#.is(NaN).nan() - NaN should be NaN', function () {
+            expect(ft.is(NaN).nan()).to.be.true;
+        });
+
+        it('#.is().nan() - object with valueOf of NaN, converted to Number, should be NaN', function () {
+            var obj = {
+                valueOf: function () {
+                    return NaN;
+                }
+            };
+            expect(ft.is(Number(obj)).nan()).to.be.true;
+        });
+
+        it('#.is().nan() - undefined should not be NaN', function () {
+            expect(ft.is().nan()).to.be.false;
+        });
+
+        it('#.is(null).nan() - null should not be NaN', function () {
+            expect(ft.is(null).nan()).to.be.false;
+        });
+
+        it('#.is(false).nan() - false should not be NaN', function () {
+            expect(ft.is(false).nan()).to.be.false;
+        });
+
+        it('#.is(true).nan() - true should not be NaN', function () {
+            expect(ft.is(true).nan()).to.be.false;
+        });
+
+        it('#.is(0).nan() - zero should not be NaN', function () {
+            expect(ft.is(0).nan()).to.be.false;
+        });
+
+        it('#.is(Infinity).nan() - infinity should not be NaN', function () {
+            expect(ft.is(Infinity).nan()).to.be.false;
+        });
+
+        it('#.is(\'foo\').nan() - string should not be NaN', function () {
+            expect(ft.is('foo').nan()).to.be.false;
+        });
+
+        it('#.is([]).nan() - array should not be NaN', function () {
+            expect(ft.is([]).nan()).to.be.false;
+        });
+
+        it('#.is({}).nan() - object should not be NaN', function () {
+            expect(ft.is({}).nan()).to.be.false;
+        });
+
+        it('#.is(function () {}).nan() - function should not be NaN', function () {
+            expect(ft.is(function () {}).nan()).to.be.false;
+        });
     });
 
     describe('.native()', function () {
