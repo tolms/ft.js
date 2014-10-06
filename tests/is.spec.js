@@ -259,7 +259,7 @@ describe('#is()', function () {
             expect(ft.is({}).boolean()).to.be.false;
         });
 
-        it('#is(/\s+/ig).boolean() - regular expression should not be boolean', function () {
+        it('#is(/\\s+/ig).boolean() - regular expression should not be boolean', function () {
             expect(ft.is(/\s+/ig).boolean()).to.be.false;
         });
     });
@@ -321,7 +321,7 @@ describe('#is()', function () {
             expect(ft.is({}).date()).to.be.false;
         });
 
-        it('#is(/\s+/ig).date() - regular expression should not be date', function () {
+        it('#is(/\\s+/ig).date() - regular expression should not be date', function () {
             expect(ft.is(/\s+/ig).date()).to.be.false;
         });
     });
@@ -383,7 +383,7 @@ describe('#is()', function () {
             expect(ft.is({}).defined()).to.be.true;
         });
 
-        it('#is(/\s+/ig).defined() - regular expression should be defined', function () {
+        it('#is(/\\s+/ig).defined() - regular expression should be defined', function () {
             expect(ft.is(/\s+/ig).defined()).to.be.true;
         });
     });
@@ -479,7 +479,7 @@ describe('#is()', function () {
             expect(ft.is({}).fn()).to.be.false;
         });
 
-        it('#is(/\s+/ig).fn() - regular expression should not be function', function () {
+        it('#is(/\\s+/ig).fn() - regular expression should not be function', function () {
             expect(ft.is(/\s+/ig).fn()).to.be.false;
         });
     });
@@ -608,7 +608,7 @@ describe('#is()', function () {
             expect(ft.is({}).number()).to.be.false;
         });
 
-        it('#is(/\s+/ig).number() - regular expression should not be number', function () {
+        it('#is(/\\s+/ig).number() - regular expression should not be number', function () {
             expect(ft.is(/\s+/ig).number()).to.be.false;
         });
     });
@@ -704,8 +704,12 @@ describe('#is()', function () {
             expect(ft.is({}).regexp()).to.be.false;
         });
 
-        it('#is(/\s+/ig).regexp() - regular expression should be regexp', function () {
+        it('#is(/\\s+/ig).regexp() - regular expression should be regexp', function () {
             expect(ft.is(/\s+/ig).regexp()).to.be.true;
+        });
+
+        it('#is(new RegExp(\'\\s+\', \'ig\')).regexp() - regular expression should be regexp', function () {
+            expect(ft.is(new RegExp('\\s+', 'ig')).regexp()).to.be.true;
         });
     });
 
@@ -766,7 +770,7 @@ describe('#is()', function () {
             expect(ft.is({}).string()).to.be.false;
         });
 
-        it('#is(/\s+/ig).string() - regular expression should not be string', function () {
+        it('#is(/\\s+/ig).string() - regular expression should not be string', function () {
             expect(ft.is(/\s+/ig).string()).to.be.false;
         });
     });
