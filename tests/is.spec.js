@@ -177,6 +177,10 @@ describe('#is()', function () {
             expect(ft.is([]).array()).to.be.true;
         });
 
+        it('#is(new Array(1, 2, 3)).array() - array should be array', function () {
+            expect(ft.is(new Array(1, 2, 3)).array()).to.be.true;
+        });
+
         it('#is(new Date()).array() - date should not be array', function () {
             expect(ft.is(new Date()).array()).to.be.false;
         });
@@ -609,7 +613,7 @@ describe('#is()', function () {
         });
     });
 
-    describe.only('.odd()', function () {
+    describe('.odd()', function () {
         it('#is(0).odd() - zero should not be odd', function () {
             expect(ft.is(0).odd()).to.be.false;
         });
