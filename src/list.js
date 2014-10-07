@@ -4,69 +4,67 @@ var List = (function () {
         this._value = value;
     }
 
-    List.prototype.at = function () {
-        // TODO: Реализовать
-        throw new Error();
-    };
+    base.extend(List.prototype, {
+        at: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
 
-    List.prototype.concat = function () {
-        // TODO: Реализовать ???
-        throw new Error();
-    };
+        concat: function () {
+            // TODO: Реализовать ???
+            throw new Error();
+        },
 
-    List.prototype.clone = function () {
-        // TODO: Реализовать
-        throw new Error();
-    };
+        clone: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
 
-    List.prototype.each = function (fn, context) {
-        if (!ft.is(fn).fn()) {
-            throw new TypeError();
+        each: function (fn, context) {
+            if (!ft.is(fn).fn()) {
+                throw new TypeError();
+            }
+
+            for (var i = 0, length = this._value.length; i < length; i++) {
+                fn.call(context, this._value[i], i, this._value);
+            }
+        },
+
+        filter: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
+        first: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
+        last: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
+        /**
+         * Метод возвращает значение из замыкания.
+         * Используется для завершения цепочки вызовов
+         * @returns {array}
+         */
+        value: function () {
+            return this._value;
+        },
+
+        /**
+         * Метод возвращает новый список элементов длинной limit, начинающийся
+         * с начала исходного списка
+         * @param {number} count Длина нового списка
+         * @returns {array} Новый список
+         */
+        take: function (count) {
+            // TODO: Возвращать копию
+            return this._value.slice(0, count);
         }
-
-        for (var i = 0, length = this._value.length; i < length; i++) {
-            fn.call(context, this._value[i], i, this._value);
-        }
-    };
-
-    List.prototype.filter = function () {
-        // TODO: Реализовать
-        throw new Error();
-    };
-
-    List.prototype.first = function () {
-        // TODO: Реализовать
-        throw new Error();
-    };
-
-    List.prototype.last = function () {
-        // TODO: Реализовать
-        throw new Error();
-    };
-
-    /**
-     * Метод возвращает значение из замыкания.
-     * Используется для завершения цепочки вызовов
-     * @returns {array}
-     */
-    List.prototype.value = function () {
-        return this._value;
-    };
-
-    /**
-     * Метод возвращает новый список элементов длинной limit, начинающийся
-     * с начала исходного списка
-     * @param {number} count Длина нового списка
-     * @returns {array} Новый список
-     */
-    List.prototype.take = function (count) {
-        // TODO: Возвращать копию
-        return this._value.slice(0, count);
-    };
-
-    List.prototype.toString = function () {
-        return '[object ft.List]';
-    };
+    });
 
     return List;
 })();

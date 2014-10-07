@@ -7,50 +7,68 @@ var Objects = (function () {
         this._value = value;
     }
 
-    Objects.prototype.assign = function (target, source) {
-        // TODO: Реализовать
-        throw new Error();
-    };
+    base.extend(Objects.prototype, {
+        assign: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
 
-    Objects.prototype.clone = function (target, source) {
-        // TODO: Реализовать
-        throw new Error();
-    };
+        clone: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
 
-    Objects.prototype.create = function () {
-        // TODO: Реализовать
-        throw new Error();
-    };
+        create: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
 
-    Objects.prototype.has = function (key) {
-        return nativeHasOwnProperty.call(this._value, key);
-    };
+        has: function (key) {
+            return base.hasOwn.call(this._value, key);
+        },
 
-    Objects.prototype.keys = function () {
-        if (nativeKeys) {
-            return nativeKeys(this._value);
-        }
-        var keys = [];
-        for (var key in this._value) {
-            if (this.has(key)) {
-                keys.push(key);
+        keys: function () {
+            if (base.keys) {
+                return base.keys(this._value);
             }
+            var keys = [];
+            for (var key in this._value) {
+                if (base.hasOwn.call(this._value, key)) {
+                    keys.push(key);
+                }
+            }
+            return keys;
+        },
+
+        pairs: function() {
+            var keys = this.keys(),
+                length = keys.length,
+                i = 0,
+                pairs = [];
+
+            for (; i < length; i++) {
+                pairs[i] = [keys[i], this.value[keys[i]]];
+            }
+            return pairs;
+        },
+
+        pick: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
+        values: function() {
+            var keys = this.keys(),
+                length = keys.length,
+                i = 0,
+                values = [];
+
+            for (; i < length; i++) {
+                values[i] = this._value[keys[i]];
+            }
+            return values;
         }
-        return keys;
-    };
-
-    Objects.prototype.pick = function() {
-        // TODO: Реализовать
-        throw new Error();
-    };
-
-    Objects.prototype.toString = function () {
-        return '[object ft.Object]';
-    };
-
-    Objects.prototype.valueOf = function () {
-        return this._value;
-    };
+    });
 
     return Objects;
 })();

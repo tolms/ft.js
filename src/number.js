@@ -7,13 +7,12 @@ var Num = (function () {
         this._value = value;
     }
 
-    Num.prototype.method = function () {
-
-    };
-
-    Num.prototype.toString = function () {
-        return '[object ft.Number]';
-    };
+    base.extend(Num.prototype, {
+        method: function () {
+            // TODO: Реализовать
+            throw new Error();
+        }
+    });
 
     return Num;
 })();

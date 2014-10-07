@@ -2,15 +2,13 @@ var Random = (function () {
     function Random() {
     }
 
-    Random.prototype.id = function (prefix) {
-        // TODO: Реализовать
-        // Генерирует уникальный идентификатор с префиксом prefix
-        throw new Error();
-    };
-
-    Random.prototype.toString = function () {
-        return '[object ft.Random]';
-    };
+    base.extend(Random.prototype, {
+        id: function (prefix) {
+            // TODO: Реализовать
+            // Генерирует уникальный идентификатор с префиксом prefix
+            throw new Error();
+        }
+    });
 
     return Random;
 })();

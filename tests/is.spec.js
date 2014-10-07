@@ -388,36 +388,6 @@ describe('#is()', function () {
         });
     });
 
-    describe('.error()', function () {
-        it('should return value');
-    });
-
-    describe('.even()', function () {
-        it('#is(0).even() - zero should be even', function () {
-            expect(ft.is(0).even()).to.be.true;
-        });
-
-        it('#is(-0).even() - negative zero should be even', function () {
-            expect(ft.is(-0).even()).to.be.true;
-        });
-
-        it('#is(Infinity).even() - Infinity should not be even', function () {
-            expect(ft.is(Infinity).even()).to.be.false;
-        });
-
-        it('#is(-Infinity).even() - negative Infinity should not be even', function () {
-            expect(ft.is(-Infinity).even()).to.be.false;
-        });
-
-        it('#is(1).even() - 1 should not be even', function () {
-            expect(ft.is(1).even()).to.be.false;
-        });
-
-        it('#is(2).even() - 2 should be even', function () {
-            expect(ft.is(2).even()).to.be.true;
-        });        
-    });
-
     describe('.float()', function () {
         it('should return value');
     });
@@ -600,8 +570,8 @@ describe('#is()', function () {
             expect(ft.is(function () {}).number()).to.be.false;
         });
 
-        it('#is(NaN).number() - NaN should be number', function () {
-            expect(ft.is(NaN).number()).to.be.true;
+        it('#is(NaN).number() - NaN should not be number', function () {
+            expect(ft.is(NaN).number()).to.be.false;
         });
 
         it('#is({}).number() - object should not be number', function () {
@@ -613,37 +583,7 @@ describe('#is()', function () {
         });
     });
 
-    describe('.odd()', function () {
-        it('#is(0).odd() - zero should not be odd', function () {
-            expect(ft.is(0).odd()).to.be.false;
-        });
-
-        it('#is(-0).odd() - negative zero should not be odd', function () {
-            expect(ft.is(-0).odd()).to.be.false;
-        });
-
-        it('#is(Infinity).odd() - Infinity should not be odd', function () {
-            expect(ft.is(Infinity).odd()).to.be.false;
-        });
-
-        it('#is(-Infinity).odd() - negative Infinity should not be odd', function () {
-            expect(ft.is(-Infinity).odd()).to.be.false;
-        });
-
-        it('#is(1).odd() - 1 should be odd', function () {
-            expect(ft.is(1).odd()).to.be.true;
-        });
-
-        it('#is(2).odd() - 2 should not be odd', function () {
-            expect(ft.is(2).odd()).to.be.false;
-        });   
-    });
-
     describe('.object()', function () {
-        it('should return value');
-    });
-
-    describe('.propertyOf()', function () {
         it('should return value');
     });
 

@@ -16,122 +16,140 @@
     /**
      * Набор общих методов
      */
+    var base = {};
+    
     var objProto = Object.prototype,
         strProto = String.prototype;
     
-    var nativeToString = objProto.toString,
-        nativeHasOwnProperty = objProto.hasOwnProperty,
-        nativeKeys = objProto.keys,
-        nativeTrim = strProto.trim,
-        nativeTrimRight = strProto.trimRight,
-        nativeTrimLeft = strProto.trimLeft;
+    base.toString = objProto.toString;
+    base.hasOwn = objProto.hasOwnProperty;
+    base.keys = objProto.keys;
+    base.trim = strProto.trim;
+    base.rtrim = strProto.trimRight;
+    base.ltrim = strProto.trimLeft;
+    
+    base.extend = function(target) {
+        var source, prop;
+        for (var i = 1, length = arguments.length; i < length; i++) {
+            source = arguments[i];
+            for (prop in source) {
+                if (base.hasOwn.call(source, prop)) {
+                    target[prop] = source[prop];
+                }
+            }
+        }
+        return target;
+    };
+    
+    base.type = function(target) {
+        if (target === undefined) {
+            return 'undefined';
+        }
+    
+        if (target === null) {
+            return 'null';
+        }
+    
+        if (target && (target.nodeType === 1 || target.nodeType === 9)) {
+            return 'element';
+        }
+    
+        var tp = base.toString.call(target).slice(8, -1).toLowerCase();
+    
+        if (tp === 'number') {
+            if (isNaN(target)) {
+                return 'nan';
+            }
+            if (!isFinite(target)) {
+                return 'infinity';
+            }
+        }
+    
+        return tp;
+    };
 
     var Is = (function () {
-        function Is(value){
+        function Is(value) {
             this._value = value;
             this._negative = false;
         }
     
-        Is.prototype.equal = function (other) {
-            if (this._value === 0 && other === 0) {
-                return 1 / this._value === 1 / other;
+        base.extend(Is.prototype, {
+            equal: function (other) {
+                if (this._value === 0 && other === 0) {
+                    return 1 / this._value === 1 / other;
+                }
+    
+                if (this._value !== this._value) {
+                    return other !== other;
+                }
+    
+                return this._value === other;
+            },
+    
+            args: function () {
+                return base.type(this._value) === 'arguments';
+            },
+    
+            array: function () {
+                return base.type(this._value) === 'array';
+            },
+    
+            boolean: function () {
+                return base.type(this._value) === 'boolean';
+            },
+    
+            date: function () {
+                return base.type(this._value) === 'date';
+            },
+    
+            defined: function () {
+                return base.type(this._value) !== 'undefined';
+            },
+    
+            float: function () {
+                return this.number() && (this._value % 1 !== 0);
+            },
+    
+            fn: function () {
+                return base.type(this._value) === 'function';
+            },
+    
+            int: function () {
+                return this.number() && (this._value % 1 === 0);
+            },
+    
+            nan: function () {
+                return base.type(this._value) === 'nan';
+            },
+    
+            native: function () {
+                // Вернет true если переданный параметр является native code
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            not: function () {
+                this._negative = true;
+                return this;
+            },
+    
+            number: function () {
+                return base.type(this._value) === 'number';
+            },
+    
+            object: function () {
+                return base.type(this._value) === 'object';
+            },
+    
+            regexp: function () {
+                return base.type(this._value) === 'regexp';
+            },
+    
+            string: function () {
+                return base.type(this._value) === 'string';
             }
-    
-            if (this._value !== this._value) {
-                return other !== other;
-            }
-    
-            return this._value === other;
-        };
-    
-        Is.prototype.args = function () {
-            return nativeToString.call(this._value) === '[object Arguments]';
-        };
-    
-        Is.prototype.array = function () {
-            return nativeToString.call(this._value) === '[object Array]';
-        };
-    
-        Is.prototype.boolean = function () {
-            return nativeToString.call(this._value) === '[object Boolean]';
-        };
-    
-        Is.prototype.date = function () {
-            return nativeToString.call(this._value) === '[object Date]' || this._value instanceof Date;
-        };
-    
-        Is.prototype.defined = function () {
-            return typeof this._value !== 'undefined';
-        };
-    
-        Is.prototype.error = function () {
-            return nativeToString.call(this._value) === '[object Error]';
-        };
-    
-        Is.prototype.even = function () {
-            return this.int() && (this._value % 2 === 0);
-        };
-    
-        Is.prototype.float = function () {
-            return this.number() && (this._value % 1 !== 0);
-        };
-    
-        Is.prototype.fn = function () {
-            return nativeToString.call(this._value) === '[object Function]';
-        };
-    
-        Is.prototype.int = function () {
-            return this.number() && (this._value % 1 === 0);
-        };
-    
-        Is.prototype.nan = function () {
-            return this.number() && this._value !== this._value;
-        };
-    
-        Is.prototype.native = function () {
-            // Вернет true если переданный параметр является native code
-            // TODO: Реализовать
-            throw new Error();
-        };
-    
-        Is.prototype.not = function () {
-            this._negative = true;
-            return this;
-        };
-    
-        Is.prototype.number = function () {
-            return nativeToString.call(this._value) === '[object Number]';
-        };
-    
-        Is.prototype.odd = function () {
-            return this.int() && (this._value % 2 !== 0);
-        };
-    
-        Is.prototype.object = function () {
-            return nativeToString.call(this._value) === '[object Object]';
-        };
-    
-        Is.prototype.propertyOf = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
-    
-        Is.prototype.regexp = function () {
-            return nativeToString.call(this._value) === '[object RegExp]' || this._value instanceof RegExp;
-        };
-    
-        Is.prototype.string = function () {
-            return nativeToString.call(this._value) === '[object String]';
-        };
-    
-        Is.prototype.toString = function () {
-            return '[object ft.Is]';
-        };
-    
-        Is.prototype.valueOf = function () {
-            // ??
-            return !!this._value;
-        };
+        });
     
         return Is;
     })();
@@ -149,50 +167,68 @@
             this._value = value;
         }
     
-        Objects.prototype.assign = function (target, source) {
-            // TODO: Реализовать
-            throw new Error();
-        };
+        base.extend(Objects.prototype, {
+            assign: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Objects.prototype.clone = function (target, source) {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            clone: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Objects.prototype.create = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            create: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Objects.prototype.has = function (key) {
-            return nativeHasOwnProperty.call(this._value, key);
-        };
+            has: function (key) {
+                return base.hasOwn.call(this._value, key);
+            },
     
-        Objects.prototype.keys = function () {
-            if (nativeKeys) {
-                return nativeKeys(this._value);
-            }
-            var keys = [];
-            for (var key in this._value) {
-                if (this.has(key)) {
-                    keys.push(key);
+            keys: function () {
+                if (base.keys) {
+                    return base.keys(this._value);
                 }
+                var keys = [];
+                for (var key in this._value) {
+                    if (base.hasOwn.call(this._value, key)) {
+                        keys.push(key);
+                    }
+                }
+                return keys;
+            },
+    
+            pairs: function() {
+                var keys = this.keys(),
+                    length = keys.length,
+                    i = 0,
+                    pairs = [];
+    
+                for (; i < length; i++) {
+                    pairs[i] = [keys[i], this.value[keys[i]]];
+                }
+                return pairs;
+            },
+    
+            pick: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            values: function() {
+                var keys = this.keys(),
+                    length = keys.length,
+                    i = 0,
+                    values = [];
+    
+                for (; i < length; i++) {
+                    values[i] = this._value[keys[i]];
+                }
+                return values;
             }
-            return keys;
-        };
-    
-        Objects.prototype.pick = function() {
-            // TODO: Реализовать
-            throw new Error();
-        };
-    
-        Objects.prototype.toString = function () {
-            return '[object ft.Object]';
-        };
-    
-        Objects.prototype.valueOf = function () {
-            return this._value;
-        };
+        });
     
         return Objects;
     })();
@@ -208,69 +244,67 @@
             this._value = value;
         }
     
-        List.prototype.at = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+        base.extend(List.prototype, {
+            at: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        List.prototype.concat = function () {
-            // TODO: Реализовать ???
-            throw new Error();
-        };
+            concat: function () {
+                // TODO: Реализовать ???
+                throw new Error();
+            },
     
-        List.prototype.clone = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            clone: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        List.prototype.each = function (fn, context) {
-            if (!ft.is(fn).fn()) {
-                throw new TypeError();
+            each: function (fn, context) {
+                if (!ft.is(fn).fn()) {
+                    throw new TypeError();
+                }
+    
+                for (var i = 0, length = this._value.length; i < length; i++) {
+                    fn.call(context, this._value[i], i, this._value);
+                }
+            },
+    
+            filter: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            first: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            last: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            /**
+             * Метод возвращает значение из замыкания.
+             * Используется для завершения цепочки вызовов
+             * @returns {array}
+             */
+            value: function () {
+                return this._value;
+            },
+    
+            /**
+             * Метод возвращает новый список элементов длинной limit, начинающийся
+             * с начала исходного списка
+             * @param {number} count Длина нового списка
+             * @returns {array} Новый список
+             */
+            take: function (count) {
+                // TODO: Возвращать копию
+                return this._value.slice(0, count);
             }
-    
-            for (var i = 0, length = this._value.length; i < length; i++) {
-                fn.call(context, this._value[i], i, this._value);
-            }
-        };
-    
-        List.prototype.filter = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
-    
-        List.prototype.first = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
-    
-        List.prototype.last = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
-    
-        /**
-         * Метод возвращает значение из замыкания.
-         * Используется для завершения цепочки вызовов
-         * @returns {array}
-         */
-        List.prototype.value = function () {
-            return this._value;
-        };
-    
-        /**
-         * Метод возвращает новый список элементов длинной limit, начинающийся
-         * с начала исходного списка
-         * @param {number} count Длина нового списка
-         * @returns {array} Новый список
-         */
-        List.prototype.take = function (count) {
-            // TODO: Возвращать копию
-            return this._value.slice(0, count);
-        };
-    
-        List.prototype.toString = function () {
-            return '[object ft.List]';
-        };
+        });
     
         return List;
     })();
@@ -284,14 +318,12 @@
             this._value = value;
         }
     
-        DateTime.prototype.now = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
-    
-        DateTime.prototype.toString = function () {
-            return '[object ft.DateTime]';
-        };
+        base.extend(DateTime.prototype, {
+            now: function () {
+                // TODO: Реализовать
+                throw new Error();
+            }
+        });
     
         return DateTime;
     })();
@@ -309,79 +341,81 @@
             this._value = value;
         }
     
-        /**
-         * Метод возвращает массив из символов, из которых состояла исходная строка
-         * @returns {Array} Массив символов
-         */
-        Strings.prototype.chars = function () {
-            return this._value.split('');
-        };
+        base.extend(Strings.prototype, {
+            /**
+             * Метод возвращает массив из символов, из которых состояла исходная строка
+             * @returns {Array} Массив символов
+             */
+            chars: function () {
+                return this._value.split('');
+            },
     
-        /**
-         * Метод очищает исходную строку от дублирующихся пробелов
-         * @returns {string} Очищенная строка
-         */
-        Strings.prototype.clean = function () {
-            return this.trim().replace(/\s+/g, ' ');
-        };
+            /**
+             * Метод очищает исходную строку от дублирующихся пробелов
+             * @returns {string} Очищенная строка
+             */
+            clean: function () {
+                return this.trim().replace(/\s+/g, ' ');
+            },
     
-        Strings.prototype.contains = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            contains: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Strings.prototype.endsWith = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            endsWith: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Strings.prototype.repeat = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            repeat: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        /**
-         * Метод разворачивает исходную строку так, что первый символ становится последним,
-         * второй - предпоследним и т.д.
-         * @returns {string}
-         */
-        Strings.prototype.reverse = function () {
-            return this.chars().reverse().join('');
-        };
+            /**
+             * Метод разворачивает исходную строку так, что первый символ становится последним,
+             * второй - предпоследним и т.д.
+             * @returns {string}
+             */
+            reverse: function () {
+                return this.chars().reverse().join('');
+            },
     
-        Strings.prototype.startsWith = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            startsWith: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Strings.prototype.trim = function (chars) {
-            if (!chars && nativeTrim) {
-                return nativeTrim.call(this._value);
+            trim: function (chars) {
+                if (!chars && base.trim) {
+                    return base.trim.call(this._value);
+                }
+                chars = chars || '\\s';
+                return this._value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
+            },
+    
+            trimLeft: function (chars) {
+                if (!chars && base.ltrim) {
+                    return base.ltrim.call(this._value);
+                }
+                chars = chars || '\\s';
+                return this._value.replace(new RegExp('^' + chars + '+'), '');
+            },
+    
+            trimRight: function (chars) {
+                if (!chars && base.rtrim) {
+                    return base.rtrim.call(this._value);
+                }
+                chars = chars || '\\s';
+                return this._value.replace(new RegExp(chars + '+$'), '');
+            },
+    
+            truncate: function (limit, sfx) {
+                sfx = sfx || '...';
+                return this._value.length > limit ? this._value.substring(0, limit - sfx.length) + sfx : this._value;
             }
-            chars = chars || '\\s';
-            return this._value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
-        };
-    
-        Strings.prototype.trimLeft = function (chars) {
-            if (!chars && nativeTrimLeft) {
-                return nativeTrimLeft.call(this._value);
-            }
-            chars = chars || '\\s';
-            return this._value.replace(new RegExp('^' + chars + '+'), '');
-        };
-    
-        Strings.prototype.trimRight = function (chars) {
-            if (!chars && nativeTrimRight) {
-                return nativeTrimRight.call(this._value);
-            }
-            chars = chars || '\\s';
-            return this._value.replace(new RegExp(chars + '+$'), '');
-        };
-    
-        Strings.prototype.truncate = function (limit, sfx) {
-            sfx = sfx || '...';
-            return this._value.length > limit ? this._value.substring(0, limit - sfx.length) + sfx : this._value;
-        };
+        });
     
         return Strings;
     })();
@@ -400,77 +434,75 @@
             this._value = value;
         }
     
-        Fn.prototype.after = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+        base.extend(Fn.prototype, {
+            after: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Fn.prototype.before = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            before: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Fn.prototype.compose = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            compose: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Fn.prototype.curry = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            curry: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Fn.prototype.debounce = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            debounce: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Fn.prototype.delay = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            delay: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Fn.prototype.defer = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            defer: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Fn.prototype.memoize = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            memoize: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Fn.prototype.once = function () {
-            // Возвращает функцию, которая вызывается один раз
-            // TODO: Реализовать
-            throw new Error();
-        };
+            once: function () {
+                // Возвращает функцию, которая вызывается один раз
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Fn.prototype.partial = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            partial: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Fn.prototype.repeat = function () {
-            // TODO: Реализовать
-            // alias: times
-            throw new Error();
-        };
+            repeat: function () {
+                // TODO: Реализовать
+                // alias: times
+                throw new Error();
+            },
     
-        Fn.prototype.throttle = function () {
-            // TODO: Реализовать
-            throw new Error();
-        };
+            throttle: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
     
-        Fn.prototype.wrap = function () {
-            // TODO: Реализовать
-            // alias: proxy
-            throw new Error();
-        };
-    
-        Fn.prototype.toString = function () {
-            return '[object ft.Fn]';
-        };
+            wrap: function () {
+                // TODO: Реализовать
+                // alias: proxy
+                throw new Error();
+            }
+        });
     
         return Fn;
     })();
@@ -489,13 +521,12 @@
             this._value = value;
         }
     
-        Num.prototype.method = function () {
-    
-        };
-    
-        Num.prototype.toString = function () {
-            return '[object ft.Number]';
-        };
+        base.extend(Num.prototype, {
+            method: function () {
+                // TODO: Реализовать
+                throw new Error();
+            }
+        });
     
         return Num;
     })();
@@ -508,15 +539,13 @@
         function Random() {
         }
     
-        Random.prototype.id = function (prefix) {
-            // TODO: Реализовать
-            // Генерирует уникальный идентификатор с префиксом prefix
-            throw new Error();
-        };
-    
-        Random.prototype.toString = function () {
-            return '[object ft.Random]';
-        };
+        base.extend(Random.prototype, {
+            id: function (prefix) {
+                // TODO: Реализовать
+                // Генерирует уникальный идентификатор с префиксом prefix
+                throw new Error();
+            }
+        });
     
         return Random;
     })();

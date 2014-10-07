@@ -5,6 +5,7 @@
         "module": true,
         "exports": true,
         "ft": true,
+        "base": true,
         "describe": true,
         "it": true,
         "expect": true

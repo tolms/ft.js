@@ -7,79 +7,81 @@ var Strings = (function () {
         this._value = value;
     }
 
-    /**
-     * Метод возвращает массив из символов, из которых состояла исходная строка
-     * @returns {Array} Массив символов
-     */
-    Strings.prototype.chars = function () {
-        return this._value.split('');
-    };
+    base.extend(Strings.prototype, {
+        /**
+         * Метод возвращает массив из символов, из которых состояла исходная строка
+         * @returns {Array} Массив символов
+         */
+        chars: function () {
+            return this._value.split('');
+        },
 
-    /**
-     * Метод очищает исходную строку от дублирующихся пробелов
-     * @returns {string} Очищенная строка
-     */
-    Strings.prototype.clean = function () {
-        return this.trim().replace(/\s+/g, ' ');
-    };
+        /**
+         * Метод очищает исходную строку от дублирующихся пробелов
+         * @returns {string} Очищенная строка
+         */
+        clean: function () {
+            return this.trim().replace(/\s+/g, ' ');
+        },
 
-    Strings.prototype.contains = function () {
-        // TODO: Реализовать
-        throw new Error();
-    };
+        contains: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
 
-    Strings.prototype.endsWith = function () {
-        // TODO: Реализовать
-        throw new Error();
-    };
+        endsWith: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
 
-    Strings.prototype.repeat = function () {
-        // TODO: Реализовать
-        throw new Error();
-    };
+        repeat: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
 
-    /**
-     * Метод разворачивает исходную строку так, что первый символ становится последним,
-     * второй - предпоследним и т.д.
-     * @returns {string}
-     */
-    Strings.prototype.reverse = function () {
-        return this.chars().reverse().join('');
-    };
+        /**
+         * Метод разворачивает исходную строку так, что первый символ становится последним,
+         * второй - предпоследним и т.д.
+         * @returns {string}
+         */
+        reverse: function () {
+            return this.chars().reverse().join('');
+        },
 
-    Strings.prototype.startsWith = function () {
-        // TODO: Реализовать
-        throw new Error();
-    };
+        startsWith: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
 
-    Strings.prototype.trim = function (chars) {
-        if (!chars && nativeTrim) {
-            return nativeTrim.call(this._value);
+        trim: function (chars) {
+            if (!chars && base.trim) {
+                return base.trim.call(this._value);
+            }
+            chars = chars || '\\s';
+            return this._value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
+        },
+
+        trimLeft: function (chars) {
+            if (!chars && base.ltrim) {
+                return base.ltrim.call(this._value);
+            }
+            chars = chars || '\\s';
+            return this._value.replace(new RegExp('^' + chars + '+'), '');
+        },
+
+        trimRight: function (chars) {
+            if (!chars && base.rtrim) {
+                return base.rtrim.call(this._value);
+            }
+            chars = chars || '\\s';
+            return this._value.replace(new RegExp(chars + '+$'), '');
+        },
+
+        truncate: function (limit, sfx) {
+            sfx = sfx || '...';
+            return this._value.length > limit ? this._value.substring(0, limit - sfx.length) + sfx : this._value;
         }
-        chars = chars || '\\s';
-        return this._value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
-    };
-
-    Strings.prototype.trimLeft = function (chars) {
-        if (!chars && nativeTrimLeft) {
-            return nativeTrimLeft.call(this._value);
-        }
-        chars = chars || '\\s';
-        return this._value.replace(new RegExp('^' + chars + '+'), '');
-    };
-
-    Strings.prototype.trimRight = function (chars) {
-        if (!chars && nativeTrimRight) {
-            return nativeTrimRight.call(this._value);
-        }
-        chars = chars || '\\s';
-        return this._value.replace(new RegExp(chars + '+$'), '');
-    };
-
-    Strings.prototype.truncate = function (limit, sfx) {
-        sfx = sfx || '...';
-        return this._value.length > limit ? this._value.substring(0, limit - sfx.length) + sfx : this._value;
-    };
+    });
 
     return Strings;
 })();

@@ -3,14 +3,12 @@ var DateTime = (function () {
         this._value = value;
     }
 
-    DateTime.prototype.now = function () {
-        // TODO: Реализовать
-        throw new Error();
-    };
-
-    DateTime.prototype.toString = function () {
-        return '[object ft.DateTime]';
-    };
+    base.extend(DateTime.prototype, {
+        now: function () {
+            // TODO: Реализовать
+            throw new Error();
+        }
+    });
 
     return DateTime;
 })();
