@@ -2,7 +2,7 @@ var Random = (function () {
     function Random() {
     }
 
-    base.extend(Random.prototype, {
+    _.extend(Random.prototype, {
         id: function (prefix) {
             // TODO: Реализовать
             // Генерирует уникальный идентификатор с префиксом prefix

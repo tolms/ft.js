@@ -7,7 +7,7 @@ var Strings = (function () {
         this._value = value;
     }
 
-    base.extend(Strings.prototype, {
+    _.extend(Strings.prototype, {
         /**
          * Метод возвращает массив из символов, из которых состояла исходная строка
          * @returns {Array} Массив символов
@@ -54,24 +54,24 @@ var Strings = (function () {
         },
 
         trim: function (chars) {
-            if (!chars && base.trim) {
-                return base.trim.call(this._value);
+            if (!chars && _.trim) {
+                return _.trim.call(this._value);
             }
             chars = chars || '\\s';
             return this._value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
         },
 
         trimLeft: function (chars) {
-            if (!chars && base.ltrim) {
-                return base.ltrim.call(this._value);
+            if (!chars && _.ltrim) {
+                return _.ltrim.call(this._value);
             }
             chars = chars || '\\s';
             return this._value.replace(new RegExp('^' + chars + '+'), '');
         },
 
         trimRight: function (chars) {
-            if (!chars && base.rtrim) {
-                return base.rtrim.call(this._value);
+            if (!chars && _.rtrim) {
+                return _.rtrim.call(this._value);
             }
             chars = chars || '\\s';
             return this._value.replace(new RegExp(chars + '+$'), '');

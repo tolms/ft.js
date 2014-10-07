@@ -1,24 +1,27 @@
 /**
  * Набор общих методов
  */
-var base = {};
-
 var objProto = Object.prototype,
-    strProto = String.prototype;
+    strProto = String.prototype,
+    arrayProto = Array.prototype;
 
-base.toString = objProto.toString;
-base.hasOwn = objProto.hasOwnProperty;
-base.keys = objProto.keys;
-base.trim = strProto.trim;
-base.rtrim = strProto.trimRight;
-base.ltrim = strProto.trimLeft;
+var _ = {
+    toString: objProto.toString,
+    hasOwn: objProto.hasOwnProperty,
+    keys: objProto.keys,
+    trim: strProto.trim,
+    rtrim: strProto.trimRight,
+    ltrim: strProto.trimLeft,
+    nForEach: arrayProto.forEach,
+    nMap: arrayProto.map
+};
 
-base.extend = function(target) {
+_.extend = function(target) {
     var source, prop;
     for (var i = 1, length = arguments.length; i < length; i++) {
         source = arguments[i];
         for (prop in source) {
-            if (base.hasOwn.call(source, prop)) {
+            if (_.hasOwn.call(source, prop)) {
                 target[prop] = source[prop];
             }
         }
@@ -26,7 +29,7 @@ base.extend = function(target) {
     return target;
 };
 
-base.type = function(target) {
+_.type = function(target) {
     if (target === undefined) {
         return 'undefined';
     }
@@ -39,7 +42,7 @@ base.type = function(target) {
         return 'element';
     }
 
-    var tp = base.toString.call(target).slice(8, -1).toLowerCase();
+    var tp = _.toString.call(target).slice(8, -1).toLowerCase();
 
     if (tp === 'number') {
         if (isNaN(target)) {
@@ -51,4 +54,34 @@ base.type = function(target) {
     }
 
     return tp;
+};
+
+_.each = function (arr, fn, ctx) {
+    if (_.type(arr) !== 'array' || !arr.length) {
+        return;
+    }
+    if (_.nForEach) {
+        _.nForEach.call(arr, fn, ctx);
+    } else {
+        for (var i = 0; i < arr.length; i++) {
+            if (fn.call(ctx || arr[i], arr[i], i, arr) === false) {
+                return;
+            }
+        }
+    }
+};
+
+_.map = function (arr, fn, ctx) {
+    if (_.type(arr) !== 'array' || !arr.length) {
+        return;
+    }
+    if (_.nMap) {
+        return _.nMap.call(arr, fn, ctx);
+    } else {
+        var result = [];
+        _.each(arr, function(el, i, ref) {
+            result.push(fn.call(ctx || this, el, i, ref));
+        });
+        return result;
+    }
 };

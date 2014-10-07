@@ -4,7 +4,7 @@ var Is = (function () {
         this._negative = false;
     }
 
-    base.extend(Is.prototype, {
+    _.extend(Is.prototype, {
         equal: function (other) {
             if (this._value === 0 && other === 0) {
                 return 1 / this._value === 1 / other;
@@ -18,23 +18,23 @@ var Is = (function () {
         },
 
         args: function () {
-            return base.type(this._value) === 'arguments';
+            return _.type(this._value) === 'arguments';
         },
 
         array: function () {
-            return base.type(this._value) === 'array';
+            return _.type(this._value) === 'array';
         },
 
         boolean: function () {
-            return base.type(this._value) === 'boolean';
+            return _.type(this._value) === 'boolean';
         },
 
         date: function () {
-            return base.type(this._value) === 'date';
+            return _.type(this._value) === 'date';
         },
 
         defined: function () {
-            return base.type(this._value) !== 'undefined';
+            return _.type(this._value) !== 'undefined';
         },
 
         float: function () {
@@ -42,7 +42,7 @@ var Is = (function () {
         },
 
         fn: function () {
-            return base.type(this._value) === 'function';
+            return _.type(this._value) === 'function';
         },
 
         int: function () {
@@ -50,7 +50,7 @@ var Is = (function () {
         },
 
         nan: function () {
-            return base.type(this._value) === 'nan';
+            return _.type(this._value) === 'nan';
         },
 
         native: function () {
@@ -65,19 +65,19 @@ var Is = (function () {
         },
 
         number: function () {
-            return base.type(this._value) === 'number';
+            return _.type(this._value) === 'number';
         },
 
         object: function () {
-            return base.type(this._value) === 'object';
+            return _.type(this._value) === 'object';
         },
 
         regexp: function () {
-            return base.type(this._value) === 'regexp';
+            return _.type(this._value) === 'regexp';
         },
 
         string: function () {
-            return base.type(this._value) === 'string';
+            return _.type(this._value) === 'string';
         }
     });
 

@@ -4,7 +4,7 @@ var List = (function () {
         this._value = value;
     }
 
-    base.extend(List.prototype, {
+    _.extend(List.prototype, {
         at: function () {
             // TODO: Реализовать
             throw new Error();
@@ -20,14 +20,11 @@ var List = (function () {
             throw new Error();
         },
 
-        each: function (fn, context) {
+        each: function (fn, ctx) {
             if (!ft.is(fn).fn()) {
                 throw new TypeError();
             }
-
-            for (var i = 0, length = this._value.length; i < length; i++) {
-                fn.call(context, this._value[i], i, this._value);
-            }
+            _.each(this._value, fn, ctx);
         },
 
         filter: function () {
@@ -43,6 +40,13 @@ var List = (function () {
         last: function () {
             // TODO: Реализовать
             throw new Error();
+        },
+
+        map: function (fn, ctx) {
+            if (!ft.is(fn).fn()) {
+                throw new TypeError();
+            }
+            return _.map(this._value, fn, ctx);
         },
 
         /**

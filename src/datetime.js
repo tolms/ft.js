@@ -3,7 +3,7 @@ var DateTime = (function () {
         this._value = value;
     }
 
-    base.extend(DateTime.prototype, {
+    _.extend(DateTime.prototype, {
         now: function () {
             // TODO: Реализовать
             throw new Error();

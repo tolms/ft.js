@@ -16,24 +16,27 @@
     /**
      * Набор общих методов
      */
-    var base = {};
-    
     var objProto = Object.prototype,
-        strProto = String.prototype;
+        strProto = String.prototype,
+        arrayProto = Array.prototype;
     
-    base.toString = objProto.toString;
-    base.hasOwn = objProto.hasOwnProperty;
-    base.keys = objProto.keys;
-    base.trim = strProto.trim;
-    base.rtrim = strProto.trimRight;
-    base.ltrim = strProto.trimLeft;
+    var _ = {
+        toString: objProto.toString,
+        hasOwn: objProto.hasOwnProperty,
+        keys: objProto.keys,
+        trim: strProto.trim,
+        rtrim: strProto.trimRight,
+        ltrim: strProto.trimLeft,
+        nForEach: arrayProto.forEach,
+        nMap: arrayProto.map
+    };
     
-    base.extend = function(target) {
+    _.extend = function(target) {
         var source, prop;
         for (var i = 1, length = arguments.length; i < length; i++) {
             source = arguments[i];
             for (prop in source) {
-                if (base.hasOwn.call(source, prop)) {
+                if (_.hasOwn.call(source, prop)) {
                     target[prop] = source[prop];
                 }
             }
@@ -41,7 +44,7 @@
         return target;
     };
     
-    base.type = function(target) {
+    _.type = function(target) {
         if (target === undefined) {
             return 'undefined';
         }
@@ -54,7 +57,7 @@
             return 'element';
         }
     
-        var tp = base.toString.call(target).slice(8, -1).toLowerCase();
+        var tp = _.toString.call(target).slice(8, -1).toLowerCase();
     
         if (tp === 'number') {
             if (isNaN(target)) {
@@ -67,6 +70,36 @@
     
         return tp;
     };
+    
+    _.each = function (arr, fn, ctx) {
+        if (_.type(arr) !== 'array' || !arr.length) {
+            return;
+        }
+        if (_.nForEach) {
+            _.nForEach.call(arr, fn, ctx);
+        } else {
+            for (var i = 0; i < arr.length; i++) {
+                if (fn.call(ctx || arr[i], arr[i], i, arr) === false) {
+                    return;
+                }
+            }
+        }
+    };
+    
+    _.map = function (arr, fn, ctx) {
+        if (_.type(arr) !== 'array' || !arr.length) {
+            return;
+        }
+        if (_.nMap) {
+            return _.nMap.call(arr, fn, ctx);
+        } else {
+            var result = [];
+            _.each(arr, function(el, i, ref) {
+                result.push(fn.call(ctx || this, el, i, ref));
+            });
+            return result;
+        }
+    };
 
     var Is = (function () {
         function Is(value) {
@@ -74,7 +107,7 @@
             this._negative = false;
         }
     
-        base.extend(Is.prototype, {
+        _.extend(Is.prototype, {
             equal: function (other) {
                 if (this._value === 0 && other === 0) {
                     return 1 / this._value === 1 / other;
@@ -88,23 +121,23 @@
             },
     
             args: function () {
-                return base.type(this._value) === 'arguments';
+                return _.type(this._value) === 'arguments';
             },
     
             array: function () {
-                return base.type(this._value) === 'array';
+                return _.type(this._value) === 'array';
             },
     
             boolean: function () {
-                return base.type(this._value) === 'boolean';
+                return _.type(this._value) === 'boolean';
             },
     
             date: function () {
-                return base.type(this._value) === 'date';
+                return _.type(this._value) === 'date';
             },
     
             defined: function () {
-                return base.type(this._value) !== 'undefined';
+                return _.type(this._value) !== 'undefined';
             },
     
             float: function () {
@@ -112,7 +145,7 @@
             },
     
             fn: function () {
-                return base.type(this._value) === 'function';
+                return _.type(this._value) === 'function';
             },
     
             int: function () {
@@ -120,7 +153,7 @@
             },
     
             nan: function () {
-                return base.type(this._value) === 'nan';
+                return _.type(this._value) === 'nan';
             },
     
             native: function () {
@@ -135,19 +168,19 @@
             },
     
             number: function () {
-                return base.type(this._value) === 'number';
+                return _.type(this._value) === 'number';
             },
     
             object: function () {
-                return base.type(this._value) === 'object';
+                return _.type(this._value) === 'object';
             },
     
             regexp: function () {
-                return base.type(this._value) === 'regexp';
+                return _.type(this._value) === 'regexp';
             },
     
             string: function () {
-                return base.type(this._value) === 'string';
+                return _.type(this._value) === 'string';
             }
         });
     
@@ -167,7 +200,7 @@
             this._value = value;
         }
     
-        base.extend(Objects.prototype, {
+        _.extend(Objects.prototype, {
             assign: function () {
                 // TODO: Реализовать
                 throw new Error();
@@ -184,16 +217,16 @@
             },
     
             has: function (key) {
-                return base.hasOwn.call(this._value, key);
+                return _.hasOwn.call(this._value, key);
             },
     
             keys: function () {
-                if (base.keys) {
-                    return base.keys(this._value);
+                if (_.keys) {
+                    return _.keys(this._value);
                 }
                 var keys = [];
                 for (var key in this._value) {
-                    if (base.hasOwn.call(this._value, key)) {
+                    if (_.hasOwn.call(this._value, key)) {
                         keys.push(key);
                     }
                 }
@@ -201,15 +234,10 @@
             },
     
             pairs: function() {
-                var keys = this.keys(),
-                    length = keys.length,
-                    i = 0,
-                    pairs = [];
-    
-                for (; i < length; i++) {
-                    pairs[i] = [keys[i], this.value[keys[i]]];
-                }
-                return pairs;
+                var that = this;
+                return _.map(that.keys(), function (el) {
+                    return [el, that._value[el]];
+                });
             },
     
             pick: function () {
@@ -218,15 +246,10 @@
             },
     
             values: function() {
-                var keys = this.keys(),
-                    length = keys.length,
-                    i = 0,
-                    values = [];
-    
-                for (; i < length; i++) {
-                    values[i] = this._value[keys[i]];
-                }
-                return values;
+                var that = this;
+                return _.map(that.keys(), function (el) {
+                    return that._value[el];
+                });
             }
         });
     
@@ -244,7 +267,7 @@
             this._value = value;
         }
     
-        base.extend(List.prototype, {
+        _.extend(List.prototype, {
             at: function () {
                 // TODO: Реализовать
                 throw new Error();
@@ -260,14 +283,11 @@
                 throw new Error();
             },
     
-            each: function (fn, context) {
+            each: function (fn, ctx) {
                 if (!ft.is(fn).fn()) {
                     throw new TypeError();
                 }
-    
-                for (var i = 0, length = this._value.length; i < length; i++) {
-                    fn.call(context, this._value[i], i, this._value);
-                }
+                _.each(this._value, fn, ctx);
             },
     
             filter: function () {
@@ -283,6 +303,13 @@
             last: function () {
                 // TODO: Реализовать
                 throw new Error();
+            },
+    
+            map: function (fn, ctx) {
+                if (!ft.is(fn).fn()) {
+                    throw new TypeError();
+                }
+                return _.map(this._value, fn, ctx);
             },
     
             /**
@@ -318,7 +345,7 @@
             this._value = value;
         }
     
-        base.extend(DateTime.prototype, {
+        _.extend(DateTime.prototype, {
             now: function () {
                 // TODO: Реализовать
                 throw new Error();
@@ -341,7 +368,7 @@
             this._value = value;
         }
     
-        base.extend(Strings.prototype, {
+        _.extend(Strings.prototype, {
             /**
              * Метод возвращает массив из символов, из которых состояла исходная строка
              * @returns {Array} Массив символов
@@ -388,24 +415,24 @@
             },
     
             trim: function (chars) {
-                if (!chars && base.trim) {
-                    return base.trim.call(this._value);
+                if (!chars && _.trim) {
+                    return _.trim.call(this._value);
                 }
                 chars = chars || '\\s';
                 return this._value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
             },
     
             trimLeft: function (chars) {
-                if (!chars && base.ltrim) {
-                    return base.ltrim.call(this._value);
+                if (!chars && _.ltrim) {
+                    return _.ltrim.call(this._value);
                 }
                 chars = chars || '\\s';
                 return this._value.replace(new RegExp('^' + chars + '+'), '');
             },
     
             trimRight: function (chars) {
-                if (!chars && base.rtrim) {
-                    return base.rtrim.call(this._value);
+                if (!chars && _.rtrim) {
+                    return _.rtrim.call(this._value);
                 }
                 chars = chars || '\\s';
                 return this._value.replace(new RegExp(chars + '+$'), '');
@@ -434,7 +461,7 @@
             this._value = value;
         }
     
-        base.extend(Fn.prototype, {
+        _.extend(Fn.prototype, {
             after: function () {
                 // TODO: Реализовать
                 throw new Error();
@@ -521,7 +548,7 @@
             this._value = value;
         }
     
-        base.extend(Num.prototype, {
+        _.extend(Num.prototype, {
             method: function () {
                 // TODO: Реализовать
                 throw new Error();
@@ -539,7 +566,7 @@
         function Random() {
         }
     
-        base.extend(Random.prototype, {
+        _.extend(Random.prototype, {
             id: function (prefix) {
                 // TODO: Реализовать
                 // Генерирует уникальный идентификатор с префиксом prefix

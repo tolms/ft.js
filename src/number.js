@@ -7,7 +7,7 @@ var Num = (function () {
         this._value = value;
     }
 
-    base.extend(Num.prototype, {
+    _.extend(Num.prototype, {
         method: function () {
             // TODO: Реализовать
             throw new Error();

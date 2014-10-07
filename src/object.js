@@ -7,7 +7,7 @@ var Objects = (function () {
         this._value = value;
     }
 
-    base.extend(Objects.prototype, {
+    _.extend(Objects.prototype, {
         assign: function () {
             // TODO: Реализовать
             throw new Error();
@@ -24,16 +24,16 @@ var Objects = (function () {
         },
 
         has: function (key) {
-            return base.hasOwn.call(this._value, key);
+            return _.hasOwn.call(this._value, key);
         },
 
         keys: function () {
-            if (base.keys) {
-                return base.keys(this._value);
+            if (_.keys) {
+                return _.keys(this._value);
             }
             var keys = [];
             for (var key in this._value) {
-                if (base.hasOwn.call(this._value, key)) {
+                if (_.hasOwn.call(this._value, key)) {
                     keys.push(key);
                 }
             }
@@ -41,15 +41,10 @@ var Objects = (function () {
         },
 
         pairs: function() {
-            var keys = this.keys(),
-                length = keys.length,
-                i = 0,
-                pairs = [];
-
-            for (; i < length; i++) {
-                pairs[i] = [keys[i], this.value[keys[i]]];
-            }
-            return pairs;
+            var that = this;
+            return _.map(that.keys(), function (el) {
+                return [el, that._value[el]];
+            });
         },
 
         pick: function () {
@@ -58,15 +53,10 @@ var Objects = (function () {
         },
 
         values: function() {
-            var keys = this.keys(),
-                length = keys.length,
-                i = 0,
-                values = [];
-
-            for (; i < length; i++) {
-                values[i] = this._value[keys[i]];
-            }
-            return values;
+            var that = this;
+            return _.map(that.keys(), function (el) {
+                return that._value[el];
+            });
         }
     });
 

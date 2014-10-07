@@ -7,7 +7,7 @@ var Fn = (function () {
         this._value = value;
     }
 
-    base.extend(Fn.prototype, {
+    _.extend(Fn.prototype, {
         after: function () {
             // TODO: Реализовать
             throw new Error();
