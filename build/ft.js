@@ -549,9 +549,13 @@
         }
     
         _.extend(Num.prototype, {
-            method: function () {
-                // TODO: Реализовать
-                throw new Error();
+    
+            parseInt: function () {
+                return parseInt(this._value, 10);
+            },
+    
+            sign: function () {
+                return this._value < 0 ? -1 : 1;
             }
         });
     
