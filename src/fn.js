@@ -33,9 +33,14 @@ var Fn = (function () {
             throw new Error();
         },
 
-        delay: function () {
-            // TODO: Реализовать
-            throw new Error();
+        /**
+         * usage: _.fn(f).delay(500, *args)
+         */
+        delay: function (ms) {
+            var args = _.slice.call(arguments, 1);
+            return setTimeout(function(){
+                return this._value.apply(null, args);
+            }, ms);
         },
 
         defer: function () {

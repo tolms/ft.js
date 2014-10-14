@@ -13,7 +13,8 @@ var _ = {
     rtrim: strProto.trimRight,
     ltrim: strProto.trimLeft,
     nForEach: arrayProto.forEach,
-    nMap: arrayProto.map
+    nMap: arrayProto.map,
+    slice: arrayProto.slice
 };
 
 _.extend = function(target) {
