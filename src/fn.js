@@ -38,7 +38,7 @@ var Fn = (function () {
          */
         delay: function (ms) {
             var args = _.slice.call(arguments, 1);
-            return setTimeout(function(){
+            return setTimeout(function () {
                 return this._value.apply(null, args);
             }, ms);
         },
@@ -84,7 +84,6 @@ var Fn = (function () {
 
     return Fn;
 })();
-
 
 ft.fn = function (value) {
     return new Fn(value);

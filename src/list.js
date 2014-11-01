@@ -1,5 +1,4 @@
 var List = (function () {
-
     function List(value) {
         this._value = value;
     }

@@ -40,7 +40,7 @@ var Objects = (function () {
             return keys;
         },
 
-        pairs: function() {
+        pairs: function () {
             var that = this;
             return _.map(that.keys(), function (el) {
                 return [el, that._value[el]];
@@ -52,7 +52,7 @@ var Objects = (function () {
             throw new Error();
         },
 
-        values: function() {
+        values: function () {
             var that = this;
             return _.map(that.keys(), function (el) {
                 return that._value[el];

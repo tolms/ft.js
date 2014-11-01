@@ -3,21 +3,20 @@
  */
 var objProto = Object.prototype,
     strProto = String.prototype,
-    arrayProto = Array.prototype;
+    arrayProto = Array.prototype,
+    _ = {
+        toString: objProto.toString,
+        hasOwn: objProto.hasOwnProperty,
+        keys: objProto.keys,
+        trim: strProto.trim,
+        rtrim: strProto.trimRight,
+        ltrim: strProto.trimLeft,
+        nForEach: arrayProto.forEach,
+        nMap: arrayProto.map,
+        slice: arrayProto.slice
+    };
 
-var _ = {
-    toString: objProto.toString,
-    hasOwn: objProto.hasOwnProperty,
-    keys: objProto.keys,
-    trim: strProto.trim,
-    rtrim: strProto.trimRight,
-    ltrim: strProto.trimLeft,
-    nForEach: arrayProto.forEach,
-    nMap: arrayProto.map,
-    slice: arrayProto.slice
-};
-
-_.extend = function(target) {
+_.extend = function (target) {
     var source, prop;
     for (var i = 1, length = arguments.length; i < length; i++) {
         source = arguments[i];
@@ -30,7 +29,7 @@ _.extend = function(target) {
     return target;
 };
 
-_.type = function(target) {
+_.type = function (target) {
     if (target === undefined) {
         return 'undefined';
     }
@@ -80,7 +79,7 @@ _.map = function (arr, fn, ctx) {
         return _.nMap.call(arr, fn, ctx);
     } else {
         var result = [];
-        _.each(arr, function(el, i, ref) {
+        _.each(arr, function (el, i, ref) {
             result.push(fn.call(ctx || this, el, i, ref));
         });
         return result;
