@@ -63,9 +63,6 @@ var Strings = (function () {
         repeat: function (count) {
             var result = '', str = this._value;
             count = +count;
-            if (count !== count) {
-                count = 0;
-            }
 
             if (count < 0) {
                 throw new RangeError('Repeat count must be non-negative');
