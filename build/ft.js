@@ -21,14 +21,15 @@
         arrayProto = Array.prototype,
         _ = {
             toString: objProto.toString,
-            hasOwn: objProto.hasOwnProperty,
+            has: objProto.hasOwnProperty,
             keys: objProto.keys,
             trim: strProto.trim,
             rtrim: strProto.trimRight,
             ltrim: strProto.trimLeft,
-            nForEach: arrayProto.forEach,
-            nMap: arrayProto.map,
-            slice: arrayProto.slice
+            each: arrayProto.forEach,
+            map: arrayProto.map,
+            slice: arrayProto.slice,
+            sIndexOf: strProto.indexOf
         };
     
     _.extend = function (target) {
@@ -36,7 +37,7 @@
         for (var i = 1, length = arguments.length; i < length; i++) {
             source = arguments[i];
             for (prop in source) {
-                if (_.hasOwn.call(source, prop)) {
+                if (_.has.call(source, prop)) {
                     target[prop] = source[prop];
                 }
             }
@@ -69,36 +70,6 @@
         }
     
         return tp;
-    };
-    
-    _.each = function (arr, fn, ctx) {
-        if (_.type(arr) !== 'array' || !arr.length) {
-            return;
-        }
-        if (_.nForEach) {
-            _.nForEach.call(arr, fn, ctx);
-        } else {
-            for (var i = 0; i < arr.length; i++) {
-                if (fn.call(ctx || arr[i], arr[i], i, arr) === false) {
-                    return;
-                }
-            }
-        }
-    };
-    
-    _.map = function (arr, fn, ctx) {
-        if (_.type(arr) !== 'array' || !arr.length) {
-            return;
-        }
-        if (_.nMap) {
-            return _.nMap.call(arr, fn, ctx);
-        } else {
-            var result = [];
-            _.each(arr, function (el, i, ref) {
-                result.push(fn.call(ctx || this, el, i, ref));
-            });
-            return result;
-        }
     };
 
     var Is = (function () {
@@ -213,16 +184,13 @@
             },
     
             has: function (key) {
-                return _.hasOwn.call(this._value, key);
+                return _.has.call(this._value, key);
             },
     
             keys: function () {
-                if (_.keys) {
-                    return _.keys(this._value);
-                }
                 var keys = [];
                 for (var key in this._value) {
-                    if (_.hasOwn.call(this._value, key)) {
+                    if (_.has.call(this._value, key)) {
                         keys.push(key);
                     }
                 }
@@ -231,7 +199,7 @@
     
             pairs: function () {
                 var that = this;
-                return _.map(that.keys(), function (el) {
+                return _.map(this.keys(), function (el) {
                     return [el, that._value[el]];
                 });
             },
@@ -243,7 +211,7 @@
     
             values: function () {
                 var that = this;
-                return _.map(that.keys(), function (el) {
+                return _.map(this.keys(), function (el) {
                     return that._value[el];
                 });
             }
@@ -279,6 +247,7 @@
             },
     
             each: function (fn, ctx) {
+                // TODO: Оставить только для чейнинга
                 if (!ft.is(fn).fn()) {
                     throw new TypeError();
                 }
@@ -301,6 +270,7 @@
             },
     
             map: function (fn, ctx) {
+                // TODO: Оставить только для чейнинга
                 if (!ft.is(fn).fn()) {
                     throw new TypeError();
                 }
@@ -387,8 +357,7 @@
             },
     
             contains: function () {
-                // TODO: Реализовать
-                throw new Error();
+                return _.sIndexOf.apply(this, arguments) !== -1;
             },
     
             endsWith: function () {

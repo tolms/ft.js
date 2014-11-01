@@ -24,16 +24,13 @@ var Objects = (function () {
         },
 
         has: function (key) {
-            return _.hasOwn.call(this._value, key);
+            return _.has.call(this._value, key);
         },
 
         keys: function () {
-            if (_.keys) {
-                return _.keys(this._value);
-            }
             var keys = [];
             for (var key in this._value) {
-                if (_.hasOwn.call(this._value, key)) {
+                if (_.has.call(this._value, key)) {
                     keys.push(key);
                 }
             }
@@ -42,7 +39,7 @@ var Objects = (function () {
 
         pairs: function () {
             var that = this;
-            return _.map(that.keys(), function (el) {
+            return _.map(this.keys(), function (el) {
                 return [el, that._value[el]];
             });
         },
@@ -54,7 +51,7 @@ var Objects = (function () {
 
         values: function () {
             var that = this;
-            return _.map(that.keys(), function (el) {
+            return _.map(this.keys(), function (el) {
                 return that._value[el];
             });
         }

@@ -31,8 +31,7 @@ var Strings = (function () {
         },
 
         contains: function () {
-            // TODO: Реализовать
-            throw new Error();
+            return _.sIndexOf.apply(this, arguments) !== -1;
         },
 
         endsWith: function () {

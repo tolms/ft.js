@@ -20,6 +20,7 @@ var List = (function () {
         },
 
         each: function (fn, ctx) {
+            // TODO: Оставить только для чейнинга
             if (!ft.is(fn).fn()) {
                 throw new TypeError();
             }
@@ -42,6 +43,7 @@ var List = (function () {
         },
 
         map: function (fn, ctx) {
+            // TODO: Оставить только для чейнинга
             if (!ft.is(fn).fn()) {
                 throw new TypeError();
             }

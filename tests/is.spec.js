@@ -517,10 +517,6 @@ describe('#is()', function () {
         it('should return value');
     });
 
-    describe('.not()', function () {
-        it('should return value');
-    });
-
     describe('.number()', function () {
         it('#is(arguments).number() - args should not be number', function () {
             expect(ft.is(arguments).number()).to.be.false;
