@@ -25,6 +25,8 @@
 
     // @include string.js
 
+    // @include html.js
+
     // @include fn.js
 
     // @include number.js
