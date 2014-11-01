@@ -28,13 +28,7 @@ var Objects = (function () {
         },
 
         keys: function () {
-            var keys = [];
-            for (var key in this._value) {
-                if (_.has.call(this._value, key)) {
-                    keys.push(key);
-                }
-            }
-            return keys;
+            return Object.keys(this._value);
         },
 
         pairs: function () {

@@ -7,7 +7,6 @@ var objProto = Object.prototype,
     _ = {
         toString: objProto.toString,
         has: objProto.hasOwnProperty,
-        keys: objProto.keys,
         trim: strProto.trim,
         rtrim: strProto.trimRight,
         ltrim: strProto.trimLeft,
