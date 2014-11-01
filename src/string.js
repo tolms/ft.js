@@ -16,8 +16,14 @@ var Strings = (function () {
             return this._value.split('');
         },
 
+        chop: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
         /**
          * Метод очищает исходную строку от дублирующихся пробелов
+         * и непечатных символов, например, \t, \n и прочих
          * @returns {string} Очищенная строка
          */
         clean: function () {
@@ -34,9 +40,23 @@ var Strings = (function () {
             throw new Error();
         },
 
-        repeat: function () {
+        insert: function () {
             // TODO: Реализовать
             throw new Error();
+        },
+
+        prune: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
+        remove: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
+        repeat: function (count) {
+            return new Array((count || 0) + 1).join(this._value);
         },
 
         /**
@@ -49,6 +69,11 @@ var Strings = (function () {
         },
 
         startsWith: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
+        supplant: function () {
             // TODO: Реализовать
             throw new Error();
         },

@@ -9,8 +9,18 @@ var Num = (function () {
 
     _.extend(Num.prototype, {
 
+        format: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
         parseInt: function () {
             return parseInt(this._value, 10);
+        },
+
+        plural: function () {
+            // TODO: Реализовать
+            throw new Error();
         },
 
         sign: function () {

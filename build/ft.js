@@ -18,20 +18,20 @@
      */
     var objProto = Object.prototype,
         strProto = String.prototype,
-        arrayProto = Array.prototype;
+        arrayProto = Array.prototype,
+        _ = {
+            toString: objProto.toString,
+            hasOwn: objProto.hasOwnProperty,
+            keys: objProto.keys,
+            trim: strProto.trim,
+            rtrim: strProto.trimRight,
+            ltrim: strProto.trimLeft,
+            nForEach: arrayProto.forEach,
+            nMap: arrayProto.map,
+            slice: arrayProto.slice
+        };
     
-    var _ = {
-        toString: objProto.toString,
-        hasOwn: objProto.hasOwnProperty,
-        keys: objProto.keys,
-        trim: strProto.trim,
-        rtrim: strProto.trimRight,
-        ltrim: strProto.trimLeft,
-        nForEach: arrayProto.forEach,
-        nMap: arrayProto.map
-    };
-    
-    _.extend = function(target) {
+    _.extend = function (target) {
         var source, prop;
         for (var i = 1, length = arguments.length; i < length; i++) {
             source = arguments[i];
@@ -44,7 +44,7 @@
         return target;
     };
     
-    _.type = function(target) {
+    _.type = function (target) {
         if (target === undefined) {
             return 'undefined';
         }
@@ -94,7 +94,7 @@
             return _.nMap.call(arr, fn, ctx);
         } else {
             var result = [];
-            _.each(arr, function(el, i, ref) {
+            _.each(arr, function (el, i, ref) {
                 result.push(fn.call(ctx || this, el, i, ref));
             });
             return result;
@@ -104,20 +104,11 @@
     var Is = (function () {
         function Is(value) {
             this._value = value;
-            this._negative = false;
         }
     
         _.extend(Is.prototype, {
             equal: function (other) {
-                if (this._value === 0 && other === 0) {
-                    return 1 / this._value === 1 / other;
-                }
-    
-                if (this._value !== this._value) {
-                    return other !== other;
-                }
-    
-                return this._value === other;
+                return (this._value === other && (this._value !== 0 || 1 / this._value === 1 / other)) || (this._value !== this._value && other !== other);
             },
     
             args: function () {
@@ -162,11 +153,6 @@
                 throw new Error();
             },
     
-            not: function () {
-                this._negative = true;
-                return this;
-            },
-    
             number: function () {
                 return _.type(this._value) === 'number';
             },
@@ -175,12 +161,22 @@
                 return _.type(this._value) === 'object';
             },
     
+            plainObject: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
             regexp: function () {
                 return _.type(this._value) === 'regexp';
             },
     
             string: function () {
                 return _.type(this._value) === 'string';
+            },
+    
+            blankString: function () {
+                // TODO: Реализовать
+                throw new Error();
             }
         });
     
@@ -233,7 +229,7 @@
                 return keys;
             },
     
-            pairs: function() {
+            pairs: function () {
                 var that = this;
                 return _.map(that.keys(), function (el) {
                     return [el, that._value[el]];
@@ -245,7 +241,7 @@
                 throw new Error();
             },
     
-            values: function() {
+            values: function () {
                 var that = this;
                 return _.map(that.keys(), function (el) {
                     return that._value[el];
@@ -262,7 +258,6 @@
     
 
     var List = (function () {
-    
         function List(value) {
             this._value = value;
         }
@@ -377,8 +372,14 @@
                 return this._value.split('');
             },
     
+            chop: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
             /**
              * Метод очищает исходную строку от дублирующихся пробелов
+             * и непечатных символов, например, \t, \n и прочих
              * @returns {string} Очищенная строка
              */
             clean: function () {
@@ -395,9 +396,23 @@
                 throw new Error();
             },
     
-            repeat: function () {
+            insert: function () {
                 // TODO: Реализовать
                 throw new Error();
+            },
+    
+            prune: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            remove: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            repeat: function (count) {
+                return new Array((count || 0) + 1).join(this._value);
             },
     
             /**
@@ -410,6 +425,11 @@
             },
     
             startsWith: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            supplant: function () {
                 // TODO: Реализовать
                 throw new Error();
             },
@@ -452,6 +472,55 @@
     };
     
 
+    var Html = (function () {
+        function Html(value) {
+            if (!ft.is(value).string()) {
+                throw new TypeError();
+            }
+    
+            this._value = value;
+        }
+    
+        _.extend(Html.prototype, {
+    
+            escape: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            prune: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            stripAttrs: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            stripTags: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            truncate: function (limit, sfx) {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            unescape: function () {
+                // TODO: Реализовать
+                throw new Error();
+            }
+        });
+    
+        return Html;
+    })();
+    
+    ft.html = function (value) {
+        return new Html(value);
+    };
+
     var Fn = (function () {
         function Fn(value) {
             if (!ft.is(value).fn()) {
@@ -487,9 +556,14 @@
                 throw new Error();
             },
     
-            delay: function () {
-                // TODO: Реализовать
-                throw new Error();
+            /**
+             * usage: _.fn(f).delay(500, *args)
+             */
+            delay: function (ms) {
+                var args = _.slice.call(arguments, 1);
+                return setTimeout(function () {
+                    return this._value.apply(null, args);
+                }, ms);
             },
     
             defer: function () {
@@ -534,7 +608,6 @@
         return Fn;
     })();
     
-    
     ft.fn = function (value) {
         return new Fn(value);
     };
@@ -550,8 +623,18 @@
     
         _.extend(Num.prototype, {
     
+            format: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
             parseInt: function () {
                 return parseInt(this._value, 10);
+            },
+    
+            plural: function () {
+                // TODO: Реализовать
+                throw new Error();
             },
     
             sign: function () {
