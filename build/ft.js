@@ -411,8 +411,42 @@
                 throw new Error();
             },
     
+            /**
+             * Метод создает новую строку, состоящую из count повторений исходной строки
+             * @param count {Number} Количество повторений
+             * @returns {string}
+             */
             repeat: function (count) {
-                return new Array((count || 0) + 1).join(this._value);
+                var result = '', str = this._value;
+                count = +count;
+                if (count !== count) {
+                    count = 0;
+                }
+    
+                if (count < 0) {
+                    throw new RangeError('Repeat count must be non-negative');
+                }
+    
+                if (count === Infinity) {
+                    throw new RangeError('Repeat count must be less than infinity');
+                }
+    
+                count |= 0;
+    
+                if (str.length === 0 || count === 0) {
+                    return result;
+                }
+    
+                if (str.length * count >= 1 << 28) {
+                    throw new RangeError('Repeat count must not overflow maximum string size');
+                }
+    
+                for (; count > 0; count >>>= 1, str += str) {
+                    if ((count & 1) === 1) {
+                        result += str;
+                    }
+                }
+                return result;
             },
     
             /**
