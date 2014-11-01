@@ -8,7 +8,8 @@
         "_": true,
         "describe": true,
         "it": true,
-        "expect": true
+        "expect": true,
+        "before": true
     },
     "maxerr": 50,
     "camelcase": true,
