@@ -1,20 +1,11 @@
 var Is = (function () {
     function Is(value) {
         this._value = value;
-        this._negative = false;
     }
 
     _.extend(Is.prototype, {
         equal: function (other) {
-            if (this._value === 0 && other === 0) {
-                return 1 / this._value === 1 / other;
-            }
-
-            if (this._value !== this._value) {
-                return other !== other;
-            }
-
-            return this._value === other;
+            return (this._value === other && (this._value !== 0 || 1 / this._value === 1 / other)) || (this._value !== this._value && other !== other);
         },
 
         args: function () {
@@ -59,11 +50,6 @@ var Is = (function () {
             throw new Error();
         },
 
-        not: function () {
-            this._negative = true;
-            return this;
-        },
-
         number: function () {
             return _.type(this._value) === 'number';
         },
@@ -72,12 +58,22 @@ var Is = (function () {
             return _.type(this._value) === 'object';
         },
 
+        plainObject: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
         regexp: function () {
             return _.type(this._value) === 'regexp';
         },
 
         string: function () {
             return _.type(this._value) === 'string';
+        },
+
+        blankString: function () {
+            // TODO: Реализовать
+            throw new Error();
         }
     });
 
