@@ -428,17 +428,15 @@
                     throw new RangeError('Repeat count must be less than infinity');
                 }
     
-                count |= 0;
-    
-                if (str.length === 0 || count === 0) {
-                    return result;
-                }
-    
                 if (str.length * count >= 1 << 28) {
                     throw new RangeError('Repeat count must not overflow maximum string size');
                 }
     
-                for (; count > 0; count >>>= 1, str += str) {
+                if (str.length === 0) {
+                    return result;
+                }
+    
+                for (count |= 0; count > 0; count >>>= 1, str += str) {
                     if ((count & 1) === 1) {
                         result += str;
                     }
