@@ -12,8 +12,7 @@ var objProto = Object.prototype,
         ltrim: strProto.trimLeft,
         each: arrayProto.forEach,
         map: arrayProto.map,
-        slice: arrayProto.slice,
-        sIndexOf: strProto.indexOf
+        slice: arrayProto.slice
     };
 
 _.extend = function (target) {

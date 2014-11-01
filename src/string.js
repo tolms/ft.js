@@ -30,13 +30,18 @@ var Strings = (function () {
             return this.trim().replace(/\s+/g, ' ');
         },
 
-        contains: function () {
-            return _.sIndexOf.apply(this, arguments) !== -1;
+        /**
+         * Метод определяет находится ли искомая строка в исходной строке
+         * @param str Искомая строка
+         * @returns {boolean}
+         */
+        contains: function (str) {
+            return this._value.indexOf('' + str) !== -1;
         },
 
-        endsWith: function () {
-            // TODO: Реализовать
-            throw new Error();
+        endsWith: function (str) {
+            str ='' + str;
+            return this._value.indexOf(str, this._value.length - str.length) !== -1;
         },
 
         insert: function () {
@@ -96,9 +101,8 @@ var Strings = (function () {
             return this.chars().reverse().join('');
         },
 
-        startsWith: function () {
-            // TODO: Реализовать
-            throw new Error();
+        startsWith: function (str) {
+            return this._value.indexOf('' + str) === 0;
         },
 
         supplant: function () {
@@ -114,7 +118,7 @@ var Strings = (function () {
             return this._value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
         },
 
-        trimLeft: function (chars) {
+        ltrim: function (chars) {
             if (!chars && _.ltrim) {
                 return _.ltrim.call(this._value);
             }
@@ -122,7 +126,7 @@ var Strings = (function () {
             return this._value.replace(new RegExp('^' + chars + '+'), '');
         },
 
-        trimRight: function (chars) {
+        rtrim: function (chars) {
             if (!chars && _.rtrim) {
                 return _.rtrim.call(this._value);
             }

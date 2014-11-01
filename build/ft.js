@@ -27,8 +27,7 @@
             ltrim: strProto.trimLeft,
             each: arrayProto.forEach,
             map: arrayProto.map,
-            slice: arrayProto.slice,
-            sIndexOf: strProto.indexOf
+            slice: arrayProto.slice
         };
     
     _.extend = function (target) {
@@ -349,13 +348,18 @@
                 return this.trim().replace(/\s+/g, ' ');
             },
     
-            contains: function () {
-                return _.sIndexOf.apply(this, arguments) !== -1;
+            /**
+             * Метод определяет находится ли искомая строка в исходной строке
+             * @param str Искомая строка
+             * @returns {boolean}
+             */
+            contains: function (str) {
+                return this._value.indexOf('' + str) !== -1;
             },
     
-            endsWith: function () {
-                // TODO: Реализовать
-                throw new Error();
+            endsWith: function (str) {
+                str ='' + str;
+                return this._value.indexOf(str, this._value.length - str.length) !== -1;
             },
     
             insert: function () {
@@ -415,9 +419,8 @@
                 return this.chars().reverse().join('');
             },
     
-            startsWith: function () {
-                // TODO: Реализовать
-                throw new Error();
+            startsWith: function (str) {
+                return this._value.indexOf('' + str) === 0;
             },
     
             supplant: function () {
@@ -433,7 +436,7 @@
                 return this._value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
             },
     
-            trimLeft: function (chars) {
+            ltrim: function (chars) {
                 if (!chars && _.ltrim) {
                     return _.ltrim.call(this._value);
                 }
@@ -441,7 +444,7 @@
                 return this._value.replace(new RegExp('^' + chars + '+'), '');
             },
     
-            trimRight: function (chars) {
+            rtrim: function (chars) {
                 if (!chars && _.rtrim) {
                     return _.rtrim.call(this._value);
                 }
