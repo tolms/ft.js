@@ -32,21 +32,32 @@ var Strings = (function () {
 
         /**
          * Метод определяет находится ли искомая строка в исходной строке
-         * @param str Искомая строка
+         * @param str {String} Искомая строка
          * @returns {boolean}
          */
         contains: function (str) {
             return this._value.indexOf('' + str) !== -1;
         },
 
+        /**
+         * Метод определяет заканчивается ли исходная строка на искомую
+         * @param str {String} Искомая строка
+         * @returns {boolean}
+         */
         endsWith: function (str) {
             str ='' + str;
             return this._value.indexOf(str, this._value.length - str.length) !== -1;
         },
 
-        insert: function () {
-            // TODO: Реализовать
-            throw new Error();
+        /**
+         * Метод добавляет подстроку в исходную строку
+         * @param str {String} Вставляемая подстрока
+         * @param after {Number} Позиция в исходной строке, с которой будет вставлена подстрока
+         * @returns {String}
+         */
+        insert: function (str, after) {
+            after = after | 0;
+            return this._value.slice(0, after) + str + this._value.slice(after);
         },
 
         prune: function () {
@@ -54,9 +65,21 @@ var Strings = (function () {
             throw new Error();
         },
 
-        remove: function () {
-            // TODO: Реализовать
-            throw new Error();
+        /**
+         * Метод из исходной строки подстроку, начинающуюся с позиции start и заканчивающуюся позицией end
+         * @param start {Number} Начальная позиция
+         * @param end {Number} Конечная позиция
+         * @returns {string}
+         */
+        remove: function (start, end) {
+            start = start | 0;
+            end = end | 0;
+
+            if (start > end && start * end > 0) {
+                throw new RangeError('Start index must be less than end index');
+            }
+
+            return this._value.slice(0, start) + this._value.slice(end);
         },
 
         /**
@@ -101,6 +124,11 @@ var Strings = (function () {
             return this.chars().reverse().join('');
         },
 
+        /**
+         * Метод определяет начинается ли исходная строка на искомую
+         * @param str {String} Искомая строка
+         * @returns {boolean}
+         */
         startsWith: function (str) {
             return this._value.indexOf('' + str) === 0;
         },
