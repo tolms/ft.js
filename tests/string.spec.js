@@ -10,6 +10,14 @@ describe('#string()', function () {
         });
     });
 
+    describe('.chars()', function () {
+        it('Should return an array of chars', function(){
+            expect(ft.string('Hello').chars()).to.deep.equal(['H', 'e', 'l', 'l', 'o']);
+            expect(ft.string('').chars()).to.deep.equal([]);
+            expect(ft.string(' Hello ').chars()).to.deep.equal([' ', 'H', 'e', 'l', 'l', 'o', ' ']);
+        });
+    });
+
     describe('.endsWith()', function () {
         var lorem;
 
