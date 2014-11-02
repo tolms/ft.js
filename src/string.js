@@ -90,8 +90,8 @@ var Strings = (function () {
          */
         inject: function (data) {
             return this._value.replace(/\$\{([^${}]+?)\}/g, function (match, name) {
-                var value = ft.is(data[name]);
-                return value.number() || value.string() ? '' + value.value() : match;
+                var v = ft.is(data[ft.string(name).trim()]);
+                return v.number() || v.string() ? '' + v.value() : match;
             });
         },
 

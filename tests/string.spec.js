@@ -109,8 +109,8 @@ describe('#string()', function () {
                 title: 'some-title',
                 ext: 'html'
             };
-            url = '${protocol}://${domain}/${year}/${month}/${day}/${title}.${ext}';
-            date = '${day}.${month}.${year}';
+            url = '${ protocol }://${ domain }/${ year }/${ month }/${ day }/${ title }.${ ext }';
+            date = '${ day }.${ month }.${ year }';
         });
 
         it('Should inject a plain object', function () {
