@@ -1,6 +1,5 @@
 /* jshint -W030 */
 describe('#string()', function () {
-
     describe('.append()', function () {
         it('Should append a substring', function () {
             expect(ft.string('Hello').append(', World!')).to.equal('Hello, World!');
@@ -92,18 +91,15 @@ describe('#string()', function () {
     });
 
     describe('.extract()', function () {
-//        it('Should add a substring', function () {
-//            expect(ft.string(', World!').insert('Hello', 0)).to.equal('Hello, World!');
-//            expect(ft.string(', World!').insert('Hello', null)).to.equal('Hello, World!');
-//            expect(ft.string(', World!').insert('Hello')).to.equal('Hello, World!');
-//            expect(ft.string('Hello, ').insert('World!', 10)).to.equal('Hello, World!');
-//            expect(ft.string('Hello, Worl').insert('d!', 12)).to.equal('Hello, World!');
-//        });
-//
-//        it('Should accept negative indexes', function () {
-//            expect(ft.string('Hello, Worl!').insert('d', -1)).to.equal('Hello, World!');
-//            expect(ft.string('o, World!').insert('Hell', -10)).to.equal('Hello, World!');
-//        });
+        it('Should extract an object values', function () {
+
+        });
+    });
+
+    describe('.inject()', function () {
+        it('Should inject an object', function () {
+
+        });
     });
 
     describe('.insert()', function () {
@@ -274,7 +270,7 @@ describe('#string()', function () {
             str = 'lorem ipsum dolor sit amet';
         });
 
-        it('Should limit number of chars', function(){
+        it('Should limit number of chars', function () {
             expect(ft.string(str).truncate(10)).to.have.length.below(11);
             expect(ft.string(str).truncate(10)).to.equal('lorem i...');
 
@@ -282,17 +278,17 @@ describe('#string()', function () {
             expect(ft.string(str).truncate(14)).to.equal('lorem ipsum...');
         });
 
-        it('Should append string param', function(){
+        it('Should append string param', function () {
             var truncated = ft.string(str).truncate(10, '--');
             expect(truncated).to.have.length.below(11);
             expect(truncated).to.equal('lorem ip--');
         });
 
-        it('Should allow cropping at full words', function(){
+        it('Should allow cropping at full words', function () {
             expect(ft.string(str).truncate(10, null, true)).to.have.length.below(11);
             expect(ft.string(str).truncate(10, null, true)).to.equal('lorem...');
 
-            expect(ft.string(str).truncate(14, null, true)).to.have.length.below( 15 );
+            expect(ft.string(str).truncate(14, null, true)).to.have.length.below(15);
             expect(ft.string(str).truncate(14, null, true)).to.equal('lorem ipsum...');
         });
     });

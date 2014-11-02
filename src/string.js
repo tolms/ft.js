@@ -77,8 +77,18 @@ var Strings = (function () {
         /**
          * Метод возвращает объект со значениями, полученными из исходной строки по переденной маске
          * @param pattern {String} Маска
+         * @returns {Object}
          */
         extract: function (pattern) {
+
+        },
+
+        /**
+         * Метод возвращает строку, заполненную данными из объекта data
+         * @param data {Object} Данные
+         * @returns {String}
+         */
+        inject: function (data) {
 
         },
 
@@ -91,11 +101,6 @@ var Strings = (function () {
         insert: function (str, after) {
             after = after | 0;
             return this._value.slice(0, after) + str + this._value.slice(after);
-        },
-
-        inject: function () {
-            // TODO: Реализовать
-            throw new Error();
         },
 
         /**
