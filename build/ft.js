@@ -17,17 +17,14 @@
      * Набор общих методов
      */
     var objProto = Object.prototype,
-        strProto = String.prototype,
         arrayProto = Array.prototype,
         _ = {
             toString: objProto.toString,
             has: objProto.hasOwnProperty,
-            trim: strProto.trim,
-            rtrim: strProto.trimRight,
-            ltrim: strProto.trimLeft,
             each: arrayProto.forEach,
             map: arrayProto.map,
-            slice: arrayProto.slice
+            slice: arrayProto.slice,
+            whitespace: '\\s\\0\\b\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF'
         };
     
     _.extend = function (target) {
@@ -349,7 +346,7 @@
              * @returns {string} Очищенная строка
              */
             clean: function () {
-                return this.trim().replace(/\s+/g, ' ');
+                return this.trim().replace(new RegExp('[' + _.whitespace + ']+', 'ig'), ' ');
             },
     
             /**
@@ -367,7 +364,7 @@
              * @returns {boolean}
              */
             endsWith: function (str) {
-                str ='' + str;
+                str = '' + str;
                 return this._value.indexOf(str, this._value.length - str.length) !== -1;
             },
     
@@ -469,28 +466,34 @@
                 throw new Error();
             },
     
+            /**
+             * Метод удаляет с начала и с конца исходной строки
+             * @param chars {String} Удаляемые символы
+             * @returns {String}
+             */
             trim: function (chars) {
-                if (!chars && _.trim) {
-                    return _.trim.call(this._value);
-                }
-                chars = chars || '\\s';
-                return this._value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
+                chars = chars || _.whitespace;
+                return this._value.replace(new RegExp('^[' + chars + ']+|[' + chars + ']+$', 'ig'), '');
             },
     
+            /**
+             * Метод удаляет с начала исходной строки
+             * @param chars {String} Удаляемые символы
+             * @returns {String}
+             */
             ltrim: function (chars) {
-                if (!chars && _.ltrim) {
-                    return _.ltrim.call(this._value);
-                }
-                chars = chars || '\\s';
-                return this._value.replace(new RegExp('^' + chars + '+'), '');
+                chars = chars || _.whitespace;
+                return this._value.replace(new RegExp('^[' + chars + ']+'), '');
             },
     
+            /**
+             * Метод удаляет с конца исходной строки
+             * @param chars {String} Удаляемые символы
+             * @returns {String}
+             */
             rtrim: function (chars) {
-                if (!chars && _.rtrim) {
-                    return _.rtrim.call(this._value);
-                }
-                chars = chars || '\\s';
-                return this._value.replace(new RegExp(chars + '+$'), '');
+                chars = chars || _.whitespace;
+                return this._value.replace(new RegExp('[' + chars + ']+$'), '');
             },
     
             truncate: function (limit, sfx) {

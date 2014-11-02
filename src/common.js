@@ -2,17 +2,14 @@
  * Набор общих методов
  */
 var objProto = Object.prototype,
-    strProto = String.prototype,
     arrayProto = Array.prototype,
     _ = {
         toString: objProto.toString,
         has: objProto.hasOwnProperty,
-        trim: strProto.trim,
-        rtrim: strProto.trimRight,
-        ltrim: strProto.trimLeft,
         each: arrayProto.forEach,
         map: arrayProto.map,
-        slice: arrayProto.slice
+        slice: arrayProto.slice,
+        whitespace: '\\s\\0\\b\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF'
     };
 
 _.extend = function (target) {

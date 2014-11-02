@@ -31,7 +31,7 @@ var Strings = (function () {
          * @returns {string} Очищенная строка
          */
         clean: function () {
-            return this.trim().replace(/\s+/g, ' ');
+            return this.trim().replace(new RegExp('[' + _.whitespace + ']+', 'ig'), ' ');
         },
 
         /**
@@ -49,7 +49,7 @@ var Strings = (function () {
          * @returns {boolean}
          */
         endsWith: function (str) {
-            str ='' + str;
+            str = '' + str;
             return this._value.indexOf(str, this._value.length - str.length) !== -1;
         },
 
@@ -151,28 +151,34 @@ var Strings = (function () {
             throw new Error();
         },
 
+        /**
+         * Метод удаляет с начала и с конца исходной строки
+         * @param chars {String} Удаляемые символы
+         * @returns {String}
+         */
         trim: function (chars) {
-            if (!chars && _.trim) {
-                return _.trim.call(this._value);
-            }
-            chars = chars || '\\s';
-            return this._value.replace(new RegExp('^' + chars + '+|' + chars + '+$'), '');
+            chars = chars || _.whitespace;
+            return this._value.replace(new RegExp('^[' + chars + ']+|[' + chars + ']+$', 'ig'), '');
         },
 
+        /**
+         * Метод удаляет с начала исходной строки
+         * @param chars {String} Удаляемые символы
+         * @returns {String}
+         */
         ltrim: function (chars) {
-            if (!chars && _.ltrim) {
-                return _.ltrim.call(this._value);
-            }
-            chars = chars || '\\s';
-            return this._value.replace(new RegExp('^' + chars + '+'), '');
+            chars = chars || _.whitespace;
+            return this._value.replace(new RegExp('^[' + chars + ']+'), '');
         },
 
+        /**
+         * Метод удаляет с конца исходной строки
+         * @param chars {String} Удаляемые символы
+         * @returns {String}
+         */
         rtrim: function (chars) {
-            if (!chars && _.rtrim) {
-                return _.rtrim.call(this._value);
-            }
-            chars = chars || '\\s';
-            return this._value.replace(new RegExp(chars + '+$'), '');
+            chars = chars || _.whitespace;
+            return this._value.replace(new RegExp('[' + chars + ']+$'), '');
         },
 
         truncate: function (limit, sfx) {

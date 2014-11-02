@@ -18,6 +18,27 @@ describe('#string()', function () {
         });
     });
 
+    describe('.clean()', function () {
+        it('Should remove all spaces', function(){
+            expect(ft.string('           Hello,      World!             ').clean()).to.equal('Hello, World!');
+            expect(ft.string('                        ').clean()).to.equal('');
+        });
+
+        it('Should remove all whitespaces', function(){
+            expect(ft.string('\n Hello,   \t   World!        \r     ').clean()).to.equal('Hello, World!');
+            expect(ft.string('\0 \b \t \n \v \f \r').clean()).to.equal('');
+        });
+    });
+
+
+    describe('.contains()', function () {
+        it('Should return an array of chars', function(){
+            expect(ft.string('Hello').chars()).to.deep.equal(['H', 'e', 'l', 'l', 'o']);
+            expect(ft.string('').chars()).to.deep.equal([]);
+            expect(ft.string(' Hello ').chars()).to.deep.equal([' ', 'H', 'e', 'l', 'l', 'o', ' ']);
+        });
+    });
+
     describe('.endsWith()', function () {
         var lorem;
 
