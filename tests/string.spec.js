@@ -266,4 +266,34 @@ describe('#string()', function () {
             expect(ft.string('\0 \b \t \nHello, World!\v \f \r').rtrim()).to.equal('\0 \b \t \nHello, World!');
         });
     });
+
+    describe('.truncate()', function () {
+        var str;
+
+        before(function () {
+            str = 'lorem ipsum dolor sit amet';
+        });
+
+        it('Should limit number of chars', function(){
+            expect(ft.string(str).truncate(10)).to.have.length.below(11);
+            expect(ft.string(str).truncate(10)).to.equal('lorem i...');
+
+            expect(ft.string(str).truncate(14)).to.have.length.below(15);
+            expect(ft.string(str).truncate(14)).to.equal('lorem ipsum...');
+        });
+
+        it('Should append string param', function(){
+            var truncated = ft.string(str).truncate(10, '--');
+            expect(truncated).to.have.length.below(11);
+            expect(truncated).to.equal('lorem ip--');
+        });
+
+        it('Should allow cropping at full words', function(){
+            expect(ft.string(str).truncate(10, null, true)).to.have.length.below(11);
+            expect(ft.string(str).truncate(10, null, true)).to.equal('lorem...');
+
+            expect(ft.string(str).truncate(14, null, true)).to.have.length.below( 15 );
+            expect(ft.string(str).truncate(14, null, true)).to.equal('lorem ipsum...');
+        });
+    });
 });

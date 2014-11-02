@@ -107,11 +107,6 @@ var Strings = (function () {
             return str + this._value;
         },
 
-        prune: function () {
-            // TODO: Реализовать
-            throw new Error();
-        },
-
         /**
          * Метод из исходной строки подстроку, начинающуюся с позиции start и заканчивающуюся позицией end
          * @param start {Number} Начальная позиция
@@ -210,9 +205,28 @@ var Strings = (function () {
             return this._value.replace(new RegExp('[' + chars + ']+$'), '');
         },
 
-        truncate: function (limit, sfx) {
+        /**
+         * Метод обрезает исходную строку до длины, не правышающей limit
+         * @param limit {Number} Длина строки
+         * @param sfx {String} Суффикс строки, по умолчанию равен '...'
+         * @param safe {Boolean} Если true, то слова не будут обрезаться
+         * @returns {string}
+         */
+        truncate: function (limit, sfx, safe) {
+            var str = this.trim();
             sfx = sfx || '...';
-            return this._value.length > limit ? this._value.substring(0, limit - sfx.length) + sfx : this._value;
+            limit |= 0;
+            limit = safe ? limit + 1 : limit;
+
+            if (str <= limit) {
+                return str;
+            }
+
+            str = str.substring(0, limit - sfx.length);
+
+            str = safe ? str.substr(0, str.lastIndexOf(' ')) : ft.string(str).trim();
+
+            return str + sfx;
         }
     });
 
