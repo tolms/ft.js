@@ -359,6 +359,27 @@
             },
     
             /**
+             * Метод определяет количество вхождений искомой строки в исходной строке
+             * @param str {String} Искомая строка
+             * @returns {Number}
+             */
+            count: function (str) {
+                str = '' + str;
+    
+                if (!str.length) {
+                    throw new RangeError('Search string must not be empty!');
+                }
+    
+                var count = 0,
+                    pos = this._value.indexOf(str);
+                while (pos >= 0) {
+                    count += 1;
+                    pos = this._value.indexOf(str, pos + 1);
+                }
+                return count;
+            },
+    
+            /**
              * Метод определяет заканчивается ли исходная строка на искомую
              * @param str {String} Искомая строка
              * @returns {boolean}
@@ -366,6 +387,14 @@
             endsWith: function (str) {
                 str = '' + str;
                 return this._value.indexOf(str, this._value.length - str.length) !== -1;
+            },
+    
+            /**
+             * Метод возвращает объект со значениями, полученными из исходной строки по переденной маске
+             * @param pattern {String} Маска
+             */
+            extract: function (pattern) {
+    
             },
     
             /**
@@ -377,6 +406,11 @@
             insert: function (str, after) {
                 after = after | 0;
                 return this._value.slice(0, after) + str + this._value.slice(after);
+            },
+    
+            inject: function () {
+                // TODO: Реализовать
+                throw new Error();
             },
     
             /**
@@ -459,11 +493,6 @@
              */
             startsWith: function (str) {
                 return this._value.indexOf('' + str) === 0;
-            },
-    
-            supplant: function () {
-                // TODO: Реализовать
-                throw new Error();
             },
     
             /**

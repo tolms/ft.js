@@ -1,3 +1,4 @@
+/* jshint -W030 */
 describe('#string()', function () {
 
     describe('.append()', function () {
@@ -35,6 +36,18 @@ describe('#string()', function () {
             expect(ft.string('Hello').chars()).to.deep.equal(['H', 'e', 'l', 'l', 'o']);
             expect(ft.string('').chars()).to.deep.equal([]);
             expect(ft.string(' Hello ').chars()).to.deep.equal([' ', 'H', 'e', 'l', 'l', 'o', ' ']);
+        });
+    });
+
+    describe('.count()', function () {
+        it('Should find a substring', function () {
+            expect(ft.string('Hello, World!').count('l')).to.equal(3);
+            expect(ft.string('Hello, World!').count('ll')).to.equal(1);
+        });
+
+        it('Should not find substring', function () {
+            expect(ft.string('Hello, World!').count('world')).to.equal(0);
+            expect(ft.string('Hello, World!').count('! ')).to.equal(0);
         });
     });
 
@@ -76,6 +89,21 @@ describe('#string()', function () {
         it('#string(\'1234567890\').endsWith(\'\') - should be true', function () {
             expect(ft.string('1234567890').endsWith('')).to.be.true;
         });
+    });
+
+    describe('.extract()', function () {
+//        it('Should add a substring', function () {
+//            expect(ft.string(', World!').insert('Hello', 0)).to.equal('Hello, World!');
+//            expect(ft.string(', World!').insert('Hello', null)).to.equal('Hello, World!');
+//            expect(ft.string(', World!').insert('Hello')).to.equal('Hello, World!');
+//            expect(ft.string('Hello, ').insert('World!', 10)).to.equal('Hello, World!');
+//            expect(ft.string('Hello, Worl').insert('d!', 12)).to.equal('Hello, World!');
+//        });
+//
+//        it('Should accept negative indexes', function () {
+//            expect(ft.string('Hello, Worl!').insert('d', -1)).to.equal('Hello, World!');
+//            expect(ft.string('o, World!').insert('Hell', -10)).to.equal('Hello, World!');
+//        });
     });
 
     describe('.insert()', function () {
