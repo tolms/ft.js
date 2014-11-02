@@ -1,7 +1,7 @@
 describe('#string()', function () {
 
     describe('.append()', function () {
-        it('Should append a substring', function(){
+        it('Should append a substring', function () {
             expect(ft.string('Hello').append(', World!')).to.equal('Hello, World!');
             expect(ft.string('').append('Hi!')).to.equal('Hi!');
             expect(ft.string('').append('')).to.equal('');
@@ -11,7 +11,7 @@ describe('#string()', function () {
     });
 
     describe('.chars()', function () {
-        it('Should return an array of chars', function(){
+        it('Should return an array of chars', function () {
             expect(ft.string('Hello').chars()).to.deep.equal(['H', 'e', 'l', 'l', 'o']);
             expect(ft.string('').chars()).to.deep.equal([]);
             expect(ft.string(' Hello ').chars()).to.deep.equal([' ', 'H', 'e', 'l', 'l', 'o', ' ']);
@@ -19,20 +19,19 @@ describe('#string()', function () {
     });
 
     describe('.clean()', function () {
-        it('Should remove all spaces', function(){
+        it('Should remove all spaces', function () {
             expect(ft.string('           Hello,      World!             ').clean()).to.equal('Hello, World!');
             expect(ft.string('                        ').clean()).to.equal('');
         });
 
-        it('Should remove all whitespaces', function(){
+        it('Should remove all whitespace', function () {
             expect(ft.string('\n Hello,   \t   World!        \r     ').clean()).to.equal('Hello, World!');
             expect(ft.string('\0 \b \t \n \v \f \r').clean()).to.equal('');
         });
     });
 
-
     describe('.contains()', function () {
-        it('Should return an array of chars', function(){
+        it('Should return an array of chars', function () {
             expect(ft.string('Hello').chars()).to.deep.equal(['H', 'e', 'l', 'l', 'o']);
             expect(ft.string('').chars()).to.deep.equal([]);
             expect(ft.string(' Hello ').chars()).to.deep.equal([' ', 'H', 'e', 'l', 'l', 'o', ' ']);
@@ -80,7 +79,7 @@ describe('#string()', function () {
     });
 
     describe('.insert()', function () {
-        it('Should add a substring', function(){
+        it('Should add a substring', function () {
             expect(ft.string(', World!').insert('Hello', 0)).to.equal('Hello, World!');
             expect(ft.string(', World!').insert('Hello', null)).to.equal('Hello, World!');
             expect(ft.string(', World!').insert('Hello')).to.equal('Hello, World!');
@@ -88,14 +87,14 @@ describe('#string()', function () {
             expect(ft.string('Hello, Worl').insert('d!', 12)).to.equal('Hello, World!');
         });
 
-        it('Should accept negative indexes', function() {
+        it('Should accept negative indexes', function () {
             expect(ft.string('Hello, Worl!').insert('d', -1)).to.equal('Hello, World!');
             expect(ft.string('o, World!').insert('Hell', -10)).to.equal('Hello, World!');
         });
     });
 
     describe('.prepend()', function () {
-        it('Should prepend a substring', function(){
+        it('Should prepend a substring', function () {
             expect(ft.string(', World!').prepend('Hello')).to.equal('Hello, World!');
             expect(ft.string('').prepend('Hi!')).to.equal('Hi!');
             expect(ft.string('').prepend('')).to.equal('');
@@ -111,14 +110,14 @@ describe('#string()', function () {
             hello = 'Hello, World!';
         });
 
-        it('Should remove a substring', function(){
+        it('Should remove a substring', function () {
             expect(ft.string(hello).remove(0, 2)).to.equal('llo, World!');
             expect(ft.string(hello).remove(0, 100)).to.equal('');
             expect(ft.string(hello).remove(0, hello.length)).to.equal('');
             expect(ft.string(hello).remove(90, 100)).to.equal('Hello, World!');
         });
 
-        it('Should accept regular expression', function() {
+        it('Should accept regular expression', function () {
             expect(ft.string(hello).remove(0, -2)).to.equal('d!');
             expect(ft.string(hello).remove(0, -100)).to.equal('Hello, World!');
             expect(ft.string(hello).remove(2, -2)).to.equal('Hed!');
@@ -158,7 +157,7 @@ describe('#string()', function () {
     });
 
     describe('.reverse()', function () {
-        it('Should reverse a substring', function(){
+        it('Should reverse a substring', function () {
             expect(ft.string('Hello, World!').reverse()).to.equal('!dlroW ,olleH');
             expect(ft.string('').reverse()).to.equal('');
         });
@@ -201,6 +200,42 @@ describe('#string()', function () {
 
         it('#string(\'1234567890\').startsWith(\'\') - should be true', function () {
             expect(ft.string('1234567890').startsWith('')).to.be.true;
+        });
+    });
+
+    describe('.trim()', function () {
+        it('Should remove all spaces', function () {
+            expect(ft.string('           Hello, World!             ').trim()).to.equal('Hello, World!');
+            expect(ft.string('                        ').trim()).to.equal('');
+        });
+
+        it('Should remove all whitespace', function () {
+            expect(ft.string('\n Hello,   \t   World!        \r     ').trim()).to.equal('Hello,   \t   World!');
+            expect(ft.string('\0 \b \t \nHello, World!\v \f \r').trim()).to.equal('Hello, World!');
+        });
+    });
+
+    describe('.ltrim()', function () {
+        it('Should remove all spaces from beginning of string', function () {
+            expect(ft.string('           Hello, World!             ').ltrim()).to.equal('Hello, World!             ');
+            expect(ft.string('                        ').ltrim()).to.equal('');
+        });
+
+        it('Should remove all whitespace from beginning of string', function () {
+            expect(ft.string('\n Hello,   \t   World!        \r     ').ltrim()).to.equal('Hello,   \t   World!        \r     ');
+            expect(ft.string('\0 \b \t \nHello, World!\v \f \r').ltrim()).to.equal('Hello, World!\v \f \r');
+        });
+    });
+
+    describe('.rtrim()', function () {
+        it('Should remove all spaces from end of string', function () {
+            expect(ft.string('           Hello, World!             ').rtrim()).to.equal('           Hello, World!');
+            expect(ft.string('                        ').rtrim()).to.equal('');
+        });
+
+        it('Should remove all whitespace from end of string', function () {
+            expect(ft.string('\n Hello,   \t   World!        \r     ').rtrim()).to.equal('\n Hello,   \t   World!');
+            expect(ft.string('\0 \b \t \nHello, World!\v \f \r').rtrim()).to.equal('\0 \b \t \nHello, World!');
         });
     });
 });
