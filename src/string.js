@@ -9,16 +9,20 @@ var Strings = (function () {
 
     _.extend(Strings.prototype, {
         /**
+         * Метод добавляет в конец исходной строки переданную
+         * @param str {String} Переданная строка
+         * @returns {String}
+         */
+        append: function (str) {
+            return this._value + str;
+        },
+
+        /**
          * Метод возвращает массив из символов, из которых состояла исходная строка
          * @returns {Array} Массив символов
          */
         chars: function () {
             return this._value.split('');
-        },
-
-        chop: function () {
-            // TODO: Реализовать
-            throw new Error();
         },
 
         /**
@@ -58,6 +62,15 @@ var Strings = (function () {
         insert: function (str, after) {
             after = after | 0;
             return this._value.slice(0, after) + str + this._value.slice(after);
+        },
+
+        /**
+         * Метод добавляет в начало исходной строки переданную
+         * @param str {String} Переданная строка
+         * @returns {String}
+         */
+        prepend: function (str) {
+            return str + this._value;
         },
 
         prune: function () {

@@ -1,5 +1,15 @@
 describe('#string()', function () {
 
+    describe('.append()', function () {
+        it('Should append a substring', function(){
+            expect(ft.string('Hello').append(', World!')).to.equal('Hello, World!');
+            expect(ft.string('').append('Hi!')).to.equal('Hi!');
+            expect(ft.string('').append('')).to.equal('');
+            expect(ft.string('').append(undefined)).to.equal('undefined');
+            expect(ft.string('').append(null)).to.equal('null');
+        });
+    });
+
     describe('.endsWith()', function () {
         var lorem;
 
@@ -55,6 +65,16 @@ describe('#string()', function () {
         });
     });
 
+    describe('.prepend()', function () {
+        it('Should prepend a substring', function(){
+            expect(ft.string(', World!').prepend('Hello')).to.equal('Hello, World!');
+            expect(ft.string('').prepend('Hi!')).to.equal('Hi!');
+            expect(ft.string('').prepend('')).to.equal('');
+            expect(ft.string('').prepend(undefined)).to.equal('undefined');
+            expect(ft.string('').prepend(null)).to.equal('null');
+        });
+    });
+
     describe('.remove()', function () {
         var hello;
 
@@ -105,6 +125,13 @@ describe('#string()', function () {
 
         it('Should repeat string twice', function () {
             expect(one.repeat('2')).to.equal('One!One!');
+        });
+    });
+
+    describe('.reverse()', function () {
+        it('Should reverse a substring', function(){
+            expect(ft.string('Hello, World!').reverse()).to.equal('!dlroW ,olleH');
+            expect(ft.string('').reverse()).to.equal('');
         });
     });
 
