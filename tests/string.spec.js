@@ -97,7 +97,28 @@ describe('#string()', function () {
     });
 
     describe('.inject()', function () {
-        it('Should inject an object', function () {
+        var plain, url, date;
+
+        before(function () {
+            plain = {
+                protocol: 'http',
+                domain: 'blog.com',
+                year: 2014,
+                month: 12,
+                day: 10,
+                title: 'some-title',
+                ext: 'html'
+            };
+            url = '${protocol}://${domain}/${year}/${month}/${day}/${title}.${ext}';
+            date = '${day}.${month}.${year}';
+        });
+
+        it('Should inject a plain object', function () {
+            expect(ft.string(url).inject(plain)).to.equal('http://blog.com/2014/12/10/some-title.html');
+            expect(ft.string(date).inject(plain)).to.equal('10.12.2014');
+        });
+
+        it('Should inject a non-plain object', function () {
 
         });
     });

@@ -74,6 +74,10 @@ var Is = (function () {
         blankString: function () {
             // TODO: Реализовать
             throw new Error();
+        },
+
+        value: function () {
+            return this._value;
         }
     });
 

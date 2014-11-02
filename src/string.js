@@ -89,7 +89,10 @@ var Strings = (function () {
          * @returns {String}
          */
         inject: function (data) {
-
+            return this._value.replace(/\$\{([^${}]+?)\}/g, function (match, name) {
+                var value = ft.is(data[name]);
+                return value.number() || value.string() ? '' + value.value() : match;
+            });
         },
 
         /**
