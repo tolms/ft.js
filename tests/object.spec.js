@@ -9,6 +9,9 @@ describe('#object()', function () {
                         dolor: {
                             sit: 'amet'
                         }
+                    },
+                    foo: function () {
+                        return 'bar';
                     }
                 }
             };
@@ -23,6 +26,8 @@ describe('#object()', function () {
 
         it('should return value of nested property', function () {
             expect(ft.object(lorem).get('lorem.ipsum.dolor.sit')).to.equal('amet');
+            expect(ft.object(lorem).get('lorem.foo')).to.be.a('function');
+            expect(ft.object(lorem).get('lorem.foo')()).to.equal('bar');
             expect(ft.object(foo).get('foo.foo')).to.deep.equal({ foo: 'foo' });
         });
 
