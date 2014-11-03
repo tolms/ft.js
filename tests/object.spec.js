@@ -24,7 +24,7 @@ describe('#object()', function () {
             };
         });
 
-        it('should return value of nested property', function () {
+        it('Should return value of nested property', function () {
             expect(ft.object(lorem).get('lorem.ipsum.dolor.sit')).to.equal('amet');
             expect(ft.object(lorem).get('lorem.foo')).to.be.a('function');
             expect(ft.object(lorem).get('lorem.foo')()).to.equal('bar');
@@ -32,7 +32,7 @@ describe('#object()', function () {
             expect(ft.object(foo).get('foo.foo.foo')).to.equal('foo');
         });
 
-        it('should not return value of undefined property', function () {
+        it('Should not return value of undefined property', function () {
             expect(ft.object(lorem).get()).to.be.an('undefined');
             expect(ft.object(foo).get('')).to.be.an('undefined');
             expect(ft.object(lorem).get('lorem.ipsum.foo')).to.be.an('undefined');
@@ -55,17 +55,18 @@ describe('#object()', function () {
             };
         });
 
-        it('should return nothing for undefined object properties.', function() {
+        it('Should return nothing for undefined object properties.', function() {
             expect(ft.object(obj).result('some')).to.be.an('undefined');
         });
 
-        it('should evaluate a method with object context and return its result.', function() {
+        it('Should evaluate a method with object context and return its result.', function() {
             expect(ft.object(obj).result('method')).to.equal('value');
         });
 
-        it('should evaluate an attribute and return its result.', function() {
+        it('Should evaluate an attribute and return its result.', function() {
             expect(ft.object(obj).result('attr')).to.equal('value');
             expect(ft.object(obj).result('falsey')).to.equal('');
+            expect(ft.object(obj).result('arr')).to.deep.equal([0, 1, 2]);
         });
     });
 });
