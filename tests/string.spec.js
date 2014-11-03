@@ -91,13 +91,58 @@ describe('#string()', function () {
     });
 
     describe('.extract()', function () {
-        it('Should extract an object values', function () {
+        var url, date,
+            objResult, dateResult,
+            objResultPlain, dateResultPlain,
+            urlPattern, datePattern,
+            urlPatternPlain, datePatternPlain;
 
+        before(function () {
+            objResultPlain = {
+                protocol: 'http',
+                domain: 'blog.com',
+                year: 2014,
+                month: 12,
+                day: 10,
+                title: 'some-title',
+                ext: 'html'
+            };
+            objResult = {
+                url: {
+                    protocol: 'http',
+                    domain: 'blog.com'
+                },
+                date: {
+                    year: 2014,
+                    month: 12,
+                    day: 10
+                },
+                info: {
+                    title: 'some-title',
+                    ext: 'html'
+                }
+            };
+            urlPatternPlain = '${ protocol }://${ domain }/${ year }/${ month }/${ day }/${ title }.${ ext }';
+            urlPattern = '${ url.protocol }://${ url.domain }/${ date.year }/${ date.month }/${ date.day }/${ info.title }.${ info.ext }';
+            date = '10.12.2014';
+            datePatternPlain = '${ day }.${ month }.${ year }';
+            datePattern = '${ date.day }.${ date.month }.${ date.year }';
+            url = 'http://blog.com/2014/12/10/some-title.html';
+        });
+
+        it('Should extract a plain object', function () {
+            expect(ft.string(url).extract(urlPatternPlain)).to.deep.equal(objResultPlain);
+            expect(ft.string(date).extract(datePatternPlain)).to.deep.equal(dateResultPlain);
+        });
+
+        it('Should extract a non-plain object', function () {
+            expect(ft.string(url).extract(urlPattern)).to.deep.equal(objResult);
+            expect(ft.string(date).extract(datePattern)).to.deep.equal(dateResult);
         });
     });
 
     describe('.inject()', function () {
-        var plain, url, date, obj, plainUrl, plainDate;
+        var plain, url, date, obj, plainUrl, plainDate, resultDate, resultUrl;
 
         before(function () {
             plain = {
@@ -126,18 +171,20 @@ describe('#string()', function () {
             };
             plainUrl = '${ protocol }://${ domain }/${ year }/${ month }/${ day }/${ title }.${ ext }';
             url = '${ url.protocol }://${ url.domain }/${ date.year }/${ date.month }/${ date.day }/${ info.title }.${ info.ext }';
+            resultDate = '10.12.2014';
             plainDate = '${ day }.${ month }.${ year }';
             date = '${ date.day }.${ date.month }.${ date.year }';
+            resultUrl = 'http://blog.com/2014/12/10/some-title.html';
         });
 
         it('Should inject a plain object', function () {
-            expect(ft.string(plainUrl).inject(plain)).to.equal('http://blog.com/2014/12/10/some-title.html');
-            expect(ft.string(plainDate).inject(plain)).to.equal('10.12.2014');
+            expect(ft.string(plainUrl).inject(plain)).to.equal(resultUrl);
+            expect(ft.string(plainDate).inject(plain)).to.equal(resultDate);
         });
 
         it('Should inject a non-plain object', function () {
-            expect(ft.string(url).inject(obj)).to.equal('http://blog.com/2014/12/10/some-title.html');
-            expect(ft.string(date).inject(obj)).to.equal('10.12.2014');
+            expect(ft.string(url).inject(obj)).to.equal(resultUrl);
+            expect(ft.string(date).inject(obj)).to.equal(resultDate);
         });
     });
 

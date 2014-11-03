@@ -77,6 +77,10 @@
                 return (this._value === other && (this._value !== 0 || 1 / this._value === 1 / other)) || (this._value !== this._value && other !== other);
             },
     
+            deepEqual: function (other) {
+    
+            },
+    
             args: function () {
                 return _.type(this._value) === 'arguments';
             },
@@ -97,6 +101,10 @@
                 return _.type(this._value) !== 'undefined';
             },
     
+            exists: function () {
+                return this.defined() && this._value !== null;
+            },
+    
             float: function () {
                 return this.number() && (this._value % 1 !== 0);
             },
@@ -111,12 +119,6 @@
     
             nan: function () {
                 return _.type(this._value) === 'nan';
-            },
-    
-            native: function () {
-                // Вернет true если переданный параметр является native code
-                // TODO: Реализовать
-                throw new Error();
             },
     
             number: function () {
@@ -182,14 +184,78 @@
                 throw new Error();
             },
     
+            /**
+             * Метод возвращает значение свойства объекта
+             * @param prop {String} Имя свойства объекта или путь <prop>.<prop1>.<prop2>...<propN>
+             * @returns {*}
+             */
+            get: function (prop) {
+                if (!ft.is(prop).string()) {
+                    return;
+                }
+    
+                var obj = this._value,
+                    parts = prop.split('.'),
+                    last = parts.pop();
+    
+                while (prop = parts.shift()) {
+                    obj = obj[prop];
+                    if (!ft.is(obj).exists()) {
+                        return;
+                    }
+                }
+    
+                return obj[last];
+            },
+    
+            /**
+             * Метод проверяет наличие ключа в объекте
+             * @param key Имя ключа
+             * @returns {Boolean}
+             */
             has: function (key) {
                 return _.has.call(this._value, key);
             },
     
+            /**
+             * Метод возвращает объект, в котором все значения исходного объекта
+             * стали ключами, а ключи - значениями
+             * @returns {Object}
+             */
+            invert: function () {
+    
+            },
+    
+            /**
+             * Метод возвращает массив ключей исходного объекта
+             * @returns {Array}
+             */
             keys: function () {
                 return Object.keys(this._value);
             },
     
+            /**
+             * Метод создает пространство имен в исходном объекте
+             * и создает вложенные объекты согласно переданному пути
+             * @param path {String} Путь
+             */
+            namespace: function (path) {
+    
+            },
+    
+            /**
+             * Метод возвращает копию объекта без переданных в метод ключей.
+             * Ключ может представлять собой путь к свойству.
+             * @returns {Object}
+             */
+            omit: function () {
+    
+            },
+    
+            /**
+             * Метод возвращает массив пар ключ-значение от исходного объекта
+             * @returns {Array}
+             */
             pairs: function () {
                 var that = this;
                 return _.map(this.keys(), function (el) {
@@ -197,11 +263,29 @@
                 });
             },
     
+            /**
+             * Метод возвращает копию объекта с ключами, переданными в метод.
+             * Ключ может представлять собой путь к свойству.
+             * @returns {Object}
+             */
             pick: function () {
                 // TODO: Реализовать
                 throw new Error();
             },
     
+            result: function (key) {
+    
+            },
+    
+            set: function (path, value) {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            /**
+             * Метод возвращает массив значений исходного объекта
+             * @returns {Array}
+             */
             values: function () {
                 var that = this;
                 return _.map(this.keys(), function (el) {
@@ -408,8 +492,9 @@
              * @returns {String}
              */
             inject: function (data) {
+                data = ft.object(data);
                 return this._value.replace(/\$\{([^${}]+?)\}/g, function (match, name) {
-                    var v = ft.is(data[ft.string(name).trim()]);
+                    var v = ft.is(data.get(ft.string(name).trim()));
                     return v.number() || v.string() ? '' + v.value() : match;
                 });
             },

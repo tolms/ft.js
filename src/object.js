@@ -24,23 +24,15 @@ var Objects = (function () {
         },
 
         /**
-         * Метод проверяет наличие ключа в объекте
-         * @param key Имя ключа
-         * @returns {Boolean}
+         * Метод возвращает значение свойства объекта
+         * @param prop {String} Имя свойства объекта или путь <prop>.<prop1>.<prop2>...<propN>
+         * @returns {*}
          */
-        has: function (key) {
-            return _.has.call(this._value, key);
-        },
-
-        /**
-         * Метод возвращает массив ключей исходного объекта
-         * @returns {Array}
-         */
-        keys: function () {
-            return Object.keys(this._value);
-        },
-
         get: function (prop) {
+            if (!ft.is(prop).string()) {
+                return;
+            }
+
             var obj = this._value,
                 parts = prop.split('.'),
                 last = parts.pop();
@@ -55,8 +47,51 @@ var Objects = (function () {
             return obj[last];
         },
 
-        set: function (path, value) {
+        /**
+         * Метод проверяет наличие ключа в объекте
+         * @param key Имя ключа
+         * @returns {Boolean}
+         */
+        has: function (key) {
+            return _.has.call(this._value, key);
+        },
 
+        /**
+         * Метод возвращает объект, в котором все значения исходного объекта
+         * стали ключами, а ключи - значениями
+         * @returns {Object}
+         */
+        invert: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
+        /**
+         * Метод возвращает массив ключей исходного объекта
+         * @returns {Array}
+         */
+        keys: function () {
+            return Object.keys(this._value);
+        },
+
+        /**
+         * Метод создает пространство имен в исходном объекте
+         * и создает вложенные объекты согласно переданному пути
+         * @param path {String} Путь
+         */
+        namespace: function (path) {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
+        /**
+         * Метод возвращает копию объекта без переданных в метод ключей.
+         * Ключ может представлять собой путь к свойству.
+         * @returns {Object}
+         */
+        omit: function () {
+            // TODO: Реализовать
+            throw new Error();
         },
 
         /**
@@ -70,7 +105,22 @@ var Objects = (function () {
             });
         },
 
+        /**
+         * Метод возвращает копию объекта с ключами, переданными в метод.
+         * Ключ может представлять собой путь к свойству.
+         * @returns {Object}
+         */
         pick: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
+        result: function (key) {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
+        set: function (path, value) {
             // TODO: Реализовать
             throw new Error();
         },

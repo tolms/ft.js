@@ -29,11 +29,14 @@ describe('#object()', function () {
             expect(ft.object(lorem).get('lorem.foo')).to.be.a('function');
             expect(ft.object(lorem).get('lorem.foo')()).to.equal('bar');
             expect(ft.object(foo).get('foo.foo')).to.deep.equal({ foo: 'foo' });
+            expect(ft.object(foo).get('foo.foo.foo')).to.equal('foo');
         });
 
         it('should not return value of undefined property', function () {
-            expect(ft.object(lorem).get('lorem.ipsum.foo')).to.be.undefined;
-            expect(ft.object(foo).get('foo.foo.foo.foo.foo.foo')).to.be.undefined;
+            expect(ft.object(lorem).get()).to.be.an('undefined');
+            expect(ft.object(foo).get('')).to.be.an('undefined');
+            expect(ft.object(lorem).get('lorem.ipsum.foo')).to.be.an('undefined');
+            expect(ft.object(foo).get('foo.foo.foo.foo.foo.foo')).to.be.an('undefined');
         });
     });
 });
