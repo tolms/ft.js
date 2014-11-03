@@ -8,6 +8,10 @@ var Is = (function () {
             return (this._value === other && (this._value !== 0 || 1 / this._value === 1 / other)) || (this._value !== this._value && other !== other);
         },
 
+        deepEqual: function (other) {
+
+        },
+
         args: function () {
             return _.type(this._value) === 'arguments';
         },
@@ -46,12 +50,6 @@ var Is = (function () {
 
         nan: function () {
             return _.type(this._value) === 'nan';
-        },
-
-        native: function () {
-            // Вернет true если переданный параметр является native code
-            // TODO: Реализовать
-            throw new Error();
         },
 
         number: function () {

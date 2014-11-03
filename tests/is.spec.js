@@ -74,6 +74,10 @@ describe('#is()', function () {
         });
     });
 
+    describe('.deepEqual()', function () {
+        it('should return value');
+    });
+
     describe('.args()', function () {
         it('#is(arguments).args() - args should be args', function () {
             expect(ft.is(arguments).args()).to.be.true;
@@ -511,10 +515,6 @@ describe('#is()', function () {
         it('#.is(function () {}).nan() - function should not be NaN', function () {
             expect(ft.is(function () {}).nan()).to.be.false;
         });
-    });
-
-    describe('.native()', function () {
-        it('should return value');
     });
 
     describe('.number()', function () {
