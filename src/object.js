@@ -115,9 +115,20 @@ var Objects = (function () {
             throw new Error();
         },
 
+        /**
+         * Метод возвращает значение ключа
+         * @param key {String} Ключ или путь
+         * @returns {*}
+         */
         result: function (key) {
-            // TODO: Реализовать
-            throw new Error();
+            var prop = this.get(key),
+                $prop = ft.is(prop);
+
+            if (!$prop.defined()) {
+                return;
+            }
+
+            return $prop.fn() ? prop.call(this._value) : prop;
         },
 
         set: function (path, value) {

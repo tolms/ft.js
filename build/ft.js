@@ -223,7 +223,8 @@
              * @returns {Object}
              */
             invert: function () {
-    
+                // TODO: Реализовать
+                throw new Error();
             },
     
             /**
@@ -240,7 +241,8 @@
              * @param path {String} Путь
              */
             namespace: function (path) {
-    
+                // TODO: Реализовать
+                throw new Error();
             },
     
             /**
@@ -249,7 +251,8 @@
              * @returns {Object}
              */
             omit: function () {
-    
+                // TODO: Реализовать
+                throw new Error();
             },
     
             /**
@@ -273,8 +276,20 @@
                 throw new Error();
             },
     
+            /**
+             * Метод возвращает значение ключа
+             * @param key {String} Ключ или путь
+             * @returns {*}
+             */
             result: function (key) {
+                var prop = this.get(key),
+                    $prop = ft.is(prop);
     
+                if (!$prop.defined()) {
+                    return;
+                }
+    
+                return $prop.fn() ? prop.call(this._value) : prop;
             },
     
             set: function (path, value) {

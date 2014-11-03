@@ -39,4 +39,33 @@ describe('#object()', function () {
             expect(ft.object(foo).get('foo.foo.foo.foo.foo.foo')).to.be.an('undefined');
         });
     });
+
+    describe('.result()', function () {
+        var obj;
+
+        before(function () {
+            obj = {
+                attr: 'value',
+                arr: [0, 1, 2],
+                num: 2,
+                falsey: '',
+                method: function () {
+                    return this.attr;
+                }
+            };
+        });
+
+        it('should return nothing for undefined object properties.', function() {
+            expect(ft.object(obj).result('some')).to.be.an('undefined');
+        });
+
+        it('should evaluate a method with object context and return its result.', function() {
+            expect(ft.object(obj).result('method')).to.equal('value');
+        });
+
+        it('should evaluate an attribute and return its result.', function() {
+            expect(ft.object(obj).result('attr')).to.equal('value');
+            expect(ft.object(obj).result('falsey')).to.equal('');
+        });
+    });
 });
