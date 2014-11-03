@@ -97,7 +97,7 @@ describe('#string()', function () {
     });
 
     describe('.inject()', function () {
-        var plain, url, date;
+        var plain, url, date, obj, plainUrl, plainDate;
 
         before(function () {
             plain = {
@@ -109,17 +109,35 @@ describe('#string()', function () {
                 title: 'some-title',
                 ext: 'html'
             };
-            url = '${ protocol }://${ domain }/${ year }/${ month }/${ day }/${ title }.${ ext }';
-            date = '${ day }.${ month }.${ year }';
+            obj = {
+                url: {
+                    protocol: 'http',
+                    domain: 'blog.com'
+                },
+                date: {
+                    year: 2014,
+                    month: 12,
+                    day: 10
+                },
+                info: {
+                    title: 'some-title',
+                    ext: 'html'
+                }
+            };
+            plainUrl = '${ protocol }://${ domain }/${ year }/${ month }/${ day }/${ title }.${ ext }';
+            url = '${ url.protocol }://${ url.domain }/${ date.year }/${ date.month }/${ date.day }/${ info.title }.${ info.ext }';
+            plainDate = '${ day }.${ month }.${ year }';
+            date = '${ date.day }.${ date.month }.${ date.year }';
         });
 
         it('Should inject a plain object', function () {
-            expect(ft.string(url).inject(plain)).to.equal('http://blog.com/2014/12/10/some-title.html');
-            expect(ft.string(date).inject(plain)).to.equal('10.12.2014');
+            expect(ft.string(plainUrl).inject(plain)).to.equal('http://blog.com/2014/12/10/some-title.html');
+            expect(ft.string(plainDate).inject(plain)).to.equal('10.12.2014');
         });
 
         it('Should inject a non-plain object', function () {
-
+            expect(ft.string(url).inject(obj)).to.equal('http://blog.com/2014/12/10/some-title.html');
+            expect(ft.string(date).inject(obj)).to.equal('10.12.2014');
         });
     });
 

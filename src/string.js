@@ -89,8 +89,9 @@ var Strings = (function () {
          * @returns {String}
          */
         inject: function (data) {
+            data = ft.object(data);
             return this._value.replace(/\$\{([^${}]+?)\}/g, function (match, name) {
-                var v = ft.is(data[ft.string(name).trim()]);
+                var v = ft.is(data.get(ft.string(name).trim()));
                 return v.number() || v.string() ? '' + v.value() : match;
             });
         },
