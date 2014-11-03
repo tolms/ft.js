@@ -28,6 +28,10 @@ var Is = (function () {
             return _.type(this._value) !== 'undefined';
         },
 
+        exists: function () {
+            return this.defined() && this._value !== null;
+        },
+
         float: function () {
             return this.number() && (this._value % 1 !== 0);
         },
