@@ -159,6 +159,7 @@
         return new Is(value);
     };
 
+    /* jshint -W084 */
     var Objects = (function () {
         function Objects(value) {
             if (!ft.is(value).object()) {
@@ -180,6 +181,11 @@
             },
     
             create: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
+            defaults: function () {
                 // TODO: Реализовать
                 throw new Error();
             },
@@ -223,8 +229,13 @@
              * @returns {Object}
              */
             invert: function () {
-                // TODO: Реализовать
-                throw new Error();
+                var result = {};
+    
+                _.each.call(this.keys(), function (el) {
+                    result[this._value[el]] = el;
+                }, this);
+    
+                return result;
             },
     
             /**
@@ -261,7 +272,7 @@
              */
             pairs: function () {
                 var that = this;
-                return _.map(this.keys(), function (el) {
+                return _.map.call(this.keys(), function (el) {
                     return [el, that._value[el]];
                 });
             },
@@ -271,9 +282,28 @@
              * Ключ может представлять собой путь к свойству.
              * @returns {Object}
              */
-            pick: function () {
-                // TODO: Реализовать
-                throw new Error();
+            pick: function (keys, ctx) {
+                var result = {},
+                    key,
+                    isKeys = ft.is(keys);
+    
+                if (isKeys.array()) {
+                    _.each.call(keys, function (key) {
+                        if (this.has(key)) {
+                            result[key] = this._value[key];
+                        }
+                    }, this);
+                }
+    
+                if (isKeys.fn()) {
+                    for (key in this._value) {
+                        if (this.has(key) && keys.call(ctx, key, this._value[key], this._value)) {
+                            result[key] = this._value[key];
+                        }
+                    }
+                }
+    
+                return result;
             },
     
             /**
@@ -297,13 +327,17 @@
                 throw new Error();
             },
     
+            template: function () {
+    
+            },
+    
             /**
              * Метод возвращает массив значений исходного объекта
              * @returns {Array}
              */
             values: function () {
                 var that = this;
-                return _.map(this.keys(), function (el) {
+                return _.map.call(this.keys(), function (el) {
                     return that._value[el];
                 });
             }
