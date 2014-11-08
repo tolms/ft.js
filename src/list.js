@@ -9,14 +9,18 @@ var List = (function () {
             throw new Error();
         },
 
+        clone: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
         concat: function () {
             // TODO: Реализовать ???
             throw new Error();
         },
 
-        clone: function () {
-            // TODO: Реализовать
-            throw new Error();
+        contains: function (item) {
+            return this._value.indexOf(item) !== -1;
         },
 
         each: function (fn, ctx) {
@@ -24,7 +28,7 @@ var List = (function () {
             if (!ft.is(fn).fn()) {
                 throw new TypeError();
             }
-            _.each(this._value, fn, ctx);
+            _.each.call(this._value, fn, ctx);
         },
 
         filter: function () {
@@ -47,7 +51,7 @@ var List = (function () {
             if (!ft.is(fn).fn()) {
                 throw new TypeError();
             }
-            return _.map(this._value, fn, ctx);
+            return _.map.call(this._value, fn, ctx);
         },
 
         /**

@@ -261,9 +261,23 @@
              * Ключ может представлять собой путь к свойству.
              * @returns {Object}
              */
-            omit: function () {
-                // TODO: Реализовать
-                throw new Error();
+            omit: function (keys, ctx) {
+                var isKeys = ft.is(keys),
+                    list,
+                    fn;
+    
+                if (isKeys.array()) {
+                    list = ft.list(keys);
+                    fn = function (key) {
+                        return !list.contains(key);
+                    };
+                }
+    
+                if (isKeys.fn()) {
+                    fn = ft.fn(keys).negate();
+                }
+    
+                return this.pick(fn, ctx);
             },
     
             /**
@@ -297,7 +311,7 @@
     
                 if (isKeys.fn()) {
                     for (key in this._value) {
-                        if (this.has(key) && keys.call(ctx, key, this._value[key], this._value)) {
+                        if (this.has(key) && keys.call(ctx, key, this._value[key])) {
                             result[key] = this._value[key];
                         }
                     }
@@ -362,14 +376,18 @@
                 throw new Error();
             },
     
+            clone: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
             concat: function () {
                 // TODO: Реализовать ???
                 throw new Error();
             },
     
-            clone: function () {
-                // TODO: Реализовать
-                throw new Error();
+            contains: function (item) {
+                return this._value.indexOf(item) !== -1;
             },
     
             each: function (fn, ctx) {
@@ -377,7 +395,7 @@
                 if (!ft.is(fn).fn()) {
                     throw new TypeError();
                 }
-                _.each(this._value, fn, ctx);
+                _.each.call(this._value, fn, ctx);
             },
     
             filter: function () {
@@ -400,7 +418,7 @@
                 if (!ft.is(fn).fn()) {
                     throw new TypeError();
                 }
-                return _.map(this._value, fn, ctx);
+                return _.map.call(this._value, fn, ctx);
             },
     
             /**
