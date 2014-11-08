@@ -252,8 +252,18 @@
              * @param path {String} Путь
              */
             namespace: function (path) {
-                // TODO: Реализовать
-                throw new Error();
+                var obj = this._value;
+                _.each.call(path.split('.'), function (key) {
+                    if (!ft.is(obj[key]).defined()) {
+                        obj[key] = {};
+                    }
+                    if (ft.is(obj[key]).object()) {
+                        obj = obj[key];
+                    } else {
+                        throw new RangeError('Property already exists and is not an object.');
+                    }
+                });
+                return obj;
             },
     
             /**
