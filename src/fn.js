@@ -8,14 +8,25 @@ var Fn = (function () {
     }
 
     _.extend(Fn.prototype, {
-        after: function () {
-            // TODO: Реализовать
-            throw new Error();
+        after: function (times) {
+            var that = this;
+            return function() {
+                if (--times < 1) {
+                    return that._value.apply(this, arguments);
+                }
+            };
         },
 
-        before: function () {
-            // TODO: Реализовать
-            throw new Error();
+        before: function (times) {
+            var that = this, memo;
+            return function () {
+                if (--times > 0) {
+                    memo = that._value.apply(this, arguments);
+                } else {
+                    that._value = null;
+                }
+                return memo;
+            };
         },
 
         compose: function () {
@@ -69,9 +80,7 @@ var Fn = (function () {
         },
 
         once: function () {
-            // Возвращает функцию, которая вызывается один раз
-            // TODO: Реализовать
-            throw new Error();
+            return this.before(2);
         },
 
         partial: function () {
