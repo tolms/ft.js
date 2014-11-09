@@ -50,8 +50,15 @@ var Fn = (function () {
         },
 
         memoize: function () {
-            // TODO: Реализовать
-            throw new Error();
+            var that = this,
+                memos = {};
+            return function () {
+                var key = JSON.stringify(_.slice.call(arguments));
+                if (!ft.is(memos[key]).defined()) {
+                    memos[key] = that._value.apply(this, arguments);
+                }
+                return memos[key];
+            };
         },
 
         negate: function () {
