@@ -325,27 +325,27 @@ describe('#string()', function () {
         });
     });
 
-    describe('.ltrim()', function () {
+    describe('.trimLeft()', function () {
         it('Should remove all spaces from beginning of string', function () {
-            expect(ft.string('           Hello, World!             ').ltrim()).to.equal('Hello, World!             ');
-            expect(ft.string('                        ').ltrim()).to.equal('');
+            expect(ft.string('           Hello, World!             ').trimLeft()).to.equal('Hello, World!             ');
+            expect(ft.string('                        ').trimLeft()).to.equal('');
         });
 
         it('Should remove all whitespace from beginning of string', function () {
-            expect(ft.string('\n Hello,   \t   World!        \r     ').ltrim()).to.equal('Hello,   \t   World!        \r     ');
-            expect(ft.string('\0 \b \t \nHello, World!\v \f \r').ltrim()).to.equal('Hello, World!\v \f \r');
+            expect(ft.string('\n Hello,   \t   World!        \r     ').trimLeft()).to.equal('Hello,   \t   World!        \r     ');
+            expect(ft.string('\0 \b \t \nHello, World!\v \f \r').trimLeft()).to.equal('Hello, World!\v \f \r');
         });
     });
 
-    describe('.rtrim()', function () {
+    describe('.trimRight()', function () {
         it('Should remove all spaces from end of string', function () {
-            expect(ft.string('           Hello, World!             ').rtrim()).to.equal('           Hello, World!');
-            expect(ft.string('                        ').rtrim()).to.equal('');
+            expect(ft.string('           Hello, World!             ').trimRight()).to.equal('           Hello, World!');
+            expect(ft.string('                        ').trimRight()).to.equal('');
         });
 
         it('Should remove all whitespace from end of string', function () {
-            expect(ft.string('\n Hello,   \t   World!        \r     ').rtrim()).to.equal('\n Hello,   \t   World!');
-            expect(ft.string('\0 \b \t \nHello, World!\v \f \r').rtrim()).to.equal('\0 \b \t \nHello, World!');
+            expect(ft.string('\n Hello,   \t   World!        \r     ').trimRight()).to.equal('\n Hello,   \t   World!');
+            expect(ft.string('\0 \b \t \nHello, World!\v \f \r').trimRight()).to.equal('\0 \b \t \nHello, World!');
         });
     });
 

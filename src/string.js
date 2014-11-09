@@ -199,7 +199,7 @@ var Strings = (function () {
          * @param chars {String} Удаляемые символы
          * @returns {String}
          */
-        ltrim: function (chars) {
+        trimLeft: function (chars) {
             chars = chars || _.whitespace;
             return this._value.replace(new RegExp('^[' + chars + ']+'), '');
         },
@@ -209,7 +209,7 @@ var Strings = (function () {
          * @param chars {String} Удаляемые символы
          * @returns {String}
          */
-        rtrim: function (chars) {
+        trimRight: function (chars) {
             chars = chars || _.whitespace;
             return this._value.replace(new RegExp('[' + chars + ']+$'), '');
         },
