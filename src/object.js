@@ -9,11 +9,6 @@ var Objects = (function () {
     }
 
     _.extend(Objects.prototype, {
-        assign: function () {
-            // TODO: Реализовать
-            throw new Error();
-        },
-
         clone: function () {
             // TODO: Реализовать
             throw new Error();
@@ -83,6 +78,11 @@ var Objects = (function () {
          */
         keys: function () {
             return Object.keys(this._value);
+        },
+
+        merge: function () {
+            // TODO: Реализовать
+            throw new Error();
         },
 
         /**
