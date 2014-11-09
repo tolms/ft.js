@@ -37,9 +37,10 @@ var Fn = (function () {
          * usage: _.fn(f).delay(500, *args)
          */
         delay: function (ms) {
-            var args = _.slice.call(arguments, 1);
+            var args = _.slice.call(arguments, 1),
+                that = this;
             return setTimeout(function () {
-                return this._value.apply(null, args);
+                return that._value.apply(null, args);
             }, ms);
         },
 
@@ -51,6 +52,13 @@ var Fn = (function () {
         memoize: function () {
             // TODO: Реализовать
             throw new Error();
+        },
+
+        negate: function () {
+            var that = this;
+            return function () {
+                return !that._value.apply(this, arguments);
+            };
         },
 
         once: function () {
