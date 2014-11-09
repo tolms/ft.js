@@ -75,8 +75,21 @@ var Fn = (function () {
         },
 
         partial: function () {
-            // TODO: Реализовать
-            throw new Error();
+            var args = _.slice.call(arguments),
+                that = this;
+
+            return function () {
+                return that._value.apply(this, args.concat(_.slice.call(arguments)));
+            };
+        },
+
+        partialRight: function () {
+            var args = _.slice.call(arguments),
+                that = this;
+
+            return function () {
+                return that._value.apply(this, _.slice.call(arguments).concat(args));
+            };
         },
 
         repeat: function () {

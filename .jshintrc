@@ -9,7 +9,8 @@
         "describe": true,
         "it": true,
         "expect": true,
-        "before": true
+        "before": true,
+        "beforeEach": true
     },
     "maxerr": 50,
     "camelcase": true,
