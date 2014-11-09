@@ -170,11 +170,6 @@
         }
     
         _.extend(Objects.prototype, {
-            assign: function () {
-                // TODO: Реализовать
-                throw new Error();
-            },
-    
             clone: function () {
                 // TODO: Реализовать
                 throw new Error();
@@ -244,6 +239,11 @@
              */
             keys: function () {
                 return Object.keys(this._value);
+            },
+    
+            merge: function () {
+                // TODO: Реализовать
+                throw new Error();
             },
     
             /**
@@ -679,7 +679,7 @@
              * @param chars {String} Удаляемые символы
              * @returns {String}
              */
-            ltrim: function (chars) {
+            trimLeft: function (chars) {
                 chars = chars || _.whitespace;
                 return this._value.replace(new RegExp('^[' + chars + ']+'), '');
             },
@@ -689,7 +689,7 @@
              * @param chars {String} Удаляемые символы
              * @returns {String}
              */
-            rtrim: function (chars) {
+            trimRight: function (chars) {
                 chars = chars || _.whitespace;
                 return this._value.replace(new RegExp('[' + chars + ']+$'), '');
             },
@@ -776,6 +776,26 @@
         return new Html(value);
     };
 
+    var Url = (function () {
+        function Url(value) {
+            if (!ft.is(value).string()) {
+                throw new TypeError();
+            }
+    
+            this._value = value;
+        }
+    
+        _.extend(Url.prototype, {
+    
+        });
+    
+        return Url;
+    })();
+    
+    ft.url = function (value) {
+        return new Url(value);
+    };
+
     var Fn = (function () {
         function Fn(value) {
             if (!ft.is(value).fn()) {
@@ -786,14 +806,25 @@
         }
     
         _.extend(Fn.prototype, {
-            after: function () {
-                // TODO: Реализовать
-                throw new Error();
+            after: function (times) {
+                var that = this;
+                return function() {
+                    if (--times < 1) {
+                        return that._value.apply(this, arguments);
+                    }
+                };
             },
     
-            before: function () {
-                // TODO: Реализовать
-                throw new Error();
+            before: function (times) {
+                var that = this, memo;
+                return function () {
+                    if (--times > 0) {
+                        memo = that._value.apply(this, arguments);
+                    } else {
+                        that._value = null;
+                    }
+                    return memo;
+                };
             },
     
             compose: function () {
@@ -815,9 +846,10 @@
              * usage: _.fn(f).delay(500, *args)
              */
             delay: function (ms) {
-                var args = _.slice.call(arguments, 1);
+                var args = _.slice.call(arguments, 1),
+                    that = this;
                 return setTimeout(function () {
-                    return this._value.apply(null, args);
+                    return that._value.apply(null, args);
                 }, ms);
             },
     
@@ -827,19 +859,44 @@
             },
     
             memoize: function () {
-                // TODO: Реализовать
-                throw new Error();
+                var that = this,
+                    memos = {};
+                return function () {
+                    var key = JSON.stringify(_.slice.call(arguments));
+                    if (!ft.is(memos[key]).defined()) {
+                        memos[key] = that._value.apply(this, arguments);
+                    }
+                    return memos[key];
+                };
+            },
+    
+            negate: function () {
+                var that = this;
+                return function () {
+                    return !that._value.apply(this, arguments);
+                };
             },
     
             once: function () {
-                // Возвращает функцию, которая вызывается один раз
-                // TODO: Реализовать
-                throw new Error();
+                return this.before(2);
             },
     
             partial: function () {
-                // TODO: Реализовать
-                throw new Error();
+                var args = _.slice.call(arguments),
+                    that = this;
+    
+                return function () {
+                    return that._value.apply(this, args.concat(_.slice.call(arguments)));
+                };
+            },
+    
+            partialRight: function () {
+                var args = _.slice.call(arguments),
+                    that = this;
+    
+                return function () {
+                    return that._value.apply(this, _.slice.call(arguments).concat(args));
+                };
             },
     
             repeat: function () {
