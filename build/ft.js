@@ -67,12 +67,12 @@
         return tp;
     };
 
-    var Is = (function () {
-        function Is(value) {
+    var IsWrapper = (function () {
+        function IsWrapper(value) {
             this._value = value;
         }
     
-        _.extend(Is.prototype, {
+        _.extend(IsWrapper.prototype, {
             equal: function (other) {
                 return (this._value === other && (this._value !== 0 || 1 / this._value === 1 / other)) || (this._value !== this._value && other !== other);
             },
@@ -95,6 +95,10 @@
     
             date: function () {
                 return _.type(this._value) === 'date';
+            },
+    
+            validDate: function () {
+                return this.date() && !ft.is(this._value.getTime()).nan();
             },
     
             defined: function () {
@@ -152,7 +156,7 @@
             }
         });
     
-        return Is;
+        return IsWrapper;
     })();
     
     ft.is = function (value) {
@@ -375,12 +379,12 @@
     };
     
 
-    var List = (function () {
-        function List(value) {
+    var ListWrapper = (function () {
+        function ListWrapper(value) {
             this._value = value;
         }
     
-        _.extend(List.prototype, {
+        _.extend(ListWrapper.prototype, {
             at: function () {
                 // TODO: Реализовать
                 throw new Error();
@@ -452,34 +456,56 @@
             }
         });
     
-        return List;
+        return ListWrapper;
     })();
     
     ft.list = function (value) {
         return new ListWrapper(value);
     };
 
-    var DateTime = (function () {
-        function DateTime(value) {
-            this._value = value;
+    var DateTimeWrapper = (function () {
+        function DateTimeWrapper(dt) {
+            var $dt = ft.is(dt);
+            if (!$dt.date() && $dt.validDate()) {
+                throw new TypeError();
+            }
+    
+            this._date = {
+                year: dt.getFullYear(),
+                month: dt.getMonth() + 1, // Январь будет иметь номер 1
+                day: dt.getDate(),
+                hours: dt.getHours(),
+                minutes: dt.getMinutes(),
+                seconds: dt.getSeconds(),
+                ms: dt.getMilliseconds()
+            };
         }
     
-        _.extend(DateTime.prototype, {
-            now: function () {
-                // TODO: Реализовать
-                throw new Error();
+        _.extend(DateTimeWrapper.prototype, {
+    
+            /**
+             * Форматирует исходную дату в строку согласно переданному паттерну
+             * @param pattern {String} Паттерн
+             * @returns {String}
+             */
+            format: function (pattern) {
+    
+            },
+    
+            value: function () {
+                return new Date(this._date.year, this._date.month - 1, this._date.day, this._date.hours, this._date.minutes, this._date.seconds, this._date.ms);
             }
         });
     
-        return DateTime;
+        return DateTimeWrapper;
     })();
     
     ft.datetime = function (value) {
         return new DateTimeWrapper(value);
     };
 
-    var Strings = (function () {
-        function Strings(value) {
+    var StringWrapper = (function () {
+        function StringWrapper(value) {
             if (!ft.is(value).string()) {
                 throw new TypeError();
             }
@@ -487,7 +513,7 @@
             this._value = value;
         }
     
-        _.extend(Strings.prototype, {
+        _.extend(StringWrapper.prototype, {
             /**
              * Метод добавляет в конец исходной строки переданную
              * @param str {String} Переданная строка
@@ -665,6 +691,31 @@
             },
     
             /**
+             * Метод приводит исходную строку к дате по паттерну
+             * @param pattern {String} Паттерн, по которому опредяется дата
+             * @returns {Date}
+             */
+            toDate: function () {
+    
+            },
+    
+            /**
+             * Метод приводит исходную строку к числу с плавающей точкой
+             * @returns {Number}
+             */
+            toFloat: function () {
+    
+            },
+    
+            /**
+             * Метод приводит исходную строку к целочисленному значению
+             * @returns {Number}
+             */
+            toInt: function () {
+    
+            },
+    
+            /**
              * Метод удаляет с начала и с конца исходной строки
              * @param chars {String} Удаляемые символы
              * @returns {String}
@@ -719,7 +770,7 @@
             }
         });
     
-        return Strings;
+        return StringWrapper;
     })();
     
     ft.string = function (value) {
@@ -727,8 +778,8 @@
     };
     
 
-    var Html = (function () {
-        function Html(value) {
+    var HtmlWrapper = (function () {
+        function HtmlWrapper(value) {
             if (!ft.is(value).string()) {
                 throw new TypeError();
             }
@@ -736,7 +787,7 @@
             this._value = value;
         }
     
-        _.extend(Html.prototype, {
+        _.extend(HtmlWrapper.prototype, {
     
             escape: function () {
                 // TODO: Реализовать
@@ -769,15 +820,15 @@
             }
         });
     
-        return Html;
+        return HtmlWrapper;
     })();
     
     ft.html = function (value) {
         return new HtmlWrapper(value);
     };
 
-    var Url = (function () {
-        function Url(value) {
+    var UrlWrapper = (function () {
+        function UrlWrapper(value) {
             if (!ft.is(value).string()) {
                 throw new TypeError();
             }
@@ -785,19 +836,19 @@
             this._value = value;
         }
     
-        _.extend(Url.prototype, {
+        _.extend(UrlWrapper.prototype, {
     
         });
     
-        return Url;
+        return UrlWrapper;
     })();
     
     ft.url = function (value) {
         return new UrlWrapper(value);
     };
 
-    var Fn = (function () {
-        function Fn(value) {
+    var FunctionWrapper = (function () {
+        function FunctionWrapper(value) {
             if (!ft.is(value).fn()) {
                 throw new TypeError();
             }
@@ -805,7 +856,7 @@
             this._value = value;
         }
     
-        _.extend(Fn.prototype, {
+        _.extend(FunctionWrapper.prototype, {
             after: function (times) {
                 var that = this;
                 return function() {
@@ -917,15 +968,15 @@
             }
         });
     
-        return Fn;
+        return FunctionWrapper;
     })();
     
     ft.fn = function (value) {
         return new FunctionWrapper(value);
     };
 
-    var Num = (function () {
-        function Num(value) {
+    var NumberWrapper = (function () {
+        function NumberWrapper(value) {
             if (!ft.is(value).number()) {
                 throw new TypeError();
             }
@@ -933,7 +984,7 @@
             this._value = value;
         }
     
-        _.extend(Num.prototype, {
+        _.extend(NumberWrapper.prototype, {
     
             format: function () {
                 // TODO: Реализовать
@@ -954,18 +1005,18 @@
             }
         });
     
-        return Num;
+        return NumberWrapper;
     })();
     
     ft.number = function (value) {
         return new NumberWrapper(value);
     };
 
-    var Random = (function () {
-        function Random() {
+    var RandomWrapper = (function () {
+        function RandomWrapper() {
         }
     
-        _.extend(Random.prototype, {
+        _.extend(RandomWrapper.prototype, {
             id: function (prefix) {
                 // TODO: Реализовать
                 // Генерирует уникальный идентификатор с префиксом prefix
@@ -973,7 +1024,7 @@
             }
         });
     
-        return Random;
+        return RandomWrapper;
     })();
     
     ft.random = function (value) {
