@@ -1,18 +1,18 @@
-var DateTime = (function () {
-    function DateTime(value) {
+var DateTimeWrapper = (function () {
+    function DateTimeWrapper(value) {
         this._value = value;
     }
 
-    _.extend(DateTime.prototype, {
+    _.extend(DateTimeWrapper.prototype, {
         now: function () {
             // TODO: Реализовать
             throw new Error();
         }
     });
 
-    return DateTime;
+    return DateTimeWrapper;
 })();
 
 ft.datetime = function (value) {
-    return new DateTime(value);
+    return new DateTimeWrapper(value);
 };

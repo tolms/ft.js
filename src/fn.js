@@ -1,5 +1,5 @@
-var Fn = (function () {
-    function Fn(value) {
+var FunctionWrapper = (function () {
+    function FunctionWrapper(value) {
         if (!ft.is(value).fn()) {
             throw new TypeError();
         }
@@ -7,7 +7,7 @@ var Fn = (function () {
         this._value = value;
     }
 
-    _.extend(Fn.prototype, {
+    _.extend(FunctionWrapper.prototype, {
         after: function (times) {
             var that = this;
             return function() {
@@ -119,9 +119,9 @@ var Fn = (function () {
         }
     });
 
-    return Fn;
+    return FunctionWrapper;
 })();
 
 ft.fn = function (value) {
-    return new Fn(value);
+    return new FunctionWrapper(value);
 };

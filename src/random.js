@@ -1,8 +1,8 @@
-var Random = (function () {
-    function Random() {
+var RandomWrapper = (function () {
+    function RandomWrapper() {
     }
 
-    _.extend(Random.prototype, {
+    _.extend(RandomWrapper.prototype, {
         id: function (prefix) {
             // TODO: Реализовать
             // Генерирует уникальный идентификатор с префиксом prefix
@@ -10,9 +10,9 @@ var Random = (function () {
         }
     });
 
-    return Random;
+    return RandomWrapper;
 })();
 
 ft.random = function (value) {
-    return new Random(value);
+    return new RandomWrapper(value);
 };

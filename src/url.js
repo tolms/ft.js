@@ -1,5 +1,5 @@
-var Url = (function () {
-    function Url(value) {
+var UrlWrapper = (function () {
+    function UrlWrapper(value) {
         if (!ft.is(value).string()) {
             throw new TypeError();
         }
@@ -7,13 +7,13 @@ var Url = (function () {
         this._value = value;
     }
 
-    _.extend(Url.prototype, {
+    _.extend(UrlWrapper.prototype, {
 
     });
 
-    return Url;
+    return UrlWrapper;
 })();
 
 ft.url = function (value) {
-    return new Url(value);
+    return new UrlWrapper(value);
 };

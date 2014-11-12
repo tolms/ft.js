@@ -1,9 +1,9 @@
-var Is = (function () {
-    function Is(value) {
+var IsWrapper = (function () {
+    function IsWrapper(value) {
         this._value = value;
     }
 
-    _.extend(Is.prototype, {
+    _.extend(IsWrapper.prototype, {
         equal: function (other) {
             return (this._value === other && (this._value !== 0 || 1 / this._value === 1 / other)) || (this._value !== this._value && other !== other);
         },
@@ -83,9 +83,9 @@ var Is = (function () {
         }
     });
 
-    return Is;
+    return IsWrapper;
 })();
 
 ft.is = function (value) {
-    return new Is(value);
+    return new IsWrapper(value);
 };

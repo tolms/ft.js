@@ -1,5 +1,5 @@
-var Strings = (function () {
-    function Strings(value) {
+var StringWrapper = (function () {
+    function StringWrapper(value) {
         if (!ft.is(value).string()) {
             throw new TypeError();
         }
@@ -7,7 +7,7 @@ var Strings = (function () {
         this._value = value;
     }
 
-    _.extend(Strings.prototype, {
+    _.extend(StringWrapper.prototype, {
         /**
          * Метод добавляет в конец исходной строки переданную
          * @param str {String} Переданная строка
@@ -239,9 +239,9 @@ var Strings = (function () {
         }
     });
 
-    return Strings;
+    return StringWrapper;
 })();
 
 ft.string = function (value) {
-    return new Strings(value);
+    return new StringWrapper(value);
 };

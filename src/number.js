@@ -1,5 +1,5 @@
-var Num = (function () {
-    function Num(value) {
+var NumberWrapper = (function () {
+    function NumberWrapper(value) {
         if (!ft.is(value).number()) {
             throw new TypeError();
         }
@@ -7,7 +7,7 @@ var Num = (function () {
         this._value = value;
     }
 
-    _.extend(Num.prototype, {
+    _.extend(NumberWrapper.prototype, {
 
         format: function () {
             // TODO: Реализовать
@@ -28,9 +28,9 @@ var Num = (function () {
         }
     });
 
-    return Num;
+    return NumberWrapper;
 })();
 
 ft.number = function (value) {
-    return new Num(value);
+    return new NumberWrapper(value);
 };

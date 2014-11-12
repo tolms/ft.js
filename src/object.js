@@ -1,6 +1,6 @@
 /* jshint -W084 */
-var Objects = (function () {
-    function Objects(value) {
+var ObjectWrapper = (function () {
+    function ObjectWrapper(value) {
         if (!ft.is(value).object()) {
             throw new TypeError();
         }
@@ -8,7 +8,7 @@ var Objects = (function () {
         this._value = value;
     }
 
-    _.extend(Objects.prototype, {
+    _.extend(ObjectWrapper.prototype, {
         clone: function () {
             // TODO: Реализовать
             throw new Error();
@@ -206,9 +206,9 @@ var Objects = (function () {
         }
     });
 
-    return Objects;
+    return ObjectWrapper;
 })();
 
 ft.object = function (value) {
-    return new Objects(value);
+    return new ObjectWrapper(value);
 };

@@ -1,5 +1,5 @@
-var Html = (function () {
-    function Html(value) {
+var HtmlWrapper = (function () {
+    function HtmlWrapper(value) {
         if (!ft.is(value).string()) {
             throw new TypeError();
         }
@@ -7,7 +7,7 @@ var Html = (function () {
         this._value = value;
     }
 
-    _.extend(Html.prototype, {
+    _.extend(HtmlWrapper.prototype, {
 
         escape: function () {
             // TODO: Реализовать
@@ -40,9 +40,9 @@ var Html = (function () {
         }
     });
 
-    return Html;
+    return HtmlWrapper;
 })();
 
 ft.html = function (value) {
-    return new Html(value);
+    return new HtmlWrapper(value);
 };

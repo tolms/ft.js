@@ -156,12 +156,12 @@
     })();
     
     ft.is = function (value) {
-        return new Is(value);
+        return new IsWrapper(value);
     };
 
     /* jshint -W084 */
-    var Objects = (function () {
-        function Objects(value) {
+    var ObjectWrapper = (function () {
+        function ObjectWrapper(value) {
             if (!ft.is(value).object()) {
                 throw new TypeError();
             }
@@ -169,7 +169,7 @@
             this._value = value;
         }
     
-        _.extend(Objects.prototype, {
+        _.extend(ObjectWrapper.prototype, {
             clone: function () {
                 // TODO: Реализовать
                 throw new Error();
@@ -367,11 +367,11 @@
             }
         });
     
-        return Objects;
+        return ObjectWrapper;
     })();
     
     ft.object = function (value) {
-        return new Objects(value);
+        return new ObjectWrapper(value);
     };
     
 
@@ -456,7 +456,7 @@
     })();
     
     ft.list = function (value) {
-        return new List(value);
+        return new ListWrapper(value);
     };
 
     var DateTime = (function () {
@@ -475,7 +475,7 @@
     })();
     
     ft.datetime = function (value) {
-        return new DateTime(value);
+        return new DateTimeWrapper(value);
     };
 
     var Strings = (function () {
@@ -723,7 +723,7 @@
     })();
     
     ft.string = function (value) {
-        return new Strings(value);
+        return new StringWrapper(value);
     };
     
 
@@ -773,7 +773,7 @@
     })();
     
     ft.html = function (value) {
-        return new Html(value);
+        return new HtmlWrapper(value);
     };
 
     var Url = (function () {
@@ -793,7 +793,7 @@
     })();
     
     ft.url = function (value) {
-        return new Url(value);
+        return new UrlWrapper(value);
     };
 
     var Fn = (function () {
@@ -921,7 +921,7 @@
     })();
     
     ft.fn = function (value) {
-        return new Fn(value);
+        return new FunctionWrapper(value);
     };
 
     var Num = (function () {
@@ -958,7 +958,7 @@
     })();
     
     ft.number = function (value) {
-        return new Num(value);
+        return new NumberWrapper(value);
     };
 
     var Random = (function () {
@@ -977,7 +977,7 @@
     })();
     
     ft.random = function (value) {
-        return new Random(value);
+        return new RandomWrapper(value);
     };
 
     return ft;

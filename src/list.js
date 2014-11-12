@@ -1,9 +1,9 @@
-var List = (function () {
-    function List(value) {
+var ListWrapper = (function () {
+    function ListWrapper(value) {
         this._value = value;
     }
 
-    _.extend(List.prototype, {
+    _.extend(ListWrapper.prototype, {
         at: function () {
             // TODO: Реализовать
             throw new Error();
@@ -75,9 +75,9 @@ var List = (function () {
         }
     });
 
-    return List;
+    return ListWrapper;
 })();
 
 ft.list = function (value) {
-    return new List(value);
+    return new ListWrapper(value);
 };
