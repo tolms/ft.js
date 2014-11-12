@@ -28,6 +28,10 @@ var IsWrapper = (function () {
             return _.type(this._value) === 'date';
         },
 
+        validDate: function () {
+            return this.date() && !ft.is(this._value.getTime()).nan();
+        },
+
         defined: function () {
             return _.type(this._value) !== 'undefined';
         },
