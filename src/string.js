@@ -185,6 +185,31 @@ var StringWrapper = (function () {
         },
 
         /**
+         * Метод приводит исходную строку к дате по паттерну
+         * @param pattern {String} Паттерн, по которому опредяется дата
+         * @returns {Date}
+         */
+        toDate: function () {
+
+        },
+
+        /**
+         * Метод приводит исходную строку к числу с плавающей точкой
+         * @returns {Number}
+         */
+        toFloat: function () {
+
+        },
+
+        /**
+         * Метод приводит исходную строку к целочисленному значению
+         * @returns {Number}
+         */
+        toInt: function () {
+
+        },
+
+        /**
          * Метод удаляет с начала и с конца исходной строки
          * @param chars {String} Удаляемые символы
          * @returns {String}
