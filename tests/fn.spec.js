@@ -24,7 +24,7 @@ describe('#fn()', function () {
             expect(add10(-7)).to.equal(10);
         });
 
-        it('Should partially apply multiple arguments', function() {
+        it('Should partially apply multiple arguments', function () {
             var hi = ft.fn(concat).partial('Hi');
             expect(hi('John', 'Doe')).to.equal('Hi, John Doe');
         });
@@ -56,9 +56,27 @@ describe('#fn()', function () {
             expect(hello('E', 'C', 'D')).to.equal('E C');
         });
 
-        it('Should partially apply multiple arguments', function() {
+        it('Should partially apply multiple arguments', function () {
             var hi = ft.fn(concat).partialRight('!');
             expect(hi('John', 'Doe')).to.equal('John Doe!');
+        });
+    });
+
+    describe('.wrap()', function () {
+        var add;
+
+        before(function () {
+            add = function (x, y) {
+                return x + y;
+            };
+        });
+
+        it('should create a wrapped function', function () {
+            var wrapped = ft.fn(add).wrap(function (fn, x, y) {
+                return fn(x * 2, y);
+            });
+
+            expect(wrapped(4, 5)).to.equal(13);
         });
     });
 });

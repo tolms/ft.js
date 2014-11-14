@@ -17,6 +17,11 @@ var FunctionWrapper = (function () {
             };
         },
 
+        async: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
         before: function (times) {
             var that = this, memo;
             return function () {
@@ -112,10 +117,12 @@ var FunctionWrapper = (function () {
             throw new Error();
         },
 
-        wrap: function () {
-            // TODO: Реализовать
-            // alias: proxy
-            throw new Error();
+        wrap: function (fn) {
+            if (!ft.is(fn).fn()) {
+                throw new TypeError('Wrapper must be a function');
+            }
+
+            return ft.fn(fn).partial(this._value);
         }
     });
 
