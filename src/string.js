@@ -211,32 +211,32 @@ var StringWrapper = (function () {
         },
 
         /**
-         * Метод удаляет с начала и с конца исходной строки
-         * @param chars {String} Удаляемые символы
+         * Метод удаляет с начала и с конца исходной строки переданные символы
          * @returns {String}
          */
-        trim: function (chars) {
-            chars = chars || ft.settings.whitespace;
+        trim: function () {
+            var chars = _.slice.call(arguments).join('');
+            chars = chars.length ? chars : ft.settings.whitespace;
             return this._value.replace(new RegExp('^[' + chars + ']+|[' + chars + ']+$', 'ig'), '');
         },
 
         /**
-         * Метод удаляет с начала исходной строки
-         * @param chars {String} Удаляемые символы
+         * Метод удаляет с начала исходной строки переданные символы
          * @returns {String}
          */
-        trimLeft: function (chars) {
-            chars = chars || ft.settings.whitespace;
+        trimLeft: function () {
+            var chars = _.slice.call(arguments).join('');
+            chars = chars.length ? chars : ft.settings.whitespace;
             return this._value.replace(new RegExp('^[' + chars + ']+'), '');
         },
 
         /**
-         * Метод удаляет с конца исходной строки
-         * @param chars {String} Удаляемые символы
+         * Метод удаляет с конца исходной строки переданные символы
          * @returns {String}
          */
-        trimRight: function (chars) {
-            chars = chars || ft.settings.whitespace;
+        trimRight: function () {
+            var chars = _.slice.call(arguments).join('');
+            chars = chars.length ? chars : ft.settings.whitespace;
             return this._value.replace(new RegExp('[' + chars + ']+$'), '');
         },
 
