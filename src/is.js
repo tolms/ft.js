@@ -4,20 +4,22 @@ var IsWrapper = (function () {
     }
 
     _.extend(IsWrapper.prototype, {
-        equal: function (other) {
-            return (this._value === other && (this._value !== 0 || 1 / this._value === 1 / other)) || (this._value !== this._value && other !== other);
-        },
-
-        deepEqual: function (other) {
-
+        blankString: function () {
+            // TODO: Реализовать
+            throw new Error();
         },
 
         validDate: function () {
             return ft.type(this._value) === 'date' && ft.type(this._value.getTime()) !== 'nan';
         },
 
+        emptyObject: function () {
+
+        },
+
         exists: function () {
-            return ft.type(this._value) !== 'undefined' && this._value !== null;
+            var type = ft.type(this._value);
+            return type !== 'undefined' && type !== 'null';
         },
 
         float: function () {
@@ -33,9 +35,9 @@ var IsWrapper = (function () {
             throw new Error();
         },
 
-        blankString: function () {
-            // TODO: Реализовать
-            throw new Error();
+        primitive: function () {
+            var type = ft.type(this._value);
+            return type === 'boolean' || type === 'number' || type === 'string' || type === 'undefined' || type === 'null';
         }
     });
 

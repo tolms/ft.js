@@ -51,3 +51,7 @@ ft.type = function (target) {
 
     return tp;
 };
+
+ft.equal = function (target, other) {
+    return (target === other && (target !== 0 || 1 / target === 1 / other)) || (target !== target && other !== other);
+};
