@@ -90,14 +90,6 @@
                 throw new Error();
             },
     
-            /**
-             * Метод определяет являет ли исходное значение валидной датой
-             * @returns {boolean}
-             */
-            validDate: function () {
-                return ft.type(this._value) === 'date' && ft.type(this._value.getTime()) !== 'nan';
-            },
-    
             emptyObject: function () {
     
             },
@@ -131,6 +123,14 @@
             primitive: function () {
                 var type = ft.type(this._value);
                 return type === 'boolean' || type === 'number' || type === 'string' || type === 'undefined' || type === 'null';
+            },
+    
+            /**
+             * Метод определяет являет ли исходное значение валидной датой
+             * @returns {boolean}
+             */
+            validDate: function () {
+                return ft.type(this._value) === 'date' && ft.type(this._value.getTime()) !== 'nan';
             }
         });
     

@@ -41,4 +41,17 @@ describe('#is()', function () {
             expect(ft.is().primitive()).to.equal(true);
         });
     });
+
+    describe('.validDate()', function () {
+        it('Should be valid date', function () {
+            expect(ft.is(new Date()).validDate()).to.equal(true);
+            expect(ft.is(new Date(2015, 0, 1)).validDate()).to.equal(true);
+        });
+
+        it('Should not be valid date', function () {
+            var date = new Date('');
+            expect(ft.type(date)).to.equal('date');
+            expect(ft.is(date).validDate()).to.equal(false);
+        });
+    });
 });
