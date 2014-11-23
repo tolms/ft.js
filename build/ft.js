@@ -13,6 +13,10 @@
 
     ft.VERSION = '0.0.1';
 
+    ft.settings = {
+        whitespace: '\\s\\0\\b\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF'
+    };
+
     /**
      * Набор общих методов
      */
@@ -23,8 +27,7 @@
             has: objProto.hasOwnProperty,
             each: arrayProto.forEach,
             map: arrayProto.map,
-            slice: arrayProto.slice,
-            whitespace: '\\s\\0\\b\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF'
+            slice: arrayProto.slice
         };
     
     _.extend = function (target) {
@@ -40,6 +43,11 @@
         return target;
     };
     
+    /**
+     * Метод возвращает тип переданного значения в виде строки
+     * @param target {*} Значение, для которого определяется тип
+     * @returns {string}
+     */
     ft.type = function (target) {
         if (target === undefined) {
             return 'undefined';
@@ -82,6 +90,10 @@
                 throw new Error();
             },
     
+            /**
+             * Метод определяет являет ли исходное значение валидной датой
+             * @returns {boolean}
+             */
             validDate: function () {
                 return ft.type(this._value) === 'date' && ft.type(this._value.getTime()) !== 'nan';
             },
@@ -108,6 +120,10 @@
                 throw new Error();
             },
     
+            /**
+             * Метод определяет является ли исходное значение примитивным типом
+             * @returns {boolean}
+             */
             primitive: function () {
                 var type = ft.type(this._value);
                 return type === 'boolean' || type === 'number' || type === 'string' || type === 'undefined' || type === 'null';
@@ -492,7 +508,7 @@
              * @returns {string} Очищенная строка
              */
             clean: function () {
-                return this.trim().replace(new RegExp('[' + _.whitespace + ']+', 'ig'), ' ');
+                return this.trim().replace(new RegExp('[' + ft.settings.whitespace + ']+', 'ig'), ' ');
             },
     
             /**
@@ -677,7 +693,7 @@
              * @returns {String}
              */
             trim: function (chars) {
-                chars = chars || _.whitespace;
+                chars = chars || ft.settings.whitespace;
                 return this._value.replace(new RegExp('^[' + chars + ']+|[' + chars + ']+$', 'ig'), '');
             },
     
@@ -687,7 +703,7 @@
              * @returns {String}
              */
             trimLeft: function (chars) {
-                chars = chars || _.whitespace;
+                chars = chars || ft.settings.whitespace;
                 return this._value.replace(new RegExp('^[' + chars + ']+'), '');
             },
     
@@ -697,7 +713,7 @@
              * @returns {String}
              */
             trimRight: function (chars) {
-                chars = chars || _.whitespace;
+                chars = chars || ft.settings.whitespace;
                 return this._value.replace(new RegExp('[' + chars + ']+$'), '');
             },
     

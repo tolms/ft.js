@@ -9,6 +9,10 @@ var IsWrapper = (function () {
             throw new Error();
         },
 
+        /**
+         * Метод определяет являет ли исходное значение валидной датой
+         * @returns {boolean}
+         */
         validDate: function () {
             return ft.type(this._value) === 'date' && ft.type(this._value.getTime()) !== 'nan';
         },
@@ -17,6 +21,10 @@ var IsWrapper = (function () {
 
         },
 
+        /**
+         * Метод определяет есть ли значение у переданной переменной
+         * @returns {boolean}
+         */
         exists: function () {
             var type = ft.type(this._value);
             return type !== 'undefined' && type !== 'null';
@@ -35,6 +43,10 @@ var IsWrapper = (function () {
             throw new Error();
         },
 
+        /**
+         * Метод определяет является ли исходное значение примитивным типом
+         * @returns {boolean}
+         */
         primitive: function () {
             var type = ft.type(this._value);
             return type === 'boolean' || type === 'number' || type === 'string' || type === 'undefined' || type === 'null';

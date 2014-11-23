@@ -31,7 +31,7 @@ var StringWrapper = (function () {
          * @returns {string} Очищенная строка
          */
         clean: function () {
-            return this.trim().replace(new RegExp('[' + _.whitespace + ']+', 'ig'), ' ');
+            return this.trim().replace(new RegExp('[' + ft.settings.whitespace + ']+', 'ig'), ' ');
         },
 
         /**
@@ -216,7 +216,7 @@ var StringWrapper = (function () {
          * @returns {String}
          */
         trim: function (chars) {
-            chars = chars || _.whitespace;
+            chars = chars || ft.settings.whitespace;
             return this._value.replace(new RegExp('^[' + chars + ']+|[' + chars + ']+$', 'ig'), '');
         },
 
@@ -226,7 +226,7 @@ var StringWrapper = (function () {
          * @returns {String}
          */
         trimLeft: function (chars) {
-            chars = chars || _.whitespace;
+            chars = chars || ft.settings.whitespace;
             return this._value.replace(new RegExp('^[' + chars + ']+'), '');
         },
 
@@ -236,7 +236,7 @@ var StringWrapper = (function () {
          * @returns {String}
          */
         trimRight: function (chars) {
-            chars = chars || _.whitespace;
+            chars = chars || ft.settings.whitespace;
             return this._value.replace(new RegExp('[' + chars + ']+$'), '');
         },
 
