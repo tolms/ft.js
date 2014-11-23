@@ -4,9 +4,16 @@ var IsWrapper = (function () {
     }
 
     _.extend(IsWrapper.prototype, {
+        /**
+         * Метод определяет является ли исходная строка пустой, т. е. состоящей из пробелов или непечатных символов
+         * @returns {boolean}
+         */
         blankString: function () {
-            // TODO: Реализовать
-            throw new Error();
+            if (ft.type(this._value) !== 'string') {
+                throw new TypeError('Provided value is not a string!');
+            }
+            var value = this._value;
+            return !Boolean(ft.string(value).trim().length);
         },
 
         emptyObject: function () {

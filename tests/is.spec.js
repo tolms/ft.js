@@ -1,6 +1,19 @@
 /* jshint -W030 */
 /* jshint -W053 */
 describe('#is()', function () {
+    describe('.blankString()', function () {
+        it('String should be blank', function () {
+            expect(ft.is('').blankString()).to.equal(true);
+            expect(ft.is('                  ').blankString()).to.equal(true);
+            expect(ft.is('\0 \b \t \n \v \f \r').blankString()).to.equal(true);
+        });
+
+        it('String should not be blank', function () {
+            expect(ft.is('Hello, world!').blankString()).to.equal(false);
+            expect(ft.is('\n Hello,   \t   World!        \r     ').blankString()).to.equal(false);
+        });
+    });
+
     describe('.float()', function () {
         it('should return value');
     });
