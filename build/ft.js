@@ -40,7 +40,7 @@
         return target;
     };
     
-    _.type = function (target) {
+    ft.type = function (target) {
         if (target === undefined) {
             return 'undefined';
         }
@@ -81,56 +81,20 @@
     
             },
     
-            args: function () {
-                return _.type(this._value) === 'arguments';
-            },
-    
-            array: function () {
-                return _.type(this._value) === 'array';
-            },
-    
-            boolean: function () {
-                return _.type(this._value) === 'boolean';
-            },
-    
-            date: function () {
-                return _.type(this._value) === 'date';
-            },
-    
             validDate: function () {
-                return this.date() && !ft.is(this._value.getTime()).nan();
-            },
-    
-            defined: function () {
-                return _.type(this._value) !== 'undefined';
+                return ft.type(this._value) === 'date' && ft.type(this._value.getTime()) !== 'nan';
             },
     
             exists: function () {
-                return this.defined() && this._value !== null;
+                return ft.type(this._value) !== 'undefined' && this._value !== null;
             },
     
             float: function () {
-                return this.number() && (this._value % 1 !== 0);
-            },
-    
-            fn: function () {
-                return _.type(this._value) === 'function';
+                return ft.type(this._value) === 'number' && (this._value % 1 !== 0);
             },
     
             int: function () {
-                return this.number() && (this._value % 1 === 0);
-            },
-    
-            nan: function () {
-                return _.type(this._value) === 'nan';
-            },
-    
-            number: function () {
-                return _.type(this._value) === 'number';
-            },
-    
-            object: function () {
-                return _.type(this._value) === 'object';
+                return ft.type(this._value) === 'number' && (this._value % 1 === 0);
             },
     
             plainObject: function () {
@@ -138,21 +102,9 @@
                 throw new Error();
             },
     
-            regexp: function () {
-                return _.type(this._value) === 'regexp';
-            },
-    
-            string: function () {
-                return _.type(this._value) === 'string';
-            },
-    
             blankString: function () {
                 // TODO: Реализовать
                 throw new Error();
-            },
-    
-            value: function () {
-                return this._value;
             }
         });
     
@@ -166,7 +118,7 @@
     /* jshint -W084 */
     var ObjectWrapper = (function () {
         function ObjectWrapper(value) {
-            if (!ft.is(value).object()) {
+            if (ft.type(value) !== 'object') {
                 throw new TypeError();
             }
     
@@ -195,7 +147,7 @@
              * @returns {*}
              */
             get: function (prop) {
-                if (!ft.is(prop).string()) {
+                if (ft.type(prop) !== 'string') {
                     return;
                 }
     
@@ -258,10 +210,10 @@
             namespace: function (path) {
                 var obj = this._value;
                 _.each.call(path.split('.'), function (key) {
-                    if (!ft.is(obj[key]).defined()) {
+                    if (ft.type(obj[key]) !== 'undefined') {
                         obj[key] = {};
                     }
-                    if (ft.is(obj[key]).object()) {
+                    if (ft.type(obj[key]) === 'object') {
                         obj = obj[key];
                     } else {
                         throw new RangeError('Property already exists and is not an object.');
@@ -276,18 +228,17 @@
              * @returns {Object}
              */
             omit: function (keys, ctx) {
-                var isKeys = ft.is(keys),
-                    list,
+                var list,
                     fn;
     
-                if (isKeys.array()) {
+                if (ft.type(keys) === 'array') {
                     list = ft.list(keys);
                     fn = function (key) {
                         return !list.contains(key);
                     };
                 }
     
-                if (isKeys.fn()) {
+                if (ft.type(keys) === 'function') {
                     fn = ft.fn(keys).negate();
                 }
     
@@ -312,10 +263,9 @@
              */
             pick: function (keys, ctx) {
                 var result = {},
-                    key,
-                    isKeys = ft.is(keys);
+                    key;
     
-                if (isKeys.array()) {
+                if (ft.type(keys) === 'array') {
                     _.each.call(keys, function (key) {
                         if (this.has(key)) {
                             result[key] = this._value[key];
@@ -323,7 +273,7 @@
                     }, this);
                 }
     
-                if (isKeys.fn()) {
+                if (ft.type(keys) === 'function') {
                     for (key in this._value) {
                         if (this.has(key) && keys.call(ctx, key, this._value[key])) {
                             result[key] = this._value[key];
@@ -340,14 +290,13 @@
              * @returns {*}
              */
             result: function (key) {
-                var prop = this.get(key),
-                    $prop = ft.is(prop);
+                var prop = this.get(key);
     
-                if (!$prop.defined()) {
+                if (ft.type(prop) === 'undefined') {
                     return;
                 }
     
-                return $prop.fn() ? prop.call(this._value) : prop;
+                return ft.type(prop) === 'function' ? prop.call(this._value) : prop;
             },
     
             set: function (path, value) {
@@ -506,7 +455,7 @@
 
     var StringWrapper = (function () {
         function StringWrapper(value) {
-            if (!ft.is(value).string()) {
+            if (ft.type(value) !== 'string') {
                 throw new TypeError();
             }
     
@@ -597,8 +546,9 @@
             inject: function (data) {
                 data = ft.object(data);
                 return this._value.replace(/\$\{([^${}]+?)\}/g, function (match, name) {
-                    var v = ft.is(data.get(ft.string(name).trim()));
-                    return v.number() || v.string() ? '' + v.value() : match;
+                    var value = data.get(ft.string(name).trim()),
+                        type = ft.type(value);
+                    return type === 'number' || type === 'string' ? '' + value : match;
                 });
             },
     
@@ -849,7 +799,7 @@
 
     var FunctionWrapper = (function () {
         function FunctionWrapper(value) {
-            if (!ft.is(value).fn()) {
+            if (ft.type(value) !== 'function') {
                 throw new TypeError();
             }
     
@@ -864,6 +814,11 @@
                         return that._value.apply(this, arguments);
                     }
                 };
+            },
+    
+            async: function () {
+                // TODO: Реализовать
+                throw new Error();
             },
     
             before: function (times) {
@@ -893,9 +848,6 @@
                 throw new Error();
             },
     
-            /**
-             * usage: _.fn(f).delay(500, *args)
-             */
             delay: function (ms) {
                 var args = _.slice.call(arguments, 1),
                     that = this;
@@ -961,10 +913,12 @@
                 throw new Error();
             },
     
-            wrap: function () {
-                // TODO: Реализовать
-                // alias: proxy
-                throw new Error();
+            wrap: function (fn) {
+                if (ft.type(fn) !== 'function') {
+                    throw new TypeError('Wrapper must be a function');
+                }
+    
+                return ft.fn(fn).partial(this._value);
             }
         });
     

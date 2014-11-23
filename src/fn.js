@@ -1,6 +1,6 @@
 var FunctionWrapper = (function () {
     function FunctionWrapper(value) {
-        if (!ft.is(value).fn()) {
+        if (ft.type(value) !== 'function') {
             throw new TypeError();
         }
 
@@ -49,9 +49,6 @@ var FunctionWrapper = (function () {
             throw new Error();
         },
 
-        /**
-         * usage: _.fn(f).delay(500, *args)
-         */
         delay: function (ms) {
             var args = _.slice.call(arguments, 1),
                 that = this;
@@ -118,7 +115,7 @@ var FunctionWrapper = (function () {
         },
 
         wrap: function (fn) {
-            if (!ft.is(fn).fn()) {
+            if (ft.type(fn) !== 'function') {
                 throw new TypeError('Wrapper must be a function');
             }
 

@@ -1,6 +1,6 @@
 var StringWrapper = (function () {
     function StringWrapper(value) {
-        if (!ft.is(value).string()) {
+        if (ft.type(value) !== 'string') {
             throw new TypeError();
         }
 
@@ -91,8 +91,9 @@ var StringWrapper = (function () {
         inject: function (data) {
             data = ft.object(data);
             return this._value.replace(/\$\{([^${}]+?)\}/g, function (match, name) {
-                var v = ft.is(data.get(ft.string(name).trim()));
-                return v.number() || v.string() ? '' + v.value() : match;
+                var value = data.get(ft.string(name).trim()),
+                    type = ft.type(value);
+                return type === 'number' || type === 'string' ? '' + value : match;
             });
         },
 

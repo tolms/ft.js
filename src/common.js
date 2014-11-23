@@ -25,7 +25,7 @@ _.extend = function (target) {
     return target;
 };
 
-_.type = function (target) {
+ft.type = function (target) {
     if (target === undefined) {
         return 'undefined';
     }

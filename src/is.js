@@ -12,56 +12,20 @@ var IsWrapper = (function () {
 
         },
 
-        args: function () {
-            return _.type(this._value) === 'arguments';
-        },
-
-        array: function () {
-            return _.type(this._value) === 'array';
-        },
-
-        boolean: function () {
-            return _.type(this._value) === 'boolean';
-        },
-
-        date: function () {
-            return _.type(this._value) === 'date';
-        },
-
         validDate: function () {
-            return this.date() && !ft.is(this._value.getTime()).nan();
-        },
-
-        defined: function () {
-            return _.type(this._value) !== 'undefined';
+            return ft.type(this._value) === 'date' && ft.type(this._value.getTime()) !== 'nan';
         },
 
         exists: function () {
-            return this.defined() && this._value !== null;
+            return ft.type(this._value) !== 'undefined' && this._value !== null;
         },
 
         float: function () {
-            return this.number() && (this._value % 1 !== 0);
-        },
-
-        fn: function () {
-            return _.type(this._value) === 'function';
+            return ft.type(this._value) === 'number' && (this._value % 1 !== 0);
         },
 
         int: function () {
-            return this.number() && (this._value % 1 === 0);
-        },
-
-        nan: function () {
-            return _.type(this._value) === 'nan';
-        },
-
-        number: function () {
-            return _.type(this._value) === 'number';
-        },
-
-        object: function () {
-            return _.type(this._value) === 'object';
+            return ft.type(this._value) === 'number' && (this._value % 1 === 0);
         },
 
         plainObject: function () {
@@ -69,21 +33,9 @@ var IsWrapper = (function () {
             throw new Error();
         },
 
-        regexp: function () {
-            return _.type(this._value) === 'regexp';
-        },
-
-        string: function () {
-            return _.type(this._value) === 'string';
-        },
-
         blankString: function () {
             // TODO: Реализовать
             throw new Error();
-        },
-
-        value: function () {
-            return this._value;
         }
     });
 

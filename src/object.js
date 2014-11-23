@@ -1,7 +1,7 @@
 /* jshint -W084 */
 var ObjectWrapper = (function () {
     function ObjectWrapper(value) {
-        if (!ft.is(value).object()) {
+        if (ft.type(value) !== 'object') {
             throw new TypeError();
         }
 
@@ -30,7 +30,7 @@ var ObjectWrapper = (function () {
          * @returns {*}
          */
         get: function (prop) {
-            if (!ft.is(prop).string()) {
+            if (ft.type(prop) !== 'string') {
                 return;
             }
 
@@ -93,10 +93,10 @@ var ObjectWrapper = (function () {
         namespace: function (path) {
             var obj = this._value;
             _.each.call(path.split('.'), function (key) {
-                if (!ft.is(obj[key]).defined()) {
+                if (ft.type(obj[key]) !== 'undefined') {
                     obj[key] = {};
                 }
-                if (ft.is(obj[key]).object()) {
+                if (ft.type(obj[key]) === 'object') {
                     obj = obj[key];
                 } else {
                     throw new RangeError('Property already exists and is not an object.');
@@ -111,18 +111,17 @@ var ObjectWrapper = (function () {
          * @returns {Object}
          */
         omit: function (keys, ctx) {
-            var isKeys = ft.is(keys),
-                list,
+            var list,
                 fn;
 
-            if (isKeys.array()) {
+            if (ft.type(keys) === 'array') {
                 list = ft.list(keys);
                 fn = function (key) {
                     return !list.contains(key);
                 };
             }
 
-            if (isKeys.fn()) {
+            if (ft.type(keys) === 'function') {
                 fn = ft.fn(keys).negate();
             }
 
@@ -147,10 +146,9 @@ var ObjectWrapper = (function () {
          */
         pick: function (keys, ctx) {
             var result = {},
-                key,
-                isKeys = ft.is(keys);
+                key;
 
-            if (isKeys.array()) {
+            if (ft.type(keys) === 'array') {
                 _.each.call(keys, function (key) {
                     if (this.has(key)) {
                         result[key] = this._value[key];
@@ -158,7 +156,7 @@ var ObjectWrapper = (function () {
                 }, this);
             }
 
-            if (isKeys.fn()) {
+            if (ft.type(keys) === 'function') {
                 for (key in this._value) {
                     if (this.has(key) && keys.call(ctx, key, this._value[key])) {
                         result[key] = this._value[key];
@@ -175,14 +173,13 @@ var ObjectWrapper = (function () {
          * @returns {*}
          */
         result: function (key) {
-            var prop = this.get(key),
-                $prop = ft.is(prop);
+            var prop = this.get(key);
 
-            if (!$prop.defined()) {
+            if (ft.type(prop) === 'undefined') {
                 return;
             }
 
-            return $prop.fn() ? prop.call(this._value) : prop;
+            return ft.type(prop) === 'function' ? prop.call(this._value) : prop;
         },
 
         set: function (path, value) {

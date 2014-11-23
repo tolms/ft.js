@@ -1,4 +1,70 @@
 describe('#fn()', function () {
+    describe('.after()', function () {
+        it('Should', function () {
+
+        });
+    });
+
+    describe('.async()', function () {
+        it('Should', function () {
+
+        });
+    });
+
+    describe('.before()', function () {
+        it('Should', function () {
+
+        });
+    });
+
+    describe('.compose()', function () {
+        it('Should', function () {
+
+        });
+    });
+
+    describe('.curry()', function () {
+        it('Should', function () {
+
+        });
+    });
+
+    describe('.debounce()', function () {
+        it('Should', function () {
+
+        });
+    });
+
+    describe('.delay()', function () {
+        it('Should', function () {
+
+        });
+    });
+
+    describe('.defer()', function () {
+        it('Should', function () {
+
+        });
+    });
+
+    describe('.memoize()', function () {
+        it('Should', function () {
+
+        });
+    });
+
+    describe('.negate()', function () {
+        it('Should', function () {
+
+        });
+    });
+
+    describe('.once()', function () {
+        it('Should', function () {
+
+        });
+    });
+
     describe('.partial()', function () {
         var add, concat;
 
@@ -59,6 +125,18 @@ describe('#fn()', function () {
         it('Should partially apply multiple arguments', function () {
             var hi = ft.fn(concat).partialRight('!');
             expect(hi('John', 'Doe')).to.equal('John Doe!');
+        });
+    });
+
+    describe('.repeat()', function () {
+        it('Should', function () {
+
+        });
+    });    
+
+    describe('.throttle()', function () {
+        it('Should', function () {
+
         });
     });
 
