@@ -14,6 +14,61 @@ describe('#is()', function () {
         });
     });
 
+    describe('.empty()', function () {
+        var fn;
+
+        before(function () {
+            fn = function () {
+                return arguments;
+            };
+        });
+
+        it('Should return true for empty string', function () {
+            expect(ft.is('').empty()).to.equal(true);
+        });
+
+        it('Should return false for non-empty string', function () {
+            expect(ft.is('hello').empty()).to.equal(false);
+        });
+
+        it('Should return true for empty object', function () {
+            expect(ft.is({}).empty()).to.equal(true);
+        });
+
+        it('Should return false for non-empty object', function () {
+            expect(ft.is({a: 'b', c: 'd'}).empty()).to.equal(false);
+        });
+
+        it('Should return true for empty array', function () {
+            expect(ft.is([]).empty()).to.equal(true);
+        });
+
+        it('Should return false for non-empty array', function () {
+            expect(ft.is([1, 2, 3, 4]).empty()).to.equal(false);
+        });
+
+        it('Should return true for empty arguments', function () {
+            expect(ft.is(fn()).empty()).to.equal(true);
+        });
+
+        it('Should return false for non-empty arguments', function () {
+            expect(ft.is(fn(1, 2, 3, 4)).empty()).to.equal(false);
+        });
+
+        it('Should return true for non-enumerable value', function () {
+            expect(ft.is(null).empty()).to.equal(true);
+            expect(ft.is(undefined).empty()).to.equal(true);
+            expect(ft.is(0).empty()).to.equal(true);
+            expect(ft.is(42).empty()).to.equal(true);
+            expect(ft.is(-42).empty()).to.equal(true);
+            expect(ft.is(NaN).empty()).to.equal(true);
+            expect(ft.is(Infinity).empty()).to.equal(true);
+            expect(ft.is(-Infinity).empty()).to.equal(true);
+            expect(ft.is(true).empty()).to.equal(true);
+            expect(ft.is(false).empty()).to.equal(true);
+        });
+    });
+
     describe('.float()', function () {
         it('should return value');
     });

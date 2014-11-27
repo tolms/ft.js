@@ -117,16 +117,28 @@
             },
     
             /**
-             * Метод определяет является ли исходный объект пустым, то есть
-             * неимеющим собственных ключей
+             * Метод определяет является ли исходное значение пустым
              * @return {boolean}
              */
-            emptyObject: function () {
-                for (var key in this._value) {
-                    if (_.has.call(this._value, key)) {
-                        return false;
+            empty: function () {
+                if (!this.exists()) {
+                    return true;
+                }
+    
+                var type = ft.type(this._value);
+    
+                if (type === 'array' || type === 'string' || type === 'arguments') {
+                    return this._value.length === 0;
+                }
+    
+                if (type === 'object') {
+                    for (var key in this._value) {
+                        if (_.has.call(this._value, key)) {
+                            return false;
+                        }
                     }
                 }
+    
                 return true;
             },
     
