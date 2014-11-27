@@ -8,7 +8,8 @@ var objProto = Object.prototype,
         has: objProto.hasOwnProperty,
         each: arrayProto.forEach,
         map: arrayProto.map,
-        slice: arrayProto.slice
+        slice: arrayProto.slice,
+        random: Math.random
     };
 
 _.extend = function (target) {
