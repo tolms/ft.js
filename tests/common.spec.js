@@ -119,4 +119,19 @@ describe('Common functions', function () {
             expect(ft.equal('foo', 'bar')).to.equal(false);
         });
     });
+
+    describe('ft.toArray()', function () {
+        var fn;
+
+        before(function () {
+            fn = function () {
+                return arguments;
+            };
+        });
+
+        it('Should convert arguments to array', function () {
+            expect(ft.type(ft.toArray(fn(1, 2, 3)))).to.equal('array');
+            expect(ft.toArray(fn(1, 2, 3))).to.deep.equal([1, 2, 3]);
+        });
+    });
 });

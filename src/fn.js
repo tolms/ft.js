@@ -66,7 +66,7 @@ var FunctionWrapper = (function () {
             var that = this,
                 memos = {};
             return function () {
-                var key = JSON.stringify(_.slice.call(arguments));
+                var key = JSON.stringify(ft.toArray(arguments));
                 if (!ft.is(memos[key]).defined()) {
                     memos[key] = that._value.apply(this, arguments);
                 }
@@ -86,11 +86,11 @@ var FunctionWrapper = (function () {
         },
 
         partial: function () {
-            var args = _.slice.call(arguments),
+            var args = ft.toArray(arguments),
                 that = this;
 
             return function () {
-                return that._value.apply(this, args.concat(_.slice.call(arguments)));
+                return that._value.apply(this, args.concat(ft.toArray(arguments)));
             };
         },
 
@@ -99,7 +99,7 @@ var FunctionWrapper = (function () {
                 that = this;
 
             return function () {
-                return that._value.apply(this, _.slice.call(arguments).concat(args));
+                return that._value.apply(this, ft.toArray(arguments).concat(args));
             };
         },
 

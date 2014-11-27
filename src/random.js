@@ -5,7 +5,7 @@ var RandomWrapper = (function () {
     _.extend(RandomWrapper.prototype, {
         /**
          * Возвращает псевдослучайное значение типа Boolean
-         * @return {Boolean}
+         * @return {boolean}
          */
         bool: function () {
             return _.random() < 0.5;

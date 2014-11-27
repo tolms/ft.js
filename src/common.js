@@ -60,3 +60,12 @@ ft.type = function (target) {
 ft.equal = function (target, other) {
     return (target === other && (target !== 0 || 1 / target === 1 / other)) || (target !== target && other !== other);
 };
+
+/**
+ * Возвращают переданные args в виде массива
+ * @param {array-like} args аргументы
+ * @return {array}
+ */
+ft.toArray = function (args) {
+    return _.slice.call(args);
+}
