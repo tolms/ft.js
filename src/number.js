@@ -1,6 +1,6 @@
 var NumberWrapper = (function () {
     function NumberWrapper(value) {
-        if (!ft.is(value).number()) {
+        if (ft.type(value) !== 'number') {
             throw new TypeError();
         }
 
@@ -19,6 +19,26 @@ var NumberWrapper = (function () {
         },
 
         plural: function () {
+            // TODO: Реализовать
+            throw new Error();
+        },
+
+        /**
+         * Метод возводит в исходное число в переданную степень
+         * @param  {Number} num Числитель степени
+         * @param  {Number} den Знаменатель степени
+         * @return {Number} 
+         */
+        pow: function (num, den) {
+            // TODO: Реализовать
+            throw new Error();  
+        },
+
+        /**
+         * Вычисляет корень исходного числа
+         * @return {Number}
+         */
+        root: function () {
             // TODO: Реализовать
             throw new Error();
         },
