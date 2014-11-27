@@ -27,8 +27,14 @@
             has: objProto.hasOwnProperty,
             each: arrayProto.forEach,
             map: arrayProto.map,
-            slice: arrayProto.slice
-        };
+            slice: arrayProto.slice,
+            random: Math.random, 
+            floor: Math.floor
+        },
+        MAX_INT = 2147483647, //Maximum 32-bit signed integer value. (2^31 - 1)
+        MIN_INT = -MAX_INT,
+        DIGITS = '0123456789',
+        HEX_LETTERS = 'abcdef';
     
     _.extend = function (target) {
         var source, prop;
@@ -78,6 +84,19 @@
     ft.equal = function (target, other) {
         return (target === other && (target !== 0 || 1 / target === 1 / other)) || (target !== target && other !== other);
     };
+    
+    /**
+     * Возвращают переданные args в виде массива
+     * @param {array-like} args аргументы
+     * @return {array}
+     */
+    ft.toArray = function (args) {
+        return _.slice.call(args);
+    }
+    
+    ft.toFixed = function (num, fixed) {
+        return parseFloat(num.toFixed(fixed));
+    }
 
     var IsWrapper = (function () {
         function IsWrapper(value) {
@@ -763,7 +782,7 @@
 
     var HtmlWrapper = (function () {
         function HtmlWrapper(value) {
-            if (!ft.is(value).string()) {
+            if (ft.type(value) !== 'string') {
                 throw new TypeError();
             }
     
@@ -771,7 +790,6 @@
         }
     
         _.extend(HtmlWrapper.prototype, {
-    
             escape: function () {
                 // TODO: Реализовать
                 throw new Error();
@@ -898,7 +916,7 @@
                 var that = this,
                     memos = {};
                 return function () {
-                    var key = JSON.stringify(_.slice.call(arguments));
+                    var key = JSON.stringify(ft.toArray(arguments));
                     if (!ft.is(memos[key]).defined()) {
                         memos[key] = that._value.apply(this, arguments);
                     }
@@ -918,11 +936,11 @@
             },
     
             partial: function () {
-                var args = _.slice.call(arguments),
+                var args = ft.toArray(arguments),
                     that = this;
     
                 return function () {
-                    return that._value.apply(this, args.concat(_.slice.call(arguments)));
+                    return that._value.apply(this, args.concat(ft.toArray(arguments)));
                 };
             },
     
@@ -931,7 +949,7 @@
                     that = this;
     
                 return function () {
-                    return that._value.apply(this, _.slice.call(arguments).concat(args));
+                    return that._value.apply(this, ft.toArray(arguments).concat(args));
                 };
             },
     
@@ -964,7 +982,7 @@
 
     var NumberWrapper = (function () {
         function NumberWrapper(value) {
-            if (!ft.is(value).number()) {
+            if (ft.type(value) !== 'number') {
                 throw new TypeError();
             }
     
@@ -987,6 +1005,26 @@
                 throw new Error();
             },
     
+            /**
+             * Метод возводит в исходное число в переданную степень
+             * @param  {Number} num Числитель степени
+             * @param  {Number} den Знаменатель степени
+             * @return {Number} 
+             */
+            pow: function (num, den) {
+                // TODO: Реализовать
+                throw new Error();  
+            },
+    
+            /**
+             * Вычисляет корень исходного числа
+             * @return {Number}
+             */
+            root: function () {
+                // TODO: Реализовать
+                throw new Error();
+            },
+    
             sign: function () {
                 return this._value < 0 ? -1 : 1;
             }
@@ -1004,10 +1042,98 @@
         }
     
         _.extend(RandomWrapper.prototype, {
-            id: function (prefix) {
-                // TODO: Реализовать
-                // Генерирует уникальный идентификатор с префиксом prefix
-                throw new Error();
+            /**
+             * Возвращает псевдослучайное значение типа Boolean
+             * @return {boolean}
+             */
+            bool: function () {
+                return _.random() < 0.5;
+            },
+    
+            /**
+             * Возвращает псевдослучайное значение из переданного набора
+             * @param  {array} list Набор значений
+             * @return {*}
+             */
+            choice: function (list) {
+                var args = (arguments.length === 1 && ft.type(list) === 'array') ? list : ft.toArray(arguments);
+    
+                return args[this.int(0, args.length - 1)];
+            },
+    
+            /**
+             * Возвращает псевдослучайный RGB-код 
+             * @return {string}
+             */
+            color: function () {
+                return '#' + this.hex(6);
+            },
+    
+            /**
+             * Возвращает псевдослучайное значение с плавающей точкой, лежащее между min и max
+             * @param  {number} min Нижняя граница диапазона
+             * @param  {number} max Верхняя граница диапазона
+             * @param  {number} fixed Количество знаков после запятой
+             * @return {number}
+             */
+            float: function (min, max, fixed) {
+                var frac = _.random();
+    
+                min = ft.is(min).exists() ? min : MIN_INT;
+                max = ft.is(max).exists() ? max : MAX_INT;
+    
+                if (min > max) {
+                    throw new Error('Minimum value cannot be greater than maximum value.');
+                }
+    
+                return ft.toFixed(_.floor(_.random() * (max - min - frac)) + frac, fixed || 5);
+            },
+    
+            /**
+             * Возвращает псевдослучайный GUID (UUID v4)
+             * Маска: xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx, 
+             * где y - символ из набора [8, 9, 'a', 'b']
+             * @return {string}
+             */
+            guid: function () {
+                return this.hex(8) + '-' + this.hex(4) + '-4' + this.hex(3) + '-' + 
+                    this.choice(8, 9, 'a', 'b') + this.hex(3) + '-' + this.hex(12); 
+            },
+    
+            /**
+             * Возвращает псевдослучайное 16-ичное число в виде строки заданной длины
+             * @param  {number} length Требуемая длина числа
+             * @return {string}
+             */     
+            hex: function (length) {
+                var result = '',
+                    letters = (HEX_LETTERS + DIGITS).split(''),
+                    size = letters.length;
+                
+                length = length && length > 0 ? length : 1;
+    
+                while (length--) {
+                    result += letters[this.int(0, size - 1)];
+                }
+    
+                return result;
+            },
+    
+            /**
+             * Возвращает псевдослучайное целочисленное значение, лежащее между min и max
+             * @param  {number} min Нижняя граница диапазона
+             * @param  {number} max Верхняя граница диапазона
+             * @return {number}
+             */
+            int: function (min, max) {
+                min = ft.is(min).exists() ? ~~min : MIN_INT;
+                max = ft.is(max).exists() ? ~~max : MAX_INT;
+    
+                if (min > max) {
+                    throw new Error('Minimum value cannot be greater than maximum value.');
+                }
+    
+                return _.floor(_.random() * (max - min + 1) + min);
             }
         });
     

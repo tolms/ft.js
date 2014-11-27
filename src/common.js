@@ -9,8 +9,13 @@ var objProto = Object.prototype,
         each: arrayProto.forEach,
         map: arrayProto.map,
         slice: arrayProto.slice,
-        random: Math.random
-    };
+        random: Math.random, 
+        floor: Math.floor
+    },
+    MAX_INT = 2147483647, //Maximum 32-bit signed integer value. (2^31 - 1)
+    MIN_INT = -MAX_INT,
+    DIGITS = '0123456789',
+    HEX_LETTERS = 'abcdef';
 
 _.extend = function (target) {
     var source, prop;
@@ -68,4 +73,8 @@ ft.equal = function (target, other) {
  */
 ft.toArray = function (args) {
     return _.slice.call(args);
+}
+
+ft.toFixed = function (num, fixed) {
+    return parseFloat(num.toFixed(fixed));
 }
