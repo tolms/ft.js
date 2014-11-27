@@ -69,6 +69,34 @@ describe('#is()', function () {
         });
     });
 
+    describe('.exists()', function () {
+        it('Should return false for undefined', function () {
+            expect(ft.is().exists()).to.equal(false);
+            expect(ft.is(undefined).exists()).to.equal(false);
+        });
+
+        it('Should return false for null', function () {
+            expect(ft.is(null).exists()).to.equal(false);
+        });        
+
+        it('Should return true for other values', function () {
+            expect(ft.is(0).exists()).to.equal(true);
+            expect(ft.is(42).exists()).to.equal(true);
+            expect(ft.is(-42).exists()).to.equal(true);
+            expect(ft.is(NaN).exists()).to.equal(true);
+            expect(ft.is(Infinity).exists()).to.equal(true);
+            expect(ft.is(-Infinity).exists()).to.equal(true);
+            expect(ft.is(true).exists()).to.equal(true);
+            expect(ft.is(false).exists()).to.equal(true);
+            expect(ft.is('').exists()).to.equal(true);
+            expect(ft.is('hello').exists()).to.equal(true);
+            expect(ft.is([]).exists()).to.equal(true);
+            expect(ft.is([1, 2, 3]).exists()).to.equal(true);
+            expect(ft.is({}).exists()).to.equal(true);
+            expect(ft.is({a: 'b', c: 'd'}).exists()).to.equal(true);
+        });
+    });
+
     describe('.float()', function () {
         it('should return value');
     });
