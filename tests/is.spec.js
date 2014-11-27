@@ -98,11 +98,28 @@ describe('#is()', function () {
     });
 
     describe('.float()', function () {
-        it('should return value');
+        it('Should return true for float', function () {
+            expect(ft.is(42.42).float()).to.equal(true);
+        });
+
+        it('Should return false for other numbers', function () {
+            expect(ft.is(42).float()).to.equal(false);
+            expect(ft.is(0).float()).to.equal(false);
+        });
     });
 
     describe('.int()', function () {
-        it('should return value');
+        it('Should return true for integer', function () {
+            expect(ft.is(42).int()).to.equal(true);
+        });
+
+        it('Should return true for zero', function () {
+            expect(ft.is(0).int()).to.equal(true);
+        });
+
+        it('Should return false for float', function () {
+            expect(ft.is(42.42).int()).to.equal(false);
+        });
     });
 
     describe('.primitive()', function () {
