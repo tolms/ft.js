@@ -16,8 +16,18 @@ var IsWrapper = (function () {
             return !Boolean(ft.string(value).trim().length);
         },
 
+        /**
+         * Метод определяет является ли исходный объект пустым, то есть
+         * неимеющим собственных ключей
+         * @return {boolean}
+         */
         emptyObject: function () {
-
+            for (var key in this._value) {
+                if (_.has.call(this._value, key)) {
+                    return false;
+                }
+            }
+            return true;
         },
 
         /**
@@ -29,14 +39,27 @@ var IsWrapper = (function () {
             return type !== 'undefined' && type !== 'null';
         },
 
+        /**
+         * Метод определяет есть ли у исходного значения дробная часть
+         * @return {boolean}
+         */
         float: function () {
             return ft.type(this._value) === 'number' && (this._value % 1 !== 0);
         },
 
+        /**
+         * Метод определяет является ли исходное значение целочисленным
+         * @return {boolean}
+         */
         int: function () {
             return ft.type(this._value) === 'number' && (this._value % 1 === 0);
         },
 
+        /**
+         * Метод определяет является ли исходный объект плоским, то есть
+         * объектом, чьи свойства не являются объектами
+         * @return {boolean}
+         */
         plainObject: function () {
             // TODO: Реализовать
             throw new Error();

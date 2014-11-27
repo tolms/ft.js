@@ -116,8 +116,18 @@
                 return !Boolean(ft.string(value).trim().length);
             },
     
+            /**
+             * Метод определяет является ли исходный объект пустым, то есть
+             * неимеющим собственных ключей
+             * @return {boolean}
+             */
             emptyObject: function () {
-    
+                for (var key in this._value) {
+                    if (_.has.call(this._value, key)) {
+                        return false;
+                    }
+                }
+                return true;
             },
     
             /**
@@ -129,14 +139,27 @@
                 return type !== 'undefined' && type !== 'null';
             },
     
+            /**
+             * Метод определяет есть ли у исходного значения дробная часть
+             * @return {boolean}
+             */
             float: function () {
                 return ft.type(this._value) === 'number' && (this._value % 1 !== 0);
             },
     
+            /**
+             * Метод определяет является ли исходное значение целочисленным
+             * @return {boolean}
+             */
             int: function () {
                 return ft.type(this._value) === 'number' && (this._value % 1 === 0);
             },
     
+            /**
+             * Метод определяет является ли исходный объект плоским, то есть
+             * объектом, чьи свойства не являются объектами
+             * @return {boolean}
+             */
             plainObject: function () {
                 // TODO: Реализовать
                 throw new Error();
@@ -234,7 +257,7 @@
             invert: function () {
                 var result = {};
     
-                _.each.call(this.keys(), function (el) {
+                this.keys().forEach(function (el) {
                     result[this._value[el]] = el;
                 }, this);
     
@@ -261,7 +284,7 @@
              */
             namespace: function (path) {
                 var obj = this._value;
-                _.each.call(path.split('.'), function (key) {
+                path.split('.').forEach(function (key) {
                     if (ft.type(obj[key]) !== 'undefined') {
                         obj[key] = {};
                     }
@@ -303,7 +326,7 @@
              */
             pairs: function () {
                 var that = this;
-                return _.map.call(this.keys(), function (el) {
+                return this.keys().map(function (el) {
                     return [el, that._value[el]];
                 });
             },
@@ -318,7 +341,7 @@
                     key;
     
                 if (ft.type(keys) === 'array') {
-                    _.each.call(keys, function (key) {
+                    keys.forEach(function (key) {
                         if (this.has(key)) {
                             result[key] = this._value[key];
                         }
@@ -366,7 +389,7 @@
              */
             values: function () {
                 var that = this;
-                return _.map.call(this.keys(), function (el) {
+                return this.keys().map(function (el) {
                     return that._value[el];
                 });
             }
