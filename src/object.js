@@ -65,7 +65,7 @@ var ObjectWrapper = (function () {
         invert: function () {
             var result = {};
 
-            _.each.call(this.keys(), function (el) {
+            this.keys().forEach(function (el) {
                 result[this._value[el]] = el;
             }, this);
 
@@ -92,7 +92,7 @@ var ObjectWrapper = (function () {
          */
         namespace: function (path) {
             var obj = this._value;
-            _.each.call(path.split('.'), function (key) {
+            path.split('.').forEach(function (key) {
                 if (ft.type(obj[key]) !== 'undefined') {
                     obj[key] = {};
                 }
@@ -134,7 +134,7 @@ var ObjectWrapper = (function () {
          */
         pairs: function () {
             var that = this;
-            return _.map.call(this.keys(), function (el) {
+            return this.keys().map(function (el) {
                 return [el, that._value[el]];
             });
         },
@@ -149,7 +149,7 @@ var ObjectWrapper = (function () {
                 key;
 
             if (ft.type(keys) === 'array') {
-                _.each.call(keys, function (key) {
+                keys.forEach(function (key) {
                     if (this.has(key)) {
                         result[key] = this._value[key];
                     }
@@ -197,7 +197,7 @@ var ObjectWrapper = (function () {
          */
         values: function () {
             var that = this;
-            return _.map.call(this.keys(), function (el) {
+            return this.keys().map(function (el) {
                 return that._value[el];
             });
         }

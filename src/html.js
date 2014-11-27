@@ -1,6 +1,6 @@
 var HtmlWrapper = (function () {
     function HtmlWrapper(value) {
-        if (!ft.is(value).string()) {
+        if (ft.type(value) !== 'string') {
             throw new TypeError();
         }
 
@@ -8,7 +8,6 @@ var HtmlWrapper = (function () {
     }
 
     _.extend(HtmlWrapper.prototype, {
-
         escape: function () {
             // TODO: Реализовать
             throw new Error();
