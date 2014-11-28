@@ -5,12 +5,6 @@ describe('#fn()', function () {
         });
     });
 
-    describe('.async()', function () {
-        it('Should', function () {
-
-        });
-    });
-
     describe('.before()', function () {
         it('Should', function () {
 

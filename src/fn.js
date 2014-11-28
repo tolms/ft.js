@@ -17,11 +17,6 @@ var FunctionWrapper = (function () {
             };
         },
 
-        async: function () {
-            // TODO: Реализовать
-            throw new Error();
-        },
-
         before: function (times) {
             var that = this, memo;
             return function () {
@@ -58,8 +53,11 @@ var FunctionWrapper = (function () {
         },
 
         defer: function () {
-            // TODO: Реализовать
-            throw new Error();
+            var args = ft.toArray(arguments),
+                that = this;
+            return setTimeout(function () {
+                return that._value.apply(null, args);
+            }, 1);
         },
 
         memoize: function () {
