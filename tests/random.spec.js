@@ -8,7 +8,10 @@ describe('#random()', function () {
     describe('.choice()', function () {
         var list = [1, 2, 3], 
             random = ft.random(),
-            choice;
+            firstChoice,
+            secondChoice,
+            firstApplyChoice,
+            secondApplyChoice;
 
         before(function () {
             firstChoice = random.choice(list);
