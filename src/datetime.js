@@ -24,7 +24,17 @@ var DateTimeWrapper = (function () {
          * @returns {String}
          */
         format: function (pattern) {
+            if (!ft.is(pattern).exists()) {
+                throw new TypeError('Pattern must be defined!');
+            }
 
+            if (ft.type(pattern) !== 'string') {
+                throw new TypeError('Pattern must be a string!');
+            }
+
+            if (pattern.length === 0) {
+                return '';
+            }
         },
 
         value: function () {
